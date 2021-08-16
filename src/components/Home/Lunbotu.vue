@@ -1,92 +1,66 @@
 <template>
   <div class="index">
     <div class="nav1">
-      <div class="tit1">轮播图上传</div>
+      <div class="tit1">轮播图内容</div>
     </div>
-    <div class="nav2">
-      <div class="tit1">（图片尺寸：360*125，最多上传三张）</div>
-    </div>
-    <div class="nav3">
-      <div class="item">
-        <div class="myImg" @click="companyList(1)">
-          <!-- <viewer> -->
-            <img v-if="img1 != ''" :src="img1" class="img_cyy" />
+    <div class="lbtForm">
+      <el-form ref="form" :model="form" label-width="80px">
+        <el-row>
+          <el-form-item label="轮播内容">
             <img
+              @click="companyList"
+              v-if="form.img != ''"
+              :src="form.img"
+              class="img_cyy"
+            />
+            <img
+              @click="companyList"
               v-else
               class="img_cyy"
               src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
               alt=""
             />
-          <!-- </viewer> -->
-        </div>
-        <div class="tit">
-          <div class="tit1">轮播图01</div>
-          <div class="tit2" v-if="img1 != ''" @click="deleImage(1)">删除</div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="myImg" @click="companyList(2)">
-          <!-- <viewer> -->
-            <img v-if="img2 != ''" :src="img2" class="img_cyy" />
-            <img
-              v-else
-              class="img_cyy"
-              src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
-              alt=""
-            />
-          <!-- </viewer> -->
-        </div>
-        <div class="tit">
-          <div class="tit1">轮播图02</div>
-          <div class="tit2" v-if="img2 != ''" @click="deleImage(2)">删除</div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="myImg" @click="companyList(3)">
-          <!-- <viewer> -->
-            <img v-if="img3 != ''" :src="img3" class="img_cyy" />
-            <img
-              v-else
-              class="img_cyy"
-              src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
-              alt=""
-            />
-          <!-- </viewer> -->
-        </div>
-        <div class="tit">
-          <div class="tit1">轮播图03</div>
-          <div class="tit2" v-if="img3 != ''" @click="deleImage(3)">删除</div>
-        </div>
-      </div>
-      <input
-        type="file"
-        name="companyLogo"
-        id="file0"
-        class="displayN"
-        multiple="multiple"
-        @change="companyLogo($event)"
-        ref="fileInputList"
-      />
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-col :span="14">
+            <el-form-item label="公告栏内容">
+              <el-input v-model="form.content"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">添加</el-button>
+          <el-button>取消</el-button>
+        </el-form-item>
+      </el-form>
     </div>
+    <input
+      type="file"
+      name="companyLogo"
+      id="file0"
+      class="displayN"
+      multiple="multiple"
+      @change="companyLogo($event)"
+      ref="fileInputList"
+    />
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import axios from "axios";
 export default {
   computed: {
     ...mapState(["fileList", "fileListImg"]),
   },
   data() {
     return {
-      dialogImageUrl: "",
-      imgList: [],
-      myImgList: [],
+      form: {
+        img: "",
+        content: "",
+      },
       imgFile: null,
-      imgIndex: 1,
-      img1: "",
-      img2: "",
-      img3: "",
     };
   },
   created() {
@@ -94,79 +68,80 @@ export default {
   },
   methods: {
     async getData() {
-      const resp = await this.$api.logincheck(
-        sessionStorage.getItem("user_name"),
-        sessionStorage.getItem("user_pass")
-      );
-      if (resp.result == 1) {
-        sessionStorage.setItem("isLogin", true);
-      } else {
-        //   console.log(res)
-        sessionStorage.setItem("token", null);
-        sessionStorage.setItem("isLogin", null);
-        this.$router.go(0);
-        this.$router.push({ path: "/login" });
-      }
-      const res2 = await this.$api.viewswiper();
-      console.log(res2);
-      this.img1 = res2.first_pic;
-      this.img2 = res2.second_pic;
-      this.img3 = res2.third_pic;
+      // const resp = await this.$api.logincheck(
+      //   sessionStorage.getItem("user_name"),
+      //   sessionStorage.getItem("user_pass")
+      // );
+      // if (resp.result == 1) {
+      //   sessionStorage.setItem("isLogin", true);
+      // } else {
+      //   //   console.log(res)
+      //   sessionStorage.setItem("token", null);
+      //   sessionStorage.setItem("isLogin", null);
+      //   this.$router.go(0);
+      //   this.$router.push({ path: "/login" });
+      // }
+      // const res2 = await this.$api.viewswiper();
+      // console.log(res2);
+      // this.img1 = res2.first_pic;
+      // this.img2 = res2.second_pic;
+      // this.img3 = res2.third_pic;
+    },
+    // 保存
+    async onSubmit() {
+      const that = this;
+      this.imgFile.append("title", this.form.content);
+      var configs = {
+        headers: {
+          "Content-Type": "multipart/form-data;charse=UTF-8",
+          "X-Token": sessionStorage.getItem("token"),
+        },
+      };
+      axios
+        .post(
+          `${this.$url}/banner/upload`,
+          // `/admin/banner/upload`,
+          this.imgFile,
+          configs
+        )
+        .then(function (res) {
+          console.log(res);
+          if (res.data.code == 200) {
+            that.$message({
+              message: res.data.message,
+              type: "success",
+            });
+            setTimeout(() => {
+              that.$router.push({ name: "Lunbotuliebiao" });
+            }, 500);
+          } else {
+            that.$message.error(res.data.message);
+          }
+        });
     },
     // 轮播图上传
-    companyList(i) {
-      this.imgIndex = i;
-      console.log(this.imgIndex);
+    companyList() {
       this.$refs.fileInputList.click();
     },
     companyLogo(event) {
-      // console.log(this.myImgList.length);
-      // this.imgIndex = this.myImgList.length + 1;
-      console.log(this.imgIndex);
       const that = this;
       var file = event.target.files[0];
       var fileSize = file.size; //文件大小
       var filetType = file.type; //文件类型
-      // console.log(event)
       //创建文件读取对象
-      console.log(filetType);
+      console.log(file);
       if (fileSize <= 10240 * 1024) {
         if (
           filetType == "image/png" ||
           filetType == "image/jpeg" ||
           filetType == "image/gif"
         ) {
-          this.imgFile = file;
+          this.imgFile = new FormData();
+          this.imgFile.append("image", file);
           var reader = new FileReader();
-          reader.readAsDataURL(this.imgFile); //通过文件流将文件转换成Base64字符串
+          reader.readAsDataURL(file); //通过文件流将文件转换成Base64字符串
           reader.onloadend = function () {
-            that.myImgList.push(reader.result);
-            console.log(that.myImgList);
-            that.$api
-              .updateswiper(
-                reader.result,
-                that.imgIndex,
-                sessionStorage.getItem("user_name"),
-                sessionStorage.getItem("user_pass")
-              )
-              .then((res) => {
-                console.log(res);
-                if (res.result == 1) {
-                  if (that.imgIndex == 1) {
-                    that.img1 = reader.result;
-                  }
-                  if (that.imgIndex == 2) {
-                    that.img2 = reader.result;
-                  }
-                  if (that.imgIndex == 3) {
-                    that.img3 = reader.result;
-                  }
-                  that.$message({
-                    message: res.msg,
-                    type: "success",
-                  });
-                }
-              });
+            that.form.img = reader.result;
           };
         } else {
           this.$message.error("图片格式不正确");
@@ -204,83 +179,35 @@ export default {
   background: #ffffff;
   .tit1 {
     opacity: 1;
-    font-size: 30px;
-    font-family: YouSheBiaoTiHei, YouSheBiaoTiHei-Regular;
-    font-weight: 400;
+    font-size: 25px;
+    font-family: PingFang SC, PingFang SC-Heavy;
+    font-weight: 800;
     text-align: left;
+    color: #2f313d;
     line-height: 80px;
-    margin-left: 40px;
-    color: #ebbfcc;
+    margin-left: 44px;
   }
 }
-.nav2 {
-  margin-top: 36px;
-  .tit1 {
+.lbtForm {
+  margin-top: 28px;
+  .img_cyy {
+    width: 414px;
+    height: 217px;
     opacity: 1;
-    font-size: 20px;
-    font-family: PingFang SC, PingFang SC-Regular;
-    font-weight: 400;
-    text-align: left;
-    color: #b41616;
+    background: #ffffff;
   }
-}
-.nav3 {
-  margin-top: 23px;
-  display: flex;
-  .item {
-    margin-right: 10px;
-    .myImg {
-      width: 360px;
-      height: 125px;
-      opacity: 1;
-      background: #ffffff;
-      border-radius: 10px;
-      .img_cyy {
-        width: 360px;
-        height: 125px;
-      }
-    }
-    .tit {
-      height: 25px;
-      display: flex;
-      justify-content: center;
-      .tit1 {
-        margin-top: 10px;
-        text-align: center;
-        opacity: 1;
-        font-size: 18px;
-        font-family: PingFang SC, PingFang SC-Regular;
-        font-weight: 400;
-        color: #000000;
-      }
-      .tit2 {
-        margin-left: 10px;
-        color: #f40;
-        margin-top: 10px;
-        text-align: center;
-        opacity: 1;
-        font-size: 16px;
-        font-family: PingFang SC, PingFang SC-Regular;
-        font-weight: 400;
-      }
-    }
-  }
-}
-.nav4 {
-  margin-top: 40px;
-  width: 100px;
-  height: 40px;
-  opacity: 1;
-  background: #ebbfcc;
-  border-radius: 10px;
-  font-size: 16px;
-  font-family: PingFang SC, PingFang SC-Regular;
-  font-weight: 400;
-  text-align: center;
-  line-height: 40px;
-  color: #ffffff;
 }
 .displayN {
   display: none;
+}
+/deep/ .el-form-item {
+  display: flex !important;
+}
+/deep/ .el-form-item__label {
+  width: 120px !important;
+}
+/deep/ .el-form-item__content {
+  margin-left: 0px !important;
+  width: 100%;
 }
 </style>

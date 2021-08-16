@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="nav1">
-      <div class="tit1">商品列表</div>
+      <div class="tit1">产品列表</div>
     </div>
     <div class="myForm">
       <el-form
@@ -17,19 +17,16 @@
             @keyup.enter.native="onSubmit"
           ></el-input>
         </el-form-item>
-        <el-form-item label="分类">
-          <el-select v-model="formInline.classify_id" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.id"
-              :label="item.title"
-              :value="item.id"
-            >
-            </el-option>
-          </el-select>
+        <el-form-item label="分 类" prop="category_id">
+          <el-cascader
+            v-model="formInline.category_id"
+            :options="options"
+            :props="{ checkStrictly: true }"
+            clearable
+          ></el-cascader>
         </el-form-item>
         <el-form-item>
-          <el-button type="danger" @click="onSubmit">查询</el-button>
+          <el-button type="primary" @click="onSubmit">查询</el-button>
         </el-form-item>
         <el-form-item>
           <el-button @click="onReset">重置</el-button>
@@ -41,6 +38,20 @@
     </div>
     <div class="myTable">
       <el-table :data="tableData" style="width: 100%">
+        <el-table-column type="expand">
+          <template slot-scope="props">
+            <el-form label-position="left" inline class="demo-table-expand">
+              <div v-for="(item, i) in props.row.sku_arr" :key="i">
+                <el-form-item label="规格">
+                  <span>{{ item.size }}</span>
+                </el-form-item>
+                <el-form-item label="价格">
+                  <span>{{ item.price }}</span>
+                </el-form-item>
+              </div>
+            </el-form>
+          </template>
+        </el-table-column>
         <el-table-column
           :show-overflow-tooltip="true"
           prop="title"
@@ -49,20 +60,14 @@
         </el-table-column>
         <el-table-column
           :show-overflow-tooltip="true"
-          prop="price"
-          label="商品价格"
-        >
-        </el-table-column>
-        <el-table-column
-          :show-overflow-tooltip="true"
-          prop="classify_name"
+          prop="category_name"
           label="商品分类"
         >
         </el-table-column>
         <el-table-column
           :show-overflow-tooltip="true"
-          prop="stock"
-          label="库存"
+          prop="prompt"
+          label="提示语"
         >
         </el-table-column>
         <el-table-column
@@ -72,12 +77,12 @@
         >
           <template slot-scope="scope">
             <!-- <div class="splbImg" v-for="(item, i) in scope.row.pic" :key="i"> -->
-            <template v-for="(item, i) in scope.row.pic">
+            <template v-for="(item, i) in scope.row.pic_arr">
               <img
-                v-if="item.name != ''"
+                v-if="item.img != ''"
                 :key="i"
                 style="width: 40px; height: 40px; cursor: pointer"
-                :src="item.name"
+                :src="item.img"
               />
             </template>
 
@@ -158,7 +163,7 @@ export default {
       total: null,
       formInline: {
         search: "",
-        classify_id: "",
+        category_id: [],
       },
       tableData: [],
       editDialogVisible: false,
@@ -199,18 +204,44 @@ export default {
     //   }
     // },
     async getData() {
-      const res = await this.$api.goods_list(
-        this.page,
-        this.pageSize,
+      const res2 = await this.$api.categoryIndex();
+      console.log(res2);
+      res2.data.forEach((ele) => {
+        ele.value = ele.category_id;
+        ele.label = ele.title;
+        if (ele.children) {
+          ele.children.forEach((item) => {
+            item.value = item.category_id;
+            item.label = item.title;
+            if (item.children) {
+              item.children.forEach((item2) => {
+                item2.value = item2.category_id;
+                item2.label = item2.title;
+              });
+            }
+          });
+        }
+      });
+      this.options = res2.data;
+      const res = await this.$api.productIndex(
         this.formInline.search,
-        this.formInline.classify_id
+        this.formInline.category_id.length != 0
+          ? this.formInline.category_id[this.formInline.category_id.length - 1]
+          : "",
+        this.page,
+        this.pageSize
       );
-      this.total = res.total;
+      this.total = res.data.total;
       console.log(res);
-      this.tableData = res.list;
-      const res2 = await this.$api.listclassify();
-      // console.log(res.list);
-      this.options = res2.list;
+      this.tableData = res.data.data;
+      this.tableData.forEach((ele) => {
+        ele.pic_arr.forEach((item) => {
+          if (item.path.slice(0, 1) == ".") {
+            item.path = item.path.substr(1);
+          }
+          item.img = item.domain + item.path;
+        });
+      });
     },
     // 分页
     handleSizeChange(val) {
@@ -226,20 +257,20 @@ export default {
       this.getData();
     },
     // 重置
-    onReset(){
+    onReset() {
       this.$store.commit("page", 1);
-      this.formInline.search = '';
-      this.formInline.classify_id = '';
+      this.formInline.search = "";
+      this.formInline.category_id = "";
       this.getData();
     },
     onAdd() {
       this.$store.commit("shangpinEditform", null);
-      this.$router.push({ name: "Haowushangjia" });
+      this.$router.push({ name: "Xinjianshangping" });
     },
     async edit(row) {
       console.log(row);
       this.$store.commit("shangpinEditform", row);
-      this.$router.push({ name: "Haowushangjia" });
+      this.$router.push({ name: "Xinjianshangping" });
     },
     async editOnSubmit() {
       const res = await this.$api.updateclassify(
@@ -263,14 +294,10 @@ export default {
       this.editDialogVisible = false;
     },
     async del(row) {
-      const res = await this.$api.goods_del(
-        sessionStorage.getItem("user_name"),
-        sessionStorage.getItem("user_pass"),
-        row.id
-      );
-      if (res.result == 1) {
+      const res = await this.$api.productDelete_product(row.id);
+      if (res.code == 200) {
         this.$message({
-          message: res.msg,
+          message: res.message,
           type: "success",
         });
         this.getData();
@@ -310,13 +337,13 @@ export default {
   background: #ffffff;
   .tit1 {
     opacity: 1;
-    font-size: 30px;
-    font-family: YouSheBiaoTiHei, YouSheBiaoTiHei-Regular;
-    font-weight: 400;
+    font-size: 25px;
+    font-family: PingFang SC, PingFang SC-Heavy;
+    font-weight: 800;
     text-align: left;
+    color: #2f313d;
     line-height: 80px;
-    margin-left: 40px;
-    color: #ebbfcc;
+    margin-left: 44px;
   }
 }
 .myForm {
@@ -331,5 +358,21 @@ export default {
 }
 .fenye {
   margin: 20px 0;
+}
+/deep/ .el-form-item {
+  margin-right: 20px;
+}
+
+/deep/ .demo-table-expand {
+  font-size: 0;
+}
+/deep/ .demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+/deep/ .demo-table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 20%;
 }
 </style>

@@ -2,6 +2,7 @@ import axios from 'axios';
 import Vue from 'vue'
 import router from '../router.js';
 import urls from './url.js';
+axios.defaults.withCredentials = true
 const vue = new Vue()
 let myPost = axios.create({
     baseURL: urls.baseUrl,
@@ -22,9 +23,7 @@ let myDelete = axios.create({
 myDelete.interceptors.request.use(config => {
     if (sessionStorage.getItem("token")) {
         config.headers = {
-            'token': sessionStorage.token,
-            'Access-Control-Allow-Origin': '*',
-            "access-control-allow-credentials": "true"
+            'X-Token': sessionStorage.getItem("token"),
         }
     }
     return config;
@@ -33,11 +32,12 @@ myDelete.interceptors.request.use(config => {
     return Promise.reject();
 })
 myPost.interceptors.request.use(config => {
+    console.log(sessionStorage.getItem("token"))
     if (sessionStorage.getItem("token")) {
         config.headers = {
-            'token': sessionStorage.token,
-            'Access-Control-Allow-Origin': '*',
-            "access-control-allow-credentials": "true"
+            'token': sessionStorage.getItem("token"),
+            // 'Access-Control-Allow-Origin': '*',
+            // "access-control-allow-credentials": "true"
         }
     }
     return config;
@@ -48,9 +48,9 @@ myPost.interceptors.request.use(config => {
 myGet.interceptors.request.use(config => {
     if (sessionStorage.getItem("token")) {
         config.headers = {
-            'token': sessionStorage.token,
-            'Access-Control-Allow-Origin': '*',
-            "access-control-allow-credentials": "true"
+            'token': sessionStorage.getItem("token"),
+            // 'Access-Control-Allow-Origin': '*',
+            // "access-control-allow-credentials": "true"
         }
     }
     return config;
@@ -154,334 +154,253 @@ myGet.interceptors.response.use(response => {
 })
 
 export default {
-    login(username, userpass) {
+    login(username, password, code) {
         return myPost({
             url: urls.login,
             data: {
                 username,
-                userpass,
+                password,
+                code
             }
         })
     },
-    logincheck(username, userpass) {
+    getVerificationCode(obj) {
         return myPost({
-            url: urls.logincheck,
+            url: urls.getVerificationCode,
             data: {
-                username,
-                userpass,
-            }
-        })
-    },
-    addclassify(title, username, userpass) {
-        return myPost({
-            url: urls.addclassify,
-            data: {
-                title,
-                username,
-                userpass
-            }
-        })
-    },
-    listclassify() {
-        return myPost({
-            url: urls.listclassify,
-        })
-    },
-    updateclassify(title, sort, classify_id, username, userpass) {
-        return myPost({
-            url: urls.updateclassify,
-            data: {
-                title,
-                sort,
-                classify_id,
-                username,
-                userpass
-            }
-        })
-    },
-    delclassify(classify_id, username, userpass) {
-        return myPost({
-            url: urls.delclassify,
-            data: {
-                classify_id,
-                username,
-                userpass
-            }
-        })
-    },
-    updateswiper(pic, page, username, userpass) {
-        return myPost({
-            url: urls.updateswiper,
-            data: {
-                pic,
-                page,
-                username,
-                userpass
-            }
-        })
-    },
-    delswiper(page, username, userpass) {
-        return myPost({
-            url: urls.delswiper,
-            data: {
-                page,
-                username,
-                userpass
-            }
-        })
-    },
-    viewswiper() {
-        return myPost({
-            url: urls.viewswiper,
-        })
-    },
-    billagreementsetstatus(username, userpass, status) {
-        return myPost({
-            url: urls.billagreementsetstatus,
-            data: {
-                username,
-                userpass,
-                status
-            }
-        })
-    },
-    billagreementstatusview() {
-        return myPost({
-            url: urls.billagreementstatusview,
-        })
-    },
-    billagreement(username, userpass, content) {
-        return myPost({
-            url: urls.billagreement,
-            data: {
-                username,
-                userpass,
-                content
-            }
-        })
-    },
-    billagreement_view() {
-        return myPost({
-            url: urls.billagreement_view,
-        })
-    },
-    updateinvitation(username, userpass, obj) {
-        return myPost({
-            url: urls.updateinvitation,
-            data: {
-                username,
-                userpass,
-                ...obj
-            }
-        })
-    },
-    invitation_view() {
-        return myPost({
-            url: urls.invitation_view,
-        })
-    },
-    addgoodspic(username, userpass, pic) {
-        return myPost({
-            url: urls.addgoodspic,
-            data: {
-                username,
-                userpass,
-                pic
-            }
-        })
-    },
-    goodspic_del(username, userpass, pic_url) {
-        return myPost({
-            url: urls.goodspic_del,
-            data: {
-                username,
-                userpass,
-                pic_url
-            }
-        })
-    },
-    goods_add(username, userpass, obj) {
-        return myPost({
-            url: urls.goods_add,
-            data: {
-                username,
-                userpass,
-                ...obj
-            }
-        })
-    },
-    goods_list(page, pagesize, keyword, classify_id) {
-        return myPost({
-            url: urls.goods_list,
-            data: {
-                page,
-                pagesize,
-                keyword,
-                classify_id
-            }
-        })
-    },
-    goods_del(username, userpass, id) {
-        return myPost({
-            url: urls.goods_del,
-            data: {
-                username,
-                userpass,
-                id
-            }
-        })
-    },
-    goods_update(username, userpass, obj, id) {
-        return myPost({
-            url: urls.goods_update,
-            data: {
-                username,
-                userpass,
                 ...obj,
-                id
             }
         })
     },
-    user_freeorder(page, pagesize, keyword) {
+    username(obj) {
         return myPost({
-            url: urls.user_freeorder,
+            url: urls.username,
             data: {
-                page,
-                pagesize,
-                keyword
+                ...obj,
             }
         })
     },
-    quota_list(page, pagesize, keyword) {
+    getOrder(obj) {
         return myPost({
-            url: urls.quota_list,
-            data: {
-                page,
-                pagesize,
-                keyword
+            url: urls.getOrder,
+            params: {
+                ...obj,
             }
         })
     },
-    quota_view(user_id) {
+    verificationSession(obj) {
         return myPost({
-            url: urls.quota_view,
+            url: urls.verificationSession,
             data: {
-                user_id
+                ...obj,
             }
         })
     },
-    user_order(page, pagesize, keyword, status) {
+    inviteReward(obj) {
         return myPost({
-            url: urls.user_order,
+            url: urls.inviteReward,
             data: {
-                page,
-                pagesize,
-                keyword,
-                status
+                ...obj,
             }
         })
     },
-    guideset_content(username, userpass, content) {
+    userInfo(obj) {
         return myPost({
-            url: urls.guideset_content,
+            url: urls.userInfo,
             data: {
-                username,
-                userpass,
-                content
+                ...obj,
             }
         })
     },
-    guide_content() {
+    getGoods(obj) {
         return myPost({
-            url: urls.guide_content,
-        })
-    },
-    payment_set(obj) {
-        return myPost({
-            url: urls.payment_set,
+            url: urls.getGoods,
             data: {
-                ...obj
+                ...obj,
             }
         })
     },
-    payment_view() {
+    kdPrice(obj) {
         return myPost({
-            url: urls.payment_view,
-        })
-    },
-    centerbanner_list() {
-        return myPost({
-            url: urls.centerbanner_list,
-        })
-    },
-    centerbanner_edit(username, userpass, pic, url, id, title, sub_title) {
-        return myPost({
-            url: urls.centerbanner_edit,
+            url: urls.kdPrice,
             data: {
-                username,
-                userpass,
-                pic,
-                url,
-                id,
-                title,
-                sub_title
+                ...obj,
             }
         })
     },
-    order_view(username, userpass, order_id) {
+    editIndex(obj) {
         return myPost({
-            url: urls.order_view,
+            url: urls.editIndex,
             data: {
-                username,
-                userpass,
-                order_id
+                ...obj,
             }
         })
     },
-    order_postsale(username, userpass, page, pagesize, status) {
+    editData(obj) {
         return myPost({
-            url: urls.order_postsale,
+            url: urls.editData,
             data: {
-                username,
-                userpass,
-                page,
-                pagesize,
-                status
+                ...obj,
             }
         })
     },
-    order_postsaleset(username, userpass, id, type) {
+    upLevelDefault(obj) {
         return myPost({
-            url: urls.order_postsaleset,
+            url: urls.upLevelDefault,
             data: {
-                username,
-                userpass,
-                id,
-                type
+                ...obj,
             }
         })
     },
-    withdrawal_list(username, userpass, page, pagesize, status) {
+    searchData(obj) {
         return myPost({
-            url: urls.withdrawal_list,
+            url: urls.searchData,
             data: {
-                username,
-                userpass,
-                page,
-                pagesize,
-                status
+                ...obj,
             }
         })
     },
-    withdrawal(username, userpass, id, remark, status) {
+    getKefu(obj) {
         return myPost({
-            url: urls.withdrawal,
+            url: urls.getKefu,
             data: {
-                username,
-                userpass,
-                id,
-                remark,
-                status
+                ...obj,
+            }
+        })
+    },
+    switchYc(obj) {
+        return myPost({
+            url: urls.switchYc,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    AftermarketAddData(obj) {
+        return myPost({
+            url: urls.AftermarketAddData,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    AftermarketGetData(obj) {
+        return myPost({
+            url: urls.AftermarketGetData,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    UserEditPassword(obj) {
+        return myPost({
+            url: urls.UserEditPassword,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    UserCheckYzm(obj) {
+        return myPost({
+            url: urls.UserCheckYzm,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    ArticleList(obj) {
+        return myPost({
+            url: urls.ArticleList,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    ArticleInfo(obj) {
+        return myPost({
+            url: urls.ArticleInfo,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    orderInsertData(obj) {
+        return myPost({
+            url: urls.orderInsertData,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    orderDelOrder(obj) {
+        return myPost({
+            url: urls.orderDelOrder,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    orderGetFilterData(obj) {
+        return myPost({
+            url: urls.orderGetFilterData,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    alipayGetPay(obj) {
+        return myPost({
+            url: urls.alipayGetPay,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    userInvitationReward(obj) {
+        return myPost({
+            url: urls.userInvitationReward,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    userMoneyList(obj) {
+        return myPost({
+            url: urls.userMoneyList,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    CommentEditIndexPassword(obj) {
+        return myPost({
+            url: urls.CommentEditIndexPassword,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    userAddLevel(obj) {
+        return myPost({
+            url: urls.userAddLevel,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    userReCharge(obj) {
+        return myPost({
+            url: urls.userReCharge,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    userCommission(obj) {
+        return myPost({
+            url: urls.userCommission,
+            data: {
+                ...obj,
             }
         })
     },

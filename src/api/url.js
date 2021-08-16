@@ -1,39 +1,37 @@
 export default {
-    baseUrl: '/api',
-    login: '/login', //登录
-    logincheck: '/logincheck', //后台登录状态检测
-    addclassify: '/addclassify', //后台添加分类
-    listclassify: '/listclassify', //后台分类列表
-    updateclassify: '/updateclassify', //后台修改分类
-    delclassify: '/delclassify', //后台删除分类
-    updateswiper: '/updateswiper', //后台轮播图上传
-    delswiper: '/delswiper', //后台轮播图删除
-    viewswiper: '/viewswiper', //后台轮播图查看
-    billagreementsetstatus: '/billagreementsetstatus', //后台免单开关设置
-    billagreementstatusview: '/billagreementstatusview', //后台免单开关
-    billagreement: '/billagreement', //后台免单购物协议修改
-    billagreement_view: '/billagreement_view', //后台免单购物协议查看
-    updateinvitation: '/updateinvitation', //后台邀请好友/佣金设置
-    invitation_view: '/invitation_view', //后台邀请好友/佣金查看
-    addgoodspic: '/addgoodspic', //后台商品上传主图
-    goodspic_del: '/goodspic_del', //后台商品主图删除
-    goods_add: '/goods_add', //后台商品添加
-    goods_update: '/goods_update', //后台商品修改
-    goods_del: '/goods_del', //后台商品删除
-    goods_list: '/goods_list', //后台商品列表
-    user_freeorder: '/user_freeorder', //后台免单记录
-    quota_list: '/quota_list', //后台额度记录
-    quota_view: '/quota_view', //后台额度记录详情
-    user_order: '/user_order', //后台货物状态(订单列表)
-    guideset_content: '/guideset_content', //后台新手指南修改
-    guide_content: '/guide_content', //后台新手指南查看
-    payment_set: '/payment_set', //后台支付配置设置
-    payment_view: '/payment_view', //后台支付配置查看
-    centerbanner_list:'/centerbanner_list',//后台四个广告列表
-    centerbanner_edit:'/centerbanner_edit',//后台广告编辑
-    order_view:'/order_view',//后台订单详情
-    order_postsale:'/order_postsale',//后台售后列表
-    order_postsaleset:'/order_postsaleset',//后台售后申请处理
-    withdrawal_list:'/withdrawal_list',//后台申请的提现列表
-    withdrawal:'/withdrawal',//后台申请的提现审核
+    // baseUrl: '',
+    // baseUrl: 'http://47.100.26.153',
+    // baseUrl: 'http://192.168.50.132',
+    baseUrl:'http://ht.yuncanggift.com',
+    getVerificationCode: '/home/Comment/getVerificationCode', //获取短信验证码
+    login:'/home/Login/login',//登录
+    username:'/home/Reg/reg',//注册
+    getOrder:'/home/order/getOrder',//订单-获取订单数据
+    verificationSession: '/home/Comment/verificationSession', //获取短信验证码
+    inviteReward:'/home/User/inviteReward',//推广返佣界面
+    userInfo:'/home/user/info',//会员中心
+    getGoods:'/home/goods/getGoods',//获取商品数据
+    kdPrice:'/home/goods/kdPrice',//获取快递费用
+    editIndex:'/home/user/editIndex',//会员资料修改页面
+    editData:'/home/user/editData',//会员资料修改提交
+    upLevelDefault:'/home/User/upLevelDefault',//会员升级页面
+    searchData:'/home/User/searchData',//会员升级页面-切换云仓或快递
+    getKefu:'/home/Comment/getKefu',//在线客服
+    switchYc:'/home/goods/switchYc',//商城切换云仓
+    AftermarketGetData:'/home/Aftermarket/getData',//售后底单申请
+    AftermarketAddData:'/home/Aftermarket/addData',//售后底单申请提交
+    UserEditPassword:'/home/User/editPassword',//修改密码
+    UserCheckYzm:'/home/User/checkYzm',//修改密码-验证短信码
+    ArticleList:'/home/Article/list',//获取文章数据列表
+    ArticleInfo:'/home/Article/info',//获取文章详情
+    orderInsertData:'/home/order/insertData',//完成并导入订单
+    orderDelOrder:'/home/order/delOrder',//撤销订单号
+    orderGetFilterData:'/home/order/getFilterData',//获取智能筛选数据
+    alipayGetPay:'/home/alipay/getPay',//支付-会员充值和会员升级
+    userInvitationReward:'/home/user/invitationReward',//获取邀请奖励列表
+    userMoneyList:'/home/user/moneyList',//获取资金明细列表
+    CommentEditIndexPassword:'/home/Comment/editIndexPassword',//未登录状态-修改密码
+    userAddLevel:'/home/user/addLevel',//会员升级-使用余额
+    userReCharge:'/home/user/reCharge',//余额提现
+    userCommission:'/home/user/commission',//佣金提现
 }

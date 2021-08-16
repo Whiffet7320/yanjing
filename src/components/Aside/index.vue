@@ -1,293 +1,426 @@
 <template>
-  <div class="aside">
-    <div class="nav1">商城APP</div>
+  <div class="index">
+    <div class="nav1" @click="toLijifahuo">
+      <img class="pic" src="../../assets/newImg/ljfh.png" alt="" />
+      <div class="tit">立即发货</div>
+    </div>
     <div class="nav2">
-      <img src="../../assets/image/蒙版组108.png" alt="" />
-    </div>
-    <div class="nav3">15058585631</div>
-    <div class="nav4" @click="loginOut">
-      <img class="pic1" src="../../assets/image/组191.png" alt="" />
-      <div class="tit1">切换账号</div>
-    </div>
-    <div class="menu">
-      <el-menu
-        :default-active="menuActiveIndex"
-        class="el-menu-vertical-demo"
-        @select="selectopen"
-        background-color="#ffffff"
-        text-color="#9b9b9b"
-        active-text-color="#EBBFCC"
-        router
-      >
-        <el-submenu index="1">
-          <template slot="title">
-            <div class="one">
-              <i
-                :class="{ 'el-icon-house': true, active: activeIndex == 1 }"
-              ></i>
-              <!-- <img class="icon1" src="../../assets/image/路径406.png" alt="" /> -->
-              <span :class="{ tit1: true, active: activeIndex == 1 }"
-                >首页后台</span
-              >
-            </div>
-          </template>
-          <el-menu-item index="1-1" :route="{ name: 'Lunbotu' }"
-            >轮播图上传</el-menu-item
-          >
-          <el-menu-item index="1-4" :route="{ name: 'Fenleiliebiao' }"
-            >分类列表</el-menu-item
-          >
-          <el-menu-item index="1-6" :route="{ name: 'Guanggaoliebiao' }"
-            >广告列表</el-menu-item
-          >
-          <el-menu-item index="1-2" :route="{ name: 'Haowushangjia' }"
-            >好物上架</el-menu-item
-          >
-          <el-menu-item index="1-5" :route="{ name: 'Shangpinliebiao' }"
-            >商品列表</el-menu-item
-          >
-          <el-menu-item index="1-3" :route="{ name: 'Yaoqinhaoyou' }"
-            >邀请好友/佣金</el-menu-item
-          >
-        </el-submenu>
-        <el-submenu index="2">
-          <template slot="title">
-            <div class="one">
-              <img
-                class="icon1"
-                v-if="activeIndex == 2"
-                src="../../assets/image/组185active.png"
-                alt=""
-              />
-              <img
-                class="icon1"
-                v-else
-                src="../../assets/image/组185.png"
-                alt=""
-              />
-              <span :class="{ tit1: true, active: activeIndex == 2 }"
-                >免单界面后台</span
-              >
-            </div>
-          </template>
-          <el-menu-item index="2-1" :route="{ name: 'Quanptmiandanjilu' }"
-            >全平台免单记录</el-menu-item
-          >
-          <el-menu-item index="2-2" :route="{ name: 'Miandangouwu' }"
-            >免单购物协议</el-menu-item
-          >
-          <el-menu-item index="2-3" :route="{ name: 'Miandankaiguan' }"
-            >免单开关按钮</el-menu-item
-          >
-        </el-submenu>
-        <el-submenu index="3">
-          <template slot="title">
-            <div class="one">
-              <img
-                class="icon1"
-                v-if="activeIndex == 3"
-                src="../../assets/image/组188active.png"
-                alt=""
-              />
-              <img
-                class="icon1"
-                v-else
-                src="../../assets/image/组188.png"
-                alt=""
-              />
-              <span :class="{ tit1: true, active: activeIndex == 3 }"
-                >我的后台</span
-              >
-            </div>
-          </template>
-          <el-menu-item index="3-1" :route="{ name: 'Edu' }"
-            >提现列表</el-menu-item
-          >
-          <el-menu-item index="3-2" :route="{ name: 'Huowuzhuangtai' }"
-            >货物状态</el-menu-item
-          >
-          <el-menu-item index="3-3" :route="{ name: 'Kefuxitong' }"
-            >客服系统</el-menu-item
-          >
-          <el-menu-item index="3-4" :route="{ name: 'Xinshouzhinan' }"
-            >新手指南</el-menu-item
-          >
-          <el-menu-item index="3-6" :route="{ name: 'Shouhouliebiao' }"
-            >售后列表</el-menu-item
-          >
-          <el-menu-item index="3-5" :route="{ name: 'Houtaizhifupeizhi' }"
-            >后台支付配置</el-menu-item
-          >
-        </el-submenu>
-      </el-menu>
+      <img class="pic" src="../../assets/newImg/asideBG.png" alt="" />
+      <div class="box1">
+        <img class="pic1" src="../../assets/newImg/zu280-1.png" alt="" />
+        <div class="txt1">订单管理</div>
+        <div class="txt2">ORDER</div>
+        <div
+          @click="toDingdanliebiao"
+          :class="{ txt3: true, txt: true, active: asideVal == '12-2' }"
+        >
+          订单列表
+        </div>
+        <div
+          @click="toBaoguoliebiao"
+          :class="{ txt4: true, txt: true, active: asideVal == '12-1' }"
+        >
+          包裹列表
+        </div>
+      </div>
+      <div class="box1 box2">
+        <img class="pic1" src="../../assets/newImg/zu280-2.png" alt="" />
+        <div class="txt1">财务中心</div>
+        <div class="txt2">FINANCE</div>
+        <div
+          @click="toWoyaochongzhi"
+          :class="{ txt3: true, txt: true, active: asideVal == '11-1' }"
+        >
+          我要充值
+        </div>
+        <div
+          @click="toZijinmingxi"
+          :class="{ txt4: true, txt: true, active: asideVal == '11-2' }"
+        >
+          资金明细
+        </div>
+        <div
+          @click="toYaoqingjiangli"
+          :class="{ txt5: true, txt: true, active: asideVal == '11-3' }"
+        >
+          邀请奖励
+        </div>
+      </div>
+      <div class="box1 box3">
+        <img class="pic1" src="../../assets/newImg/zu280-1.png" alt="" />
+        <div class="txt1">售后服务</div>
+        <div class="txt2">AFTER SALES</div>
+        <div
+          @click="toShowhouchajian"
+          :class="{ txt3: true, txt: true, active: asideVal == '10-1' }"
+        >
+          售后查件
+        </div>
+        <div
+          @click="toDidanshenqin"
+          :class="{ txt3: true, txt: true, active: asideVal == '10-2' }"
+          class="txt4 txt"
+        >
+          底单申请
+        </div>
+      </div>
+      <div class="box1 box4">
+        <img class="pic1" src="../../assets/newImg/zu280-3.png" alt="" />
+        <div class="txt1">账户管理</div>
+        <div class="txt2">ACCOUNT</div>
+        <div
+          @click="toShengjiVIP"
+          :class="{ txt3: true, txt: true, active: asideVal == '6-4' }"
+        >
+          升级VIP
+        </div>
+        <div
+          @click="toXiugaimima"
+          :class="{ txt4: true, txt: true, active: asideVal == '6-3' }"
+        >
+          修改密码
+        </div>
+        <div
+          @click="toHuiyuanziliao"
+          :class="{ txt5: true, txt: true, active: asideVal == '6-1' }"
+        >
+          会员资料
+        </div>
+        <div
+          @click="toTuiguanfanyong"
+          :class="{ txt6: true, txt: true, active: asideVal == '6-2' }"
+        >
+          推广返佣
+        </div>
+      </div>
+      <div class="box1 box5">
+        <img class="pic1" src="../../assets/newImg/zu280-1.png" alt="" />
+        <div class="txt1">帮助中心</div>
+        <div class="txt2">HELP CENTER</div>
+        <div
+          @click="toApi"
+          :class="{ txt3: true, txt: true, active: asideVal == '7-1' }"
+        >
+          分站与API
+        </div>
+        <div
+          @click="toBzzx"
+          :class="{ txt4: true, txt: true, active: asideVal == '7-2' }"
+        >
+          帮助中心
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
-  watch: {
-    $route(to) {
-      console.log(to.path); //到哪去
-      if (to.path == "/Lunbotu") {
-        this.menuActiveIndex = "1-1";
-      } else if (to.path == "/Haowushangjia") {
-        this.menuActiveIndex = "1-2";
-      } else if (to.path == "/Yaoqinhaoyou") {
-        this.menuActiveIndex = "1-3";
-      } else if (to.path == "/Fenleiliebiao") {
-        this.menuActiveIndex = "1-4";
-      } else if (to.path == "/Shangpinliebiao") {
-        this.menuActiveIndex = "1-5";
-      } else if (to.path == "/Shangpinliebiao") {
-        this.menuActiveIndex = "1-6";
-      } else if (to.path == "/Miandan/Guanggaoliebiao") {
-        this.menuActiveIndex = "2-1";
-      } else if (to.path == "/Miandan/Miandangouwu") {
-        this.menuActiveIndex = "2-2";
-      } else if (to.path == "/Miandan/Miandankaiguan") {
-        this.menuActiveIndex = "2-3";
-      } else if (to.path == "/Wodehoutai/Edu") {
-        this.menuActiveIndex = "3-1";
-      } else if (to.path == "/Wodehoutai/Huowuzhuangtai") {
-        this.menuActiveIndex = "3-2";
-      } else if (to.path == "/Wodehoutai/Kefuxitong") {
-        this.menuActiveIndex = "3-3";
-      } else if (to.path == "/Wodehoutai/Xinshouzhinan") {
-        this.menuActiveIndex = "3-4";
-      } else if (to.path == "/Wodehoutai/Houtaizhifupeizhi") {
-        this.menuActiveIndex = "3-5";
-      } else if (to.path == "/Wodehoutai/Shouhouliebiao") {
-        this.menuActiveIndex = "3-6";
-      }
-    },
+  computed: {
+    ...mapState(["asideVal"]),
   },
-  data() {
-    return {
-      activeIndex: 0,
-      menuActiveIndex: "",
-    };
+  created() {
+    console.log(this.asideVal);
   },
   methods: {
-    loginOut() {
-      sessionStorage.setItem("token", null);
-      sessionStorage.setItem("isLogin", null);
-      this.$router.go(0);
-      this.$router.push({ path: "/login" });
+    toApi() {
+      this.$router.push({ name: "Fenzhanyuapi" });
     },
-    // handleOpen(key, keyPath) {
-    //     console.log(key, keyPath);
-    //   },
-    selectopen(i, indexpath) {
-      if (indexpath[0] == "1") {
-        this.activeIndex = 1;
-      } else if (indexpath[0] == "2") {
-        this.activeIndex = 2;
-      } else if (indexpath[0] == "3") {
-        this.activeIndex = 3;
-      }
+    toBzzx() {
+      this.$router.push({ name: "Bangzhuzhongxin" });
+    },
+    toHuiyuanziliao() {
+      this.$router.push({ name: "Huiyuanziliao" });
+    },
+    toTuiguanfanyong() {
+      this.$router.push({ name: "Tuiguanfanyong" });
+    },
+    toXiugaimima() {
+      this.$router.push({ name: "Xiugaimima" });
+    },
+    toShengjiVIP() {
+      this.$router.push({ name: "ShengjiVIP" });
+    },
+    toShowhouchajian() {
+      this.$router.push({ name: "Shouhouchajian" });
+    },
+    toDidanshenqin() {
+      this.$router.push({ name: "Didanshenqin" });
+    },
+    toWoyaochongzhi() {
+      this.$router.push({ name: "Woyaochongzhi" });
+    },
+    toZijinmingxi() {
+      this.$router.push({ name: "Zijinmingxi" });
+    },
+    toYaoqingjiangli() {
+      this.$router.push({ name: "Yaoqingjiangli" });
+    },
+    toBaoguoliebiao() {
+      this.$router.push({ name: "Baoguoliebiao" });
+    },
+    toDingdanliebiao() {
+      this.$router.push({ name: "Dingdanliebiao" });
+    },
+    toLijifahuo() {
+      this.$router.push({ name: "Lijifahuo" });
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.aside {
-  overflow-x: hidden;
+.index {
   .nav1 {
-    width: 284px;
-    height: 81px;
-    opacity: 1;
-    background: #ebbfcc;
-    font-size: 30px;
-    font-family: YouSheBiaoTiHei, YouSheBiaoTiHei-Regular;
-    font-weight: 400;
-    text-align: center;
-    color: #ffffff;
-    line-height: 81px;
+    position: relative;
+    width: 224px;
+    height: 58px;
+    cursor: pointer;
+    .pic {
+      position: absolute;
+      width: 224px;
+      height: 58px;
+      opacity: 1;
+    }
+    .tit {
+      position: absolute;
+      top: 50%;
+      right: 28px;
+      transform: translate(4px,-50%);
+      letter-spacing: 2px;
+      font-size: 22px;
+      font-family: PingFang SC, PingFang SC-Bold;
+      font-weight: 700;
+      color: #ea8e11;
+    }
   }
   .nav2 {
-    margin: 36px auto 15px auto;
-    width: 70px;
-    height: 70px;
+    position: relative;
+    transform: translate(-12px, -12px);
+    width: 248px;
+    height: 1132px;
     opacity: 1;
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-  .nav3 {
-    opacity: 1;
-    font-size: 15px;
-    font-family: PingFang SC, PingFang SC-Regular;
-    font-weight: 400;
-    text-align: center;
-    color: #000000;
-  }
-  .nav4 {
-    cursor: pointer;
-    margin-top: 5px;
-    margin-bottom: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .pic1 {
-      width: 14px;
-      height: 14px;
+
+    .pic {
+      position: absolute;
+      width: 248px;
+      height: 1132px;
       opacity: 1;
     }
-    .tit1 {
-      margin-left: 10px;
+    .box1 {
+      .txt.active {
+        color: #ea8e11;
+      }
+      .txt:hover {
+        color: #ea8e11;
+      }
+      position: relative;
+      left: 50%;
+      top: 52px;
+      transform: translateX(-50%);
+      width: 105px;
+      height: 154px;
       opacity: 1;
-      font-size: 12px;
-      font-family: PingFang SC, PingFang SC-Regular;
-      font-weight: 400;
-      text-align: center;
-      color: #9b9b9b;
-    }
-  }
-  .menu {
-    // /deep/ .el-submenu__title.active{
-    //   background: red !important;
-    // }
-    .one {
-      .icon1 {
-        margin-left: 50px;
-        width: 18px;
-        height: 19px;
+      .pic1 {
+        position: absolute;
+        width: 105px;
+        height: 154px;
         opacity: 1;
+        left: 0;
+        top: 0;
       }
-      .el-icon-house {
-        margin-left: 48px;
-        font-size: 24px;
-        margin-right: -4px !important;
-      }
-      .el-icon-house.active {
-        color: #ebbfcc;
-      }
-      .tit1 {
-        margin-left: 15px;
-        opacity: 1;
-        font-size: 20px;
-        font-family: PingFang SC, PingFang SC-Regular;
-        font-weight: 400;
+      .txt1 {
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 22px;
+        width: 100%;
+        font-size: 16px;
+        font-family: 'zw';
+        font-weight: 500;
         text-align: center;
-        color: #9b9b9b;
+        color: #5c5c5c;
       }
-      .tit1.active {
-        color: #000000;
+      .txt2 {
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 40px;
+        width: 100%;
+        font-size: 12px;
+        font-family: 'zw';;
+        font-weight: 500;
+        text-align: center;
+        color: #5c5c5c;
+      }
+      .txt3 {
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 76px;
+        width: 100%;
+        font-size: 14px;
+        font-family: 'zw';
+        font-weight: 500;
+        text-align: center;
+        color: #5c5c5c;
+      }
+      .txt4 {
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 116px;
+        width: 100%;
+        font-size: 14px;
+        font-family: 'zw';
+        font-weight: 500;
+        text-align: center;
+        color: #5c5c5c;
+      }
+      .txt5 {
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 140px;
+        width: 100%;
+        font-size: 18px;
+        font-family: 'zw';
+        font-weight: 500;
+        text-align: center;
+        color: #5c5c5c;
       }
     }
-    // .one:hover{
-    //   background: chocolate;
-    // }
-    .el-menu-item {
-      padding-left: 83px !important;
+    .box2.box1 {
+      .txt.active {
+        color: #ea8e11;
+      }
+      .txt:hover {
+        color: #ea8e11;
+      }
+      margin-top: 40px;
+      .pic1 {
+        width: 105px;
+        height: 176px;
+        opacity: 1;
+      }
+      .txt3 {
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 68px;
+        width: 100%;
+        font-size: 14px;
+        font-family: 'zw';
+        font-weight: 500;
+        text-align: center;
+        color: #5c5c5c;
+      }
+      .txt4 {
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 104px;
+        width: 100%;
+        font-size: 14px;
+        font-family: 'zw';
+        font-weight: 500;
+        text-align: center;
+        color: #5c5c5c;
+      }
+      .txt5 {
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 142px;
+        width: 100%;
+        font-size: 14px;
+        font-family: 'zw';
+        font-weight: 500;
+        text-align: center;
+        color: #5c5c5c;
+      }
+    }
+    .box3.box1 {
+      .txt.active {
+        color: #ea8e11;
+      }
+      margin-top: 60px;
+    }
+    .box4.box1 {
+      .txt.active {
+        color: #ea8e11;
+      }
+      margin-top: 40px;
+      .txt:hover {
+        color: #ea8e11;
+      }
+      position: relative;
+      left: 50%;
+      top: 52px;
+      transform: translateX(-50%);
+      width: 105px;
+      height: 212px;
       opacity: 1;
-      font-size: 18px;
-      font-family: PingFang SC, PingFang SC-Regular;
-      font-weight: 400;
-      color: #9b9b9b;
+      .pic1 {
+        width: 105px;
+        height: 212px;
+        opacity: 1;
+      }
+      .txt3 {
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 70px;
+        width: 100%;
+        font-size: 14px;
+        font-family: 'zw';
+        font-weight: 500;
+        text-align: center;
+        color: #5c5c5c;
+      }
+      .txt4 {
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 102px;
+        width: 100%;
+        font-size: 14px;
+        font-family: 'zw';
+        font-weight: 500;
+        text-align: center;
+        color: #5c5c5c;
+      }
+      .txt5 {
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 138px;
+        width: 100%;
+        font-size: 14px;
+        font-family: 'zw';
+        font-weight: 500;
+        text-align: center;
+        color: #5c5c5c;
+      }
+      .txt6 {
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 174px;
+        width: 100%;
+        font-size: 14px;
+        font-family: 'zw';
+        font-weight: 500;
+        text-align: center;
+        color: #5c5c5c;
+      }
+    }
+    .box5.box1 {
+      .txt.active {
+        color: #ea8e11;
+      }
+      margin-top: 40px;
     }
   }
 }

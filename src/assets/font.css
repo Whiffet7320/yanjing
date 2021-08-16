@@ -1,0 +1,24 @@
+@font-face {
+    font-family: 'eng';
+    src: url('./fonts/04B_21__.TTF') format('truetype'),
+    url('./fonts/PingFang\ Bold.ttf') format('truetype'),
+    url('./fonts/PingFang\ ExtraLight.ttf') format('truetype'),
+    url('./fonts/PingFang\ Heavy.ttf') format('truetype'),
+    url('./fonts/PingFang\ Light.ttf') format('truetype'),
+    url('./fonts/PingFang\ Medium.ttf') format('truetype'),
+    url('./fonts/PingFang\ Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'zw';
+    src: 
+    url('./fonts/PingFang\ Bold.ttf') format('truetype'),
+    url('./fonts/PingFang\ ExtraLight.ttf') format('truetype'),
+    url('./fonts/PingFang\ Heavy.ttf') format('truetype'),
+    url('./fonts/PingFang\ Light.ttf') format('truetype'),
+    url('./fonts/PingFang\ Medium.ttf') format('truetype'),
+    url('./fonts/PingFang\ Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

@@ -5,59 +5,84 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    fileList: [],
-    fileListImg: [],
-    shangpinEditform: null,
-    page: 1, //商品详情
-    pageSize: 10,
-    miandanjiluPage: 1, //免单记录
-    miandanjiluPageSize: 10,
-    eduPage: 1, //额度
-    eduPageSize: 10,
-    huowuzhuangtaiPage: 1, //货物状态
-    huowuzhuangtaiPageSize: 10,
-    shouhouliebiaoPage: 1, //售后列表
-    shouhouliebiaoPageSize: 10,
+    routerParams:null,
+    // 礼品商城
+    lipingshangchengPage: 1,
+    lipingshangchengPageSize: 10,
+    ljgmlipingshangchengPage: 1,
+    // 分站与API
+    asideVal: null,
+    // 账户管理-推广返佣
+    wotuijiandeshangjiaPage: 1,
+    // 售后服务-底单申请
+    didanshenqinPage: 1,
+    // 财务中心-资金明细
+    zijinmingxiPage: 1,
+    // 财务中心-邀请奖励
+    yaoqingjiangliPage: 1,
+    // 订单管理-包裹列表
+    baoguoliebiaoPage: 1,
+    // 立即发货-添加/编辑商品
+    tianjiabianjiPage: 1,
+    // 分站与api-帮助中心
+    bangzhuzhongxinPage: 1,
+    shopObj:null,
+    myactiveName:null,
+    isYueTixian:null,
+    isYongjinTixian:null,
+    commission:null,
   },
   mutations: {
-    fileList(state, str) {
-      state.fileList = str;
+    routerParams(state, str) {
+      state.routerParams = str;
     },
-    fileListImg(state, str) {
-      state.fileListImg = str;
+    lipingshangchengPage(state, str) {
+      state.lipingshangchengPage = str;
     },
-    shangpinEditform(state, str) {
-      state.shangpinEditform = str;
+    lipingshangchengPageSize(state, str) {
+      state.lipingshangchengPageSize = str;
     },
-    page(state, str) {
-      state.page = str;
+    ljgmlipingshangchengPage(state, str) {
+      state.ljgmlipingshangchengPage = str;
     },
-    pageSize(state, str) {
-      state.pageSize = str;
+    asideVal(state, str) {
+      state.asideVal = str;
     },
-    miandanjiluPage(state, str) {
-      state.miandanjiluPage = str;
+    wotuijiandeshangjiaPage(state, str) {
+      state.wotuijiandeshangjiaPage = str;
     },
-    miandanjiluPageSize(state, str) {
-      state.miandanjiluPageSize = str;
+    didanshenqinPage(state, str) {
+      state.didanshenqinPage = str;
     },
-    eduPage(state, str) {
-      state.eduPage = str;
+    zijinmingxiPage(state, str) {
+      state.zijinmingxiPage = str;
     },
-    eduPageSize(state, str) {
-      state.eduPageSize = str;
+    yaoqingjiangliPage(state, str) {
+      state.yaoqingjiangliPage = str;
     },
-    huowuzhuangtaiPage(state, str) {
-      state.huowuzhuangtaiPage = str;
+    baoguoliebiaoPage(state, str) {
+      state.baoguoliebiaoPage = str;
     },
-    huowuzhuangtaiPageSize(state, str) {
-      state.huowuzhuangtaiPageSize = str;
+    tianjiabianjiPage(state, str) {
+      state.tianjiabianjiPage = str;
     },
-    shouhouliebiaoPage(state, str) {
-      state.shouhouliebiaoPage = str;
+    bangzhuzhongxinPage(state, str) {
+      state.bangzhuzhongxinPage = str;
     },
-    shouhouliebiaoPageSize(state, str) {
-      state.shouhouliebiaoPageSize = str;
+    shopObj(state, str) {
+      state.shopObj = str;
+    },
+    myactiveName(state, str) {
+      state.myactiveName = str;
+    },
+    isYueTixian(state, str) {
+      state.isYueTixian = str;
+    },
+    isYongjinTixian(state, str) {
+      state.isYongjinTixian = str;
+    },
+    commission(state, str) {
+      state.commission = str;
     },
   },
   actions: {
