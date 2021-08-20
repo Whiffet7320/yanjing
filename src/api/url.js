@@ -34,4 +34,5 @@ export default {
     userAddLevel:'/home/user/addLevel',//会员升级-使用余额
     userReCharge:'/home/user/reCharge',//余额提现
     userCommission:'/home/user/commission',//佣金提现
+    alipayQueryOrder:'/home/alipay/queryOrder',//查询订单是否支付成功
 }

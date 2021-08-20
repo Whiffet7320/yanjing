@@ -59,7 +59,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="19">
+            <el-col :span="21">
               <el-form-item>
                 <img style="width: 180px" class="inputImg" src="../../assets/newImg/input.png" alt />
                 <div class="inputshu"></div>
@@ -79,11 +79,11 @@
                 <!-- <div class="yzm" v-show="show1" @click="getCode1">
                   发送验证码
                 </div>-->
-                <div class="get-code" @click="refreshCode()">
-                  <SIdentify :identifyCode="identifyCode"></SIdentify>
-                </div>
-                <div class="yzm count" v-show="!show1">( 重新发送{{ count1 }}s )</div>
               </el-form-item>
+              <div class="get-code" @click="refreshCode()">
+                <SIdentify :identifyCode="identifyCode"></SIdentify>
+              </div>
+              <div class="yzm count" v-show="!show1">( 重新发送{{ count1 }}s )</div>
             </el-col>
           </el-row>
           <el-row>
@@ -379,8 +379,8 @@ export default {
       checked: false
     };
   },
-  created(){
-    this.refreshCode()
+  created() {
+    this.refreshCode();
   },
   methods: {
     // 图片验证码
@@ -548,7 +548,7 @@ export default {
           type: "success"
         });
         sessionStorage.setItem("token", `${res.data.token}`);
-        sessionStorage.setItem("isLogin", "sy");
+        // sessionStorage.setItem("isLogin", "sy");
         // sessionStorage.setItem("username", JSON.stringify(res.data.username));
         sessionStorage.setItem("username", res.data.username);
         this.$message({
@@ -556,8 +556,11 @@ export default {
           type: "success"
         });
         setTimeout(() => {
-          this.$router.push({ path: "/" });
-          this.$router.go(0);
+          sessionStorage.setItem("isLogin", true);
+          this.$router.push({ name: "Huiyuanzhongxin" });
+          setTimeout(() => {
+            this.$router.go(0);
+          }, 100);
         }, 500);
       } else {
         this.$message.error(res.msg);
@@ -576,7 +579,7 @@ export default {
         console.log(res);
         if (res.code == 200) {
           sessionStorage.setItem("token", `${res.data.token}`);
-          sessionStorage.setItem("isLogin", "sy");
+          // sessionStorage.setItem("isLogin", "sy");
           // sessionStorage.setItem("username", JSON.stringify(res.data.username));
           sessionStorage.setItem("username", res.data.username);
           this.$message({
@@ -584,8 +587,11 @@ export default {
             type: "success"
           });
           setTimeout(() => {
-            this.$router.push({ path: "/" });
-            this.$router.go(0);
+            sessionStorage.setItem("isLogin", true);
+            this.$router.push({ name: "Huiyuanzhongxin" });
+            setTimeout(() => {
+              this.$router.go(0);
+            }, 100);
           }, 500);
         } else {
           this.$message.error(res.msg);
@@ -786,12 +792,25 @@ export default {
   border: 0px solid #dcdfe6;
   width: 34px !important;
 }
+.el-col-21 {
+  /deep/ .el-input__inner {
+    background-color: transparent;
+    border: 0px solid #dcdfe6;
+    height: 48px;
+    width: 90px;
+    padding: 0;
+    margin-right: 32px;
+  }
+}
 /deep/ .el-input__inner {
   background-color: transparent;
   border: 0px solid #dcdfe6;
   height: 48px;
   padding: 0;
 }
+// /deep/ .el-form-item__content{
+//   width: 180px;
+// }
 .inputshu {
   top: 14px;
   left: 60px;
@@ -802,8 +821,11 @@ export default {
   opacity: 0.5;
   background: rgba(0, 0, 0, 0.3);
 }
-.get-code{
-  height: 0;
-  transform: translateX(36px);
+/deep/ .el-col {
+  display: flex;
+}
+.get-code {
+  // height: 0;
+  // transform: translateX(36px);
 }
 </style>

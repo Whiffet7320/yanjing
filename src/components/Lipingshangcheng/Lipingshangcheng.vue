@@ -76,7 +76,7 @@
           <div class="tit2-2">{{ item.weight }}kg/{{ item.unit }}</div>
         </div>
         <!-- <div class="tit3">库存：{{ item.stock }}件</div> -->
-        <div class="tit4" @click="goumai">
+        <div class="tit4" @click="goumai(item)">
           <!-- <img class="pic" src="../../assets/newImg/lujin136.png" alt="" /> -->
           <div class="txt">立即购买</div>
         </div>
@@ -620,7 +620,8 @@ export default {
       }
       this.getData();
     },
-    goumai() {
+    goumai(item) {
+      this.$set(this.tableData3, 0, item);
       this.dialogVisible = true;
     },
     handleClose() {

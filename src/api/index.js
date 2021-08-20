@@ -404,4 +404,12 @@ export default {
             }
         })
     },
+    alipayQueryOrder(obj) {
+        return myPost({
+            url: urls.alipayQueryOrder,
+            data: {
+                ...obj,
+            }
+        })
+    },
 }

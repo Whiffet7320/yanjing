@@ -1,19 +1,25 @@
 <template>
   <div class="layout">
     <el-container v-if="this.isLogin == 'true'">
-      <el-header><Header /></el-header>
-      <div class="contain">
-        <el-container>
-          <!-- <el-aside><Aside /></el-aside> -->
-          <el-main>
-            <RouterView></RouterView>
-          </el-main>
-        </el-container>
-      </div>
-
-      <el-footer>
-        <img class="footerImg" src="../../assets/newImg/组件2–74.png" alt="" />
-      </el-footer>
+      <template v-if="aliPay">
+        <AliPay />
+      </template>
+      <template v-else>
+        <el-header>
+          <Header />
+        </el-header>
+        <div class="contain">
+          <el-container>
+            <!-- <el-aside><Aside /></el-aside> -->
+            <el-main>
+              <RouterView></RouterView>
+            </el-main>
+          </el-container>
+        </div>
+        <el-footer>
+          <img class="footerImg" src="../../assets/newImg/组件2–74.png" alt />
+        </el-footer>
+      </template>
     </el-container>
     <div class="syIndex" v-else-if="this.isLogin == 'sy'">
       <SyHeader />
@@ -24,26 +30,36 @@
 </template>
 
 <script>
+// import { mapState } from "vuex";
+import AliPay from "../AliPay";
 import Login from "../Login";
 import Header from "../Header";
 import SyHeader from "../Header/syIndex.vue";
 import SyMain from "../Header/syMain.vue";
 // import Aside from "../Aside";
 export default {
+  // computed: {
+  //   ...mapState(["aliPay"]),
+  // },
   watch: {
     $route(to) {
-      console.log(to.path, "layout"); //到哪去
-    },
+      console.log(to.path); //到哪去
+      if (to.path == "/AliPay/AliPay") {
+        this.aliPay = true;
+      }
+    }
   },
   data() {
     return {
       isLogin: "false",
       path: "",
+      aliPay: false
     };
   },
   created() {
-    console.log(sessionStorage.getItem("routerParams"),'ccccc')
-    this.routerParams = sessionStorage.getItem("routerParams")
+    console.log(this.aliPay);
+    console.log(sessionStorage.getItem("routerParams"), "ccccc");
+    this.routerParams = sessionStorage.getItem("routerParams");
     if (!sessionStorage.getItem("isLogin")) {
       sessionStorage.setItem("isLogin", "sy");
     }
@@ -60,12 +76,13 @@ export default {
     // Aside,
     SyHeader,
     SyMain,
+    AliPay
   },
   methods: {
     disableBrowserBack() {
       console.log(this.isLogin, this.routerParams);
 
-      if (this.path == this.$route.path ) {
+      if (this.path == this.$route.path) {
         this.path = this.$route.path;
         sessionStorage.setItem("isLogin", "sy");
         this.$router.go(0);
@@ -74,7 +91,7 @@ export default {
         sessionStorage.setItem("isLogin", "true");
         this.$router.go(0);
         window.history.forward(1);
-      } else if ( this.isLogin == "123") {
+      } else if (this.isLogin == "123") {
         sessionStorage.setItem("isLogin", "sy");
         this.$router.go(0);
         window.history.forward(1);
@@ -87,12 +104,12 @@ export default {
     toLogin() {
       sessionStorage.setItem("isLogin", "123");
       this.isLogin = sessionStorage.getItem("isLogin");
-    },
+    }
   },
   destroyed() {
     // 清除popstate事件 否则会影响到其他页面
     window.removeEventListener("popstate", this.disableBrowserBack, false);
-  },
+  }
 };
 </script>
 

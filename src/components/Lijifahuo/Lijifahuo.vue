@@ -71,7 +71,7 @@
               v-model="textarea1"
             >
             </el-input>
-            <!-- <div class="btn">完成添加</div> -->
+            <div @click='wanchengtianjia' class="btn">完成添加</div>
           </div>
         </div>
         <div class="nav4">
@@ -176,10 +176,10 @@
               <div @click="uploadExl" class="tit2 red">4、导入模版下载</div>
             </div>
           </div>
-          <!-- <div @click="querenShangchuan" class="box2">
+          <div @click="querenShangchuan" class="box2">
             <img class="pic" src="../../assets/newImg/zu139.png" alt="" />
             <div class="txt">确认上传</div>
-          </div> -->
+          </div>
         </div>
         <div class="nav4">
           <div class="txt1">最后一步：选择赠送礼品</div>
@@ -1011,31 +1011,31 @@ export default {
       this.$store.commit("tianjiabianjiPage", page);
       this.getData();
     },
-    addShopNum: {
-      deep: true, //深度监听设置为 true
-      handler: function () {
-        if (this.tableData3[0]) {
-          if (Number(this.tableData3[0].weight) * this.addShopNum < 1) {
-            this.kdyunfei = Number(this.dataObj.kd_price.kg);
-          } else {
-            var num = parseInt(
-              (Number(this.tableData3[0].weight) * this.addShopNum) / 1
-            );
-            this.kdyunfei =
-              Number(this.dataObj.kd_price.kg) +
-              num * this.dataObj.kd_price.kg_add;
-          }
-        }
-        if (this.radioVal2 == "手动输入") {
-          if (this.radioVal2 == "手动输入") {
-            this.peopleNum = this.textarea1.split(";").length - 1;
-          }
-        }
-        this.shopPrice =
-          this.tableData3[0].price * this.addShopNum + this.kdyunfei;
-        this.zongPrice = this.shopPrice * this.peopleNum;
-      },
-    },
+    // addShopNum: {
+    //   deep: true, //深度监听设置为 true
+    //   handler: function () {
+    //     if (this.tableData3[0]) {
+    //       if (Number(this.tableData3[0].weight) * this.addShopNum < 1) {
+    //         this.kdyunfei = Number(this.dataObj.kd_price.kg);
+    //       } else {
+    //         var num = parseInt(
+    //           (Number(this.tableData3[0].weight) * this.addShopNum) / 1
+    //         );
+    //         this.kdyunfei =
+    //           Number(this.dataObj.kd_price.kg) +
+    //           num * this.dataObj.kd_price.kg_add;
+    //       }
+    //     }
+    //     if (this.radioVal2 == "手动输入") {
+    //       if (this.radioVal2 == "手动输入") {
+    //         this.peopleNum = this.textarea1.split(";").length - 1;
+    //       }
+    //     }
+    //     this.shopPrice =
+    //       this.tableData3[0].price * this.addShopNum + this.kdyunfei;
+    //     this.zongPrice = this.shopPrice * this.peopleNum;
+    //   },
+    // },
     tableData3: {
       deep: true, //深度监听设置为 true
       handler: function () {
@@ -1494,6 +1494,28 @@ export default {
         this.kdId = res.data.kd_data[0].id;
       }
     },
+    wanchengtianjia(){
+       if (this.tableData3[0]) {
+          if (Number(this.tableData3[0].weight) * this.addShopNum < 1) {
+            this.kdyunfei = Number(this.dataObj.kd_price.kg);
+          } else {
+            var num = parseInt(
+              (Number(this.tableData3[0].weight) * this.addShopNum) / 1
+            );
+            this.kdyunfei =
+              Number(this.dataObj.kd_price.kg) +
+              num * this.dataObj.kd_price.kg_add;
+          }
+        }
+        if (this.radioVal2 == "手动输入") {
+          if (this.radioVal2 == "手动输入") {
+            this.peopleNum = this.textarea1.split(";").length - 1;
+          }
+        }
+        this.shopPrice =
+          this.tableData3[0].price * this.addShopNum + this.kdyunfei;
+        this.zongPrice = this.shopPrice * this.peopleNum;
+    },
     mySearchData() {
       this.getData();
     },
@@ -1677,7 +1699,7 @@ export default {
       };
       axios
         .post(
-          "http://192.168.50.132/home/order/insertData",
+          "http://ht.yuncanggift.com/home/order/insertData",
           this.myformData,
           configs
         )
@@ -1755,7 +1777,7 @@ export default {
         };
         axios
           .post(
-            "http://192.168.50.132/home/order/getFilterData",
+            "http://ht.yuncanggift.com/home/order/getFilterData",
             this.myformData2,
             configs
           )
@@ -1798,7 +1820,7 @@ export default {
       }
     },
     uploadExl(){
-      window.open('http://47.100.26.153/%E5%AF%BC%E5%85%A5%E6%A8%A1%E6%9D%BF.xls')
+      window.open('http://ht.yuncanggift.com/%E5%AF%BC%E5%85%A5%E6%A8%A1%E6%9D%BF.xls')
     },
     // 添加/编辑商品
     goumai() {

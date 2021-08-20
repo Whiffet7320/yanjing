@@ -177,6 +177,7 @@ export default {
   },
   created() {
     this.getData();
+    sessionStorage.setItem("isPay",'false');
   },
   methods: {
     async getData() {

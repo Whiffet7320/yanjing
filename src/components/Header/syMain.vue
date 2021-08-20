@@ -1,53 +1,53 @@
 <template>
   <div class="index">
     <div class="top">
-      <img class="pic1" src="../../assets/newImg/dhl.png" alt="" />
+      <img class="pic1" src="../../assets/newImg/dhl.png" alt />
       <div class="nav">
         <div class="item1">
-          <img class="pic2" src="../../assets/newImg/mhhz.png" alt="" />
+          <img class="pic2" src="../../assets/newImg/mhhz.png" alt />
         </div>
         <div @click="shouye" class="item active">
-          <img class="pic2" src="../../assets/newImg/hezi.png" alt="" />
+          <img class="pic2" src="../../assets/newImg/hezi.png" alt />
           <div class="txt1">首页</div>
           <div class="txt2">INDEX</div>
         </div>
         <div @click="lpsc" class="item">
-          <img class="pic2" src="../../assets/newImg/hezi.png" alt="" />
+          <img class="pic2" src="../../assets/newImg/hezi.png" alt />
           <div class="txt1">礼品商城</div>
           <div class="txt2">GIFT MALL</div>
         </div>
         <div @click="hyzx" class="item">
-          <img class="pic2" src="../../assets/newImg/hezi.png" alt="" />
+          <img class="pic2" src="../../assets/newImg/hezi.png" alt />
           <div class="txt1">会员中心</div>
           <div class="txt2">MEMBER</div>
         </div>
         <div @click="sfbz" class="item">
-          <img class="pic2" src="../../assets/newImg/hezi.png" alt="" />
+          <img class="pic2" src="../../assets/newImg/hezi.png" alt />
           <div class="txt1">收费标准</div>
           <div class="txt2">CHARGES</div>
         </div>
         <div @click="dfzn" class="item">
-          <img class="pic2" src="../../assets/newImg/hezi.png" alt="" />
+          <img class="pic2" src="../../assets/newImg/hezi.png" alt />
           <div class="txt1">代发指南</div>
           <div class="txt2">AGENCY</div>
         </div>
         <div @click="tgfy" class="item">
-          <img class="pic2" src="../../assets/newImg/hezi.png" alt="" />
+          <img class="pic2" src="../../assets/newImg/hezi.png" alt />
           <div class="txt1">推广返佣</div>
           <div class="txt2">REBATE</div>
         </div>
         <div @click="fzyApi" class="item">
-          <img class="pic2" src="../../assets/newImg/hezi.png" alt="" />
+          <img class="pic2" src="../../assets/newImg/hezi.png" alt />
           <div class="txt1">分站与API</div>
           <div class="txt2">SUBATATION</div>
         </div>
         <div @click="zxkf" class="item">
-          <img class="pic2" src="../../assets/newImg/hezi.png" alt="" />
+          <img class="pic2" src="../../assets/newImg/hezi.png" alt />
           <div class="txt1">在线客服</div>
           <div class="txt2">SERVICE</div>
         </div>
         <div class="item">
-          <img class="pic2" src="../../assets/newImg/mhhz.png" alt="" />
+          <img class="pic2" src="../../assets/newImg/mhhz.png" alt />
         </div>
       </div>
     </div>
@@ -55,90 +55,80 @@
       <el-row type="flex" justify="center">
         <el-col :span="18">
           <div class="item">
-            <img class="pic" src="../../assets/newImg/sy1.png" alt="" />
+            <img class="pic" src="../../assets/newImg/sy1.png" alt />
             <div class="box">
               <div class="items">
-                <img class="pic2" src="../../assets/newImg/hezi.png" alt="" />
+                <img class="pic2" src="../../assets/newImg/hezi.png" alt />
                 <div class="txt1">关于我们</div>
                 <div class="txt2">ABOUT US</div>
               </div>
             </div>
-            <div class="box2">
-              我司是专业做礼品代发、云仓发货、还可以专门为客户定制专属礼品发货的一家公司，我们承诺礼品代发百分百真实发货，百分百派送，而且价格实惠
-            </div>
+            <div class="box2">我司是专业做礼品代发、云仓发货、还可以专门为客户定制专属礼品发货的一家公司，我们承诺礼品代发百分百真实发货，百分百派送，而且价格实惠</div>
           </div>
         </el-col>
       </el-row>
       <el-row type="flex" justify="center">
         <el-col :span="18">
           <div class="item">
-            <img class="pic" src="../../assets/newImg/sy2.png" alt="" />
+            <img class="pic" src="../../assets/newImg/sy2.png" alt />
             <div class="sy2">
               <div class="items">
-                <img class="pic2" src="../../assets/newImg/hezi.png" alt="" />
+                <img class="pic2" src="../../assets/newImg/hezi.png" alt />
                 <div class="txt1">专属定制</div>
                 <div class="txt2">CUSTOM MADE</div>
               </div>
             </div>
-            <div class="boxsy2">
-              我司可以专门为客户定制专属礼品发货，还可以加入我们分站，专属个人域名、独立后台自由管理，我们提供稳定、安全、低价的快递费、礼品货源
-            </div>
+            <div class="boxsy2">我司可以专门为客户定制专属礼品发货，还可以加入我们分站，专属个人域名、独立后台自由管理，我们提供稳定、安全、低价的快递费、礼品货源</div>
           </div>
         </el-col>
       </el-row>
       <el-row type="flex" justify="center">
         <el-col :span="18">
           <div class="item" style="marginbottom: 60px">
-            <img class="pic" src="../../assets/newImg/sy3.png" alt="" />
+            <img class="pic" src="../../assets/newImg/sy3.png" alt />
             <div class="box">
               <div class="items">
-                <img class="pic2" src="../../assets/newImg/hezi.png" alt="" />
+                <img class="pic2" src="../../assets/newImg/hezi.png" alt />
                 <div class="txt1">推广返佣</div>
                 <div class="txt2">REBATE</div>
               </div>
             </div>
-            <div class="box2">
-              邀请您身边的朋友在我们平台上下单，您就有佣金可拿只要一直在用您就永久有佣金拿，我们要做的就是真正实现合作共赢的优良平台
-            </div>
+            <div class="box2">邀请您身边的朋友在我们平台上下单，您就有佣金可拿只要一直在用您就永久有佣金拿，我们要做的就是真正实现合作共赢的优良平台</div>
           </div>
         </el-col>
       </el-row>
     </div>
     <div class="right-float">
-      <img class="pic" src="../../assets/newImg/zu291.png" alt="" />
+      <img class="pic" src="../../assets/newImg/zu291.png" alt />
       <div class="txt1">在线客服</div>
-      <img class="pic2" :src="kefuImg" alt="" />
+      <img class="pic2" :src="kefuImg" alt />
       <div class="txt2">微信咨询</div>
       <div class="tit">
-        <img class="picc1" src="../../assets/newImg/lujin215.png" alt="" />
+        <img class="picc1" src="../../assets/newImg/lujin215.png" alt />
         <div class="txtt1">客服QQ</div>
       </div>
       <div class="txt3">353546372</div>
       <div class="line line2"></div>
       <div class="tit tit2">
-        <img class="picc1" src="../../assets/newImg/lujin521.png" alt="" />
+        <img class="picc1" src="../../assets/newImg/lujin521.png" alt />
         <div class="txtt1">客服电话</div>
       </div>
       <div class="line"></div>
       <div class="txt4">工作时间:8:00~22:00</div>
       <div class="line line3"></div>
       <div class="btn">
-        <img class="picc3" src="../../assets/newImg/lujin522.png" alt="" />
+        <img class="picc3" src="../../assets/newImg/lujin522.png" alt />
         <div class="txtt3">客服QQ</div>
       </div>
     </div>
     <!-- 在线客服 -->
-    <el-dialog
-      :visible.sync="zxkfDialogVisible"
-      width="400px"
-      :before-close="zxkfHandleClose"
-    >
+    <el-dialog :visible.sync="zxkfDialogVisible" width="400px" :before-close="zxkfHandleClose">
       <div class="zxkf">
         <div class="picBox">
-          <img :src="kefuImg" alt="" class="zxkf-pic" />
+          <img :src="kefuImg" alt class="zxkf-pic" />
         </div>
         <div class="zxkf-txt">扫码添加客服微信</div>
-        <img class="zxkf-pic2" src="../../assets/newImg/shuxian2.png" alt="" />
+        <img class="zxkf-pic2" src="../../assets/newImg/shuxian2.png" alt />
         <div @click="zxkfDialogVisible = false" class="zxkf-btn">确定</div>
       </div>
     </el-dialog>
@@ -152,6 +142,13 @@ export default {
       zxkfDialogVisible: false,
       kefuImg: "",
     };
+  },
+  async created(){
+    const res = await this.$api.getKefu({
+        token: sessionStorage.getItem("token"),
+      });
+      console.log(res);
+      this.kefuImg = res.data;
   },
   methods: {
     async toZaixiankefu() {
@@ -559,7 +556,7 @@ export default {
         margin-left: 11px;
         opacity: 1;
         font-size: 16px;
-        font-family: 'zw';
+        font-family: "zw";
         font-weight: 500;
         color: #ffffff;
       }

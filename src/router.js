@@ -5,7 +5,19 @@ Vue.use(VueRouter)
 Vue.config.productionTip = false;
 
 
-const routes = [{
+const routes = [
+    {
+        path: '/AliPay',
+        name: 'Ali',
+        component: () => import('./components/AliPay'),
+        children: [{
+                path: 'AliPay',
+                name: 'AliPay',
+                component: () => import('./components/AliPay/AliPay.vue'),
+            },
+        ]
+    },
+    {
         path: '/Shouye',
         name: 'Sy',
         component: () => import('./components/Shouye'),
@@ -277,7 +289,7 @@ const routes = [{
 ]
 
 const router = new VueRouter({
-    mode: 'history',
+    mode: 'hash',
     routes,
 })
 

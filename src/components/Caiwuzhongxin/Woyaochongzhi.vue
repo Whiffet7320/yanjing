@@ -39,7 +39,6 @@
     </div>
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
       <div class="payImg">
-        <img :src="payImg" alt />
         <div class="txt">充值完成后，请重新刷新页面！</div>
       </div>
     </el-dialog>
@@ -121,21 +120,17 @@ export default {
       }
     },
     async chongzhi() {
-      const res = await this.$api.alipayGetPay({
-        token: sessionStorage.getItem("token"),
-        type: 1,
-        money: this.val1
+      let routeData = this.$router.resolve({
+        name: "AliPay",
+        query: {
+          val1: this.val1
+        }
       });
-      console.log(res);
       if (this.val1 == "") {
         this.$message.error("请输入充值金额");
       } else {
-        if (res.code == 200) {
-          this.payImg = `${res.data.img}`;
-          this.dialogVisible = true;
-        } else {
-          this.$message.error(res.msg);
-        }
+        window.open(routeData.href, "_blank");
+        this.dialogVisible = true;
       }
     },
     handleClose() {

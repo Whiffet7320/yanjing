@@ -612,7 +612,9 @@ export default {
     }
     /deep/ .el-tabs__item.is-active {
       background: #ffffff;
-      box-shadow: inset 0px 0 16px 2px #dddddd !important;
+      // box-shadow: inset 0px 0 16px 2px #dddddd !important;
+      background-image: url("../../assets/newImg/kk100.png");
+      background-size: 100% 100%;
       color: #000000;
     }
   }
@@ -688,7 +690,9 @@ export default {
       opacity: 1;
       background: #ffffff;
       border-radius: 8px;
-      box-shadow: inset 0px 0 20px 2px #dddddd !important;
+      // box-shadow: inset 0px 0 20px 2px #dddddd !important;
+      background-image: url("../../assets/newImg/kk100.png");
+      background-size: 100% 100%;
       .tit1 {
         height: 75px;
         display: flex;
@@ -739,7 +743,9 @@ export default {
       opacity: 1;
       background: #ffffff;
       border-radius: 8px;
-      box-shadow: inset 0px 0 20px 2px #dddddd !important;
+      // box-shadow: inset 0px 0 20px 2px #dddddd !important;
+      background-image: url("../../assets/newImg/kk100.png");
+      background-size: 100% 100%;
       .tit1 {
         height: 80px;
         line-height: 80px;
@@ -829,7 +835,9 @@ export default {
       opacity: 1;
       background: #ffffff;
       border-radius: 8px;
-      box-shadow: inset 0px 0 20px 2px #dddddd !important;
+      // box-shadow: inset 0px 0 20px 2px #dddddd !important;
+      background-image: url("../../assets/newImg/kk100.png");
+      background-size: 100% 100%;
       .tit1 {
         height: 75px;
         display: flex;
@@ -892,7 +900,9 @@ export default {
       opacity: 1;
       background: #ffffff;
       border-radius: 8px;
-      box-shadow: inset 0px 0 20px 2px #dddddd !important;
+      // box-shadow: inset 0px 0 20px 2px #dddddd !important;
+      background-image: url("../../assets/newImg/kk100.png");
+      background-size: 100% 100%;
       .tit1 {
         height: 80px;
         line-height: 80px;

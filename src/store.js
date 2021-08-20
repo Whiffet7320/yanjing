@@ -5,6 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    aliPay:true,
+    isPay:false,
     routerParams:null,
     // 礼品商城
     lipingshangchengPage: 1,
@@ -33,6 +35,12 @@ export default new Vuex.Store({
     commission:null,
   },
   mutations: {
+    aliPay(state, str) {
+      state.aliPay = str;
+    },
+    isPay(state, str) {
+      state.isPay = str;
+    },
     routerParams(state, str) {
       state.routerParams = str;
     },

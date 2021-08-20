@@ -7,44 +7,33 @@
       <div class="nav1">当前位置：订单管理 > 订单列表</div>
       <div class="txt1">
         <div class="txt1-1">
-          <img style="width: 24px;height: 24px;" src="../../assets/newImg/tubiao301.png" alt="" />
+          <img style="width: 24px;height: 24px;" src="../../assets/newImg/tubiao301.png" alt />
           <div class="txt1-1-1">订单列表</div>
         </div>
         <div class="txt1-2">
           <div
             @click="editTime('day')"
             :class="{ txt: true, active: formInline.monthTime == 'day' }"
-          >
-            今天
-          </div>
+          >今天</div>
           <div
             @click="editTime('week')"
             :class="{ txt: true, active: formInline.monthTime == 'week' }"
-          >
-            一周
-          </div>
+          >一周</div>
           <div
             @click="editTime('month')"
             :class="{ txt: true, active: formInline.monthTime == 'month' }"
-          >
-            一个月
-          </div>
+          >一个月</div>
           <div
             @click="editTime('threeMonth')"
             :class="{ txt: true, active: formInline.monthTime == 'threeMonth' }"
-          >
-            三个月
-          </div>
+          >三个月</div>
         </div>
       </div>
       <div class="txt2">
         <div class="myForm">
           <el-form :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item label="快捷查询">
-              <el-input
-                placeholder="输入订单号/收件人手机号"
-                v-model="formInline.name"
-              ></el-input>
+              <el-input placeholder="输入订单号/收件人手机号" v-model="formInline.name"></el-input>
             </el-form-item>
             <el-form-item label="订单状态">
               <el-select v-model="formInline.ship_status" placeholder="请选择">
@@ -60,8 +49,7 @@
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
-              >
-              </el-date-picker>
+              ></el-date-picker>
             </el-form-item>
             <!-- <el-form-item label="平台订单号">
               <el-input
@@ -80,28 +68,15 @@
                 placeholder="请输入"
                 v-model="formInline.kd_order"
               ></el-input>
-            </el-form-item> -->
-            <el-button
-              class="btn"
-              type="info"
-              plain
-              icon="el-icon-search"
-              @click="onSubmit"
-              >搜索</el-button
-            >
-            <el-button class="btn" type="info" plain @click="onResult"
-              >重置</el-button
-            >
+            </el-form-item>-->
+            <el-button class="btn" type="info" plain icon="el-icon-search" @click="onSubmit">搜索</el-button>
+            <el-button class="btn" type="info" plain @click="onResult">重置</el-button>
           </el-form>
         </div>
       </div>
       <div class="txt3">
         <div class="myRadio">
-          <el-radio-group
-            @change="changeRadioVal1"
-            v-model="formInline.radioVal1"
-            size="small"
-          >
+          <el-radio-group @change="changeRadioVal1" v-model="formInline.radioVal1" size="small">
             <el-radio-button label="全部订单"></el-radio-button>
             <el-radio-button label="未发货"></el-radio-button>
             <el-radio-button label="已发货"></el-radio-button>
@@ -110,47 +85,19 @@
             <el-radio-button label="可发货"></el-radio-button>
             <el-radio-button label="发货中"></el-radio-button>
             <el-radio-button label="发货完成"></el-radio-button>
-            <el-radio-button label="撤销订单"></el-radio-button> -->
+            <el-radio-button label="撤销订单"></el-radio-button>-->
           </el-radio-group>
         </div>
       </div>
       <div class="txt4">
         <div class="myTable">
-          <vxe-table
-            :cell-class-name="cellClassName"
-            align="center"
-            :data="tableData"
-          >
-            <vxe-table-column
-              show-overflow="title"
-              field="dsf_order"
-              title="订单号"
-            ></vxe-table-column>
-            <vxe-table-column
-              show-overflow="title"
-              field="ship_status"
-              title="订单状态"
-            ></vxe-table-column>
-            <vxe-table-column
-              show-overflow="title"
-              field="import_mode"
-              title="导入方式"
-            ></vxe-table-column>
-            <vxe-table-column
-              show-overflow="title"
-              field="ctime"
-              title="支付时间"
-            ></vxe-table-column>
-            <vxe-table-column
-              show-overflow="title"
-              field="order_amount"
-              title="总费用"
-            ></vxe-table-column>
-            <vxe-table-column
-              show-overflow="title"
-              field="remarks"
-              title="备注"
-            ></vxe-table-column>
+          <vxe-table :cell-class-name="cellClassName" align="center" :data="tableData">
+            <vxe-table-column show-overflow="title" field="dsf_order" title="订单号"></vxe-table-column>
+            <vxe-table-column show-overflow="title" field="ship_status" title="订单状态"></vxe-table-column>
+            <vxe-table-column show-overflow="title" field="import_mode" title="导入方式"></vxe-table-column>
+            <vxe-table-column show-overflow="title" field="ctime" title="支付时间"></vxe-table-column>
+            <vxe-table-column show-overflow="title" field="order_amount" title="总费用"></vxe-table-column>
+            <vxe-table-column show-overflow="title" field="remarks" title="备注"></vxe-table-column>
             <vxe-table-column title="操作状态" width="180">
               <template slot-scope="scope">
                 <div class="flex">
@@ -161,9 +108,7 @@
                     @click="del(scope.row)"
                     type="text"
                     size="small"
-                  >
-                    可发货
-                  </div>
+                  >可发货</div>
                   <!-- 可发货 -->
                   <div
                     v-if="scope.row.status == 4"
@@ -171,9 +116,7 @@
                     @click="del(scope.row)"
                     type="text"
                     size="small"
-                  >
-                    发货中
-                  </div>
+                  >发货中</div>
                   <!-- 发货中 -->
                   <div
                     v-if="scope.row.status == 5"
@@ -181,17 +124,21 @@
                     @click="del(scope.row)"
                     type="text"
                     size="small"
-                  >
-                    发货完成
-                  </div>
-                  <div
+                  >发货完成</div>
+                  <!-- <div
                     class="delBtn"
                     @click="del(scope.row)"
                     type="text"
                     size="small"
                   >
                     撤销订单
-                  </div>
+                  </div>-->
+                  <div
+                    class="delBtn blue"
+                    @click="seeDingdan(scope.row)"
+                    type="text"
+                    size="small"
+                  >查看详情</div>
                 </div>
               </template>
             </vxe-table-column>
@@ -209,11 +156,29 @@
             :page-size="10"
             layout="total, prev, pager, next, jumper"
             :total="total"
-          >
-          </el-pagination>
+          ></el-pagination>
         </div>
       </div>
     </div>
+    <!-- 查看详情 -->
+    <el-dialog title="订单信息" :visible.sync="dialogVisible" width="800" :before-close="handleClose">
+      <div class="xiangqinBox">
+        <img class="see-pic1" src="../../assets/newImg/zu193.png" alt />
+        <div class="tit1">
+          <div class="txt1">商品名称：{{}}</div>
+          <div class="txt1">购买数量：{{}}</div>
+          <div class="txt1">总重量：0.05</div>
+          <div class="txt1">总价格：{{xqObj.order_amount}}</div>
+        </div>
+        <div class="tit2">
+          <div class="txt1">第三方订单号：{{xqObj.order_id}}</div>
+          <div class="txt1">快递单号：{{}}</div>
+          <div class="txt1">收件人：{{xqObj.sj_username}}</div>
+          <div class="txt1">收件人电话：{{}}</div>
+          <div class="txt1">地址：{{}}</div>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -222,19 +187,21 @@ import Aside from "../Aside";
 import { mapState } from "vuex";
 export default {
   components: {
-    Aside,
+    Aside
   },
   computed: {
-    ...mapState(["baoguoliebiaoPage"]),
+    ...mapState(["baoguoliebiaoPage"])
   },
   watch: {
-    baoguoliebiaoPage: function (page) {
+    baoguoliebiaoPage: function(page) {
       this.$store.commit("baoguoliebiaoPage", page);
       this.getData();
-    },
+    }
   },
   data() {
     return {
+      xqObj:{},
+      dialogVisible: false,
       formInline: {
         monthTime: "",
         name: "",
@@ -243,7 +210,7 @@ export default {
         radioVal1: "全部订单",
         kd_order: "",
         order_id: "",
-        dsf_order: "",
+        dsf_order: ""
       },
       tableData: [
         {
@@ -253,7 +220,7 @@ export default {
           sex: "+50.00",
           age: 24,
           address: "Shanghai",
-          status: 1,
+          status: 1
         },
         {
           id: 10004,
@@ -262,10 +229,10 @@ export default {
           sex: "-60.00",
           age: 24,
           address: "Shanghai",
-          status: 2,
-        },
+          status: 2
+        }
       ],
-      total: 0,
+      total: 0
     };
   },
   created() {
@@ -294,12 +261,12 @@ export default {
           keyword: this.formInline.name,
           order_id: this.formInline.order_id,
           dsf_order: this.formInline.dsf_order,
-          kd_order: this.formInline.kd_order,
+          kd_order: this.formInline.kd_order
         });
         console.log(res);
         this.tableData = res.data.data;
         this.total = res.data.total;
-        this.tableData.forEach((ele) => {
+        this.tableData.forEach(ele => {
           if (ele.import_mode == 1) {
             ele.import_mode = "淘宝";
           } else if (ele.import_mode == 2) {
@@ -326,12 +293,12 @@ export default {
           keyword: this.formInline.name,
           order_id: this.formInline.order_id,
           dsf_order: this.formInline.dsf_order,
-          kd_order: this.formInline.kd_order,
+          kd_order: this.formInline.kd_order
         });
         console.log(res);
         this.tableData = res.data.data;
         this.total = res.data.total;
-        this.tableData.forEach((ele) => {
+        this.tableData.forEach(ele => {
           if (ele.import_mode == 1) {
             ele.import_mode = "淘宝";
           } else if (ele.import_mode == 2) {
@@ -356,22 +323,31 @@ export default {
       this.formInline.monthTime = val;
       this.getData();
     },
+    // 查看订单
+    seeDingdan(row) {
+      console.log(row);
+      this.xqObj = row;
+      this.dialogVisible = true;
+    },
     async del(row) {
       console.log(row);
       const res = await this.$api.orderDelOrder({
         token: sessionStorage.getItem("token"),
-        order: row.order_id,
+        order: row.order_id
       });
       console.log(res);
       if (res.code == 200) {
         this.$message({
           message: res.msg,
-          type: "success",
+          type: "success"
         });
-        setTimeout(()=>{
-          this.getData()
-        },500)
+        setTimeout(() => {
+          this.getData();
+        }, 500);
       }
+    },
+    handleClose() {
+      this.dialogVisible = false;
     },
     onSubmit() {
       console.log(this.formInline);
@@ -386,7 +362,7 @@ export default {
         radioVal1: "全部订单",
         kd_order: "",
         order_id: "",
-        dsf_order: "",
+        dsf_order: ""
       };
       this.getData();
     },
@@ -405,8 +381,8 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.$store.commit("baoguoliebiaoPage", val);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -468,7 +444,7 @@ export default {
       //   height: 180px;
       // background: #ffffff;
       background-image: url("../../assets/newImg/kk4.png");
-    background-size: 100% 100%;
+      background-size: 100% 100%;
       border-radius: 10px;
       display: flex;
       justify-content: center;
@@ -490,8 +466,8 @@ export default {
         }
       }
     }
-    .txt3{
-      margin:  0 14px 14px 14px;
+    .txt3 {
+      margin: 0 14px 14px 14px;
     }
     .txt4 {
       margin: 14px;
@@ -525,10 +501,30 @@ export default {
   }
   .txt {
     font-size: 14px;
-    font-family: zw;;
+    font-family: zw;
     font-weight: 400;
     text-align: center;
     color: #5c5c5c;
+  }
+}
+.xiangqinBox{
+  display: flex;
+  .see-pic1{
+    width: 120px;
+    height: 120px;
+    margin-right: 20px;
+  }
+  .tit1{
+    width: 200px;
+    margin-right: 20px;
+  }
+  .tit2{
+ width: 308px;
+  }
+  .txt1{
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 6px;
   }
 }
 /deep/ .el-radio-group {
@@ -584,7 +580,7 @@ export default {
   opacity: 1;
   box-shadow: inset 0px 0 5px 0 #ccc !important;
   font-size: 12px;
-  font-family: zw;;
+  font-family: zw;
   font-weight: 400;
   text-align: center;
   line-height: 26px;

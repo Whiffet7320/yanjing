@@ -8,15 +8,17 @@
       <div class="nav2">
         <div class="tit1">
           <div class="box1-1">
-            <img style="width: 24px;height: 24px;margin-right: 12px;" src="../../assets/newImg/tubiao301.png" alt="" />
+            <img
+              style="width: 24px;height: 24px;margin-right: 12px;"
+              src="../../assets/newImg/tubiao301.png"
+              alt
+            />
             <div class="txt1">升级VIP</div>
             <div class="txt2">【当前会员级别：{{ grade }}会员】</div>
           </div>
           <div class="box1-2">
-            <img class="pic1" src="../../assets/newImg/lujin312-1.png" alt="" />
-            <div class="txt1">
-              点击升级直接扣费，若账户余额不足可进行扫码支付
-            </div>
+            <img class="pic1" src="../../assets/newImg/lujin312-1.png" alt />
+            <div class="txt1">点击升级直接扣费，若账户余额不足可进行扫码支付</div>
           </div>
         </div>
         <div class="flex">
@@ -28,104 +30,48 @@
                 <div class="bx1"></div>
               </div>
               <div class="nav1-2">
-                账户当前余额：<span class="color">{{ dataObj.balance }}</span>
+                账户当前余额：
+                <span class="color">{{ dataObj.balance }}</span>
               </div>
             </div>
             <div class="myRadio">
-              <el-radio-group
-                @change="changeRadVal1"
-                v-model="radioVal1"
-                size="small"
-              >
-                <el-radio-button
-                  v-for="item in dataObj.yc"
-                  :key="item.id"
-                  :label="item.name"
-                ></el-radio-button>
+              <el-radio-group @change="changeRadVal1" v-model="radioVal1" size="small">
+                <el-radio-button v-for="item in dataObj.yc" :key="item.id" :label="item.name"></el-radio-button>
               </el-radio-group>
-              <el-radio-group
-                @change="changeRadVal2"
-                v-model="radioVal2"
-                size="small"
-              >
-                <el-radio-button
-                  v-for="item in dataObj.kd"
-                  :key="item.id"
-                  :label="item.name"
-                ></el-radio-button>
+              <el-radio-group @change="changeRadVal2" v-model="radioVal2" size="small">
+                <el-radio-button v-for="item in dataObj.kd" :key="item.id" :label="item.name"></el-radio-button>
                 <!-- <el-radio-button label="申通快递(拼多多面单)"></el-radio-button>
-                <el-radio-button label="广州极兔仓"></el-radio-button> -->
+                <el-radio-button label="广州极兔仓"></el-radio-button>-->
               </el-radio-group>
             </div>
           </div>
           <div class="right">
             <div class="r-1">
               <div :class="{ btns1: true, active: nowVip == 1 }">
-                <img
-                  v-if="nowVip == 1"
-                  class="pic1"
-                  src="../../assets/newImg/zu203.png"
-                  alt=""
-                />
-                <img
-                  v-else
-                  class="pic1"
-                  src="../../assets/newImg/zu203-2.png"
-                  alt=""
-                />
+                <img v-if="nowVip == 1" class="pic1" src="../../assets/newImg/zu203.png" alt />
+                <img v-else class="pic1" src="../../assets/newImg/zu203-2.png" alt />
                 <div class="txt1">
-                  普通会员<span v-if="nowVip == 1" class="color">(当前)</span>
+                  普通会员
+                  <span v-if="nowVip == 1" class="color">(当前)</span>
                 </div>
               </div>
               <div :class="{ btns1: true, active: nowVip == 2 }">
-                <img
-                  v-if="nowVip != 2"
-                  class="pic1"
-                  src="../../assets/newImg/zu193.png"
-                  alt=""
-                />
-                <img
-                  v-else
-                  class="pic1"
-                  src="../../assets/newImg/zu217.png"
-                  alt=""
-                />
+                <img v-if="nowVip != 2" class="pic1" src="../../assets/newImg/zu193.png" alt />
+                <img v-else class="pic1" src="../../assets/newImg/zu217.png" alt />
                 <div class="txt1">
-                  升级尊贵VIP<span v-if="nowVip == 2" class="color"
-                    >(当前)</span
-                  >
+                  升级尊贵VIP
+                  <span v-if="nowVip == 2" class="color">(当前)</span>
                 </div>
-                <img
-                  class="pic2"
-                  v-if="nowVip <= 1"
-                  src="../../assets/newImg/zu206.png"
-                  alt=""
-                />
+                <img class="pic2" v-if="nowVip <= 1" src="../../assets/newImg/zu206.png" alt />
               </div>
               <div :class="{ btns1: true, active: nowVip == 3 }">
-                <img
-                  v-if="nowVip <= 2"
-                  class="pic1"
-                  src="../../assets/newImg/zu196.png"
-                  alt=""
-                />
-                <img
-                  v-else
-                  class="pic1"
-                  src="../../assets/newImg/zu220.png"
-                  alt=""
-                />
+                <img v-if="nowVip <= 2" class="pic1" src="../../assets/newImg/zu196.png" alt />
+                <img v-else class="pic1" src="../../assets/newImg/zu220.png" alt />
                 <div class="txt1">
-                  升级至尊VIP<span v-if="nowVip == 3" class="color"
-                    >(当前)</span
-                  >
+                  升级至尊VIP
+                  <span v-if="nowVip == 3" class="color">(当前)</span>
                 </div>
-                <img
-                  class="pic2"
-                  v-if="nowVip <= 2"
-                  src="../../assets/newImg/zu206.png"
-                  alt=""
-                />
+                <img class="pic2" v-if="nowVip <= 2" src="../../assets/newImg/zu206.png" alt />
               </div>
             </div>
             <div class="rTable">
@@ -136,28 +82,20 @@
                 :data="tableData"
                 align="center"
               >
-                <vxe-table-column
-                  width="100"
-                  field="name"
-                  title="Name"
-                ></vxe-table-column>
+                <vxe-table-column width="100" field="name" title="Name"></vxe-table-column>
                 <vxe-table-column field="sex" title="Sex"></vxe-table-column>
                 <vxe-table-column field="age" title="Age"></vxe-table-column>
-                <vxe-table-column
-                  field="address"
-                  title="Address"
-                  show-overflow
-                ></vxe-table-column>
+                <vxe-table-column field="address" title="Address" show-overflow></vxe-table-column>
               </vxe-table>
             </div>
             <div @click="dialogVisible = true" class="r-2" v-if="nowVip != 3">
-              <img class="pic1" src="../../assets/newImg/zu257.png" alt="" />
+              <img class="pic1" src="../../assets/newImg/zu257.png" alt />
               <template v-if="nowVip == 1">
-                <img class="pic2" src="../../assets/newImg/zu217.png" alt="" />
+                <img class="pic2" src="../../assets/newImg/zu217.png" alt />
                 <div class="txt">升级尊贵VIP</div>
               </template>
               <template v-else-if="nowVip == 2">
-                <img class="pic2" src="../../assets/newImg/zu220.png" alt="" />
+                <img class="pic2" src="../../assets/newImg/zu220.png" alt />
                 <div class="txt">升级至尊VIP</div>
               </template>
             </div>
@@ -165,42 +103,36 @@
               <div class="txt1">扫一扫付款(元)</div>
               <div class="txt2" v-if="nowVip == 1">{{ zgPrice }}</div>
               <div class="txt2" v-if="nowVip == 2">{{ zzPrice }}</div>
-              <img class="pic1" :src="payImg" alt="" />
+              <img class="pic1" :src="payImg" alt />
               <div class="nav1">
-                <img
-                  class="pic2"
-                  src="../../assets/newImg/lujin356.png"
-                  alt=""
-                />
+                <img class="pic2" src="../../assets/newImg/lujin356.png" alt />
                 <div class="nav1-1">
                   <div class="txt1">打开手机支付宝</div>
                   <div class="txt1">扫一扫继续支付</div>
                 </div>
               </div>
               <div class="txt3">
-                首次使用<span class="blue">请下载手机支付宝</span>
+                首次使用
+                <span class="blue">请下载手机支付宝</span>
               </div>
             </div>
             <div class="r-3-right" v-if="nowVip != 3">
-              <img class="pic1" src="../../assets/newImg/zu215.png" alt="" />
+              <img class="pic1" src="../../assets/newImg/zu215.png" alt />
             </div>
           </div>
         </div>
       </div>
     </div>
     <!-- 升级vip -->
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose"
-    >
-      <div v-if="dataObj.up_level && nowVip == 1" class="txtt">
-        确定付费{{ dataObj.up_level.zg }}元升级尊贵vip吗？
-      </div>
-      <div v-if="dataObj.up_level && nowVip == 2" class="txtt">
-        确定付费{{ dataObj.up_level.zz }}元升级至尊vip吗？
-      </div>
+    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+      <div
+        v-if="dataObj.up_level && nowVip == 1"
+        class="txtt"
+      >确定付费{{ dataObj.up_level.zg }}元升级尊贵vip吗？</div>
+      <div
+        v-if="dataObj.up_level && nowVip == 2"
+        class="txtt"
+      >确定付费{{ dataObj.up_level.zz }}元升级至尊vip吗？</div>
       <div class="btns">
         <div @click="vipSubmit" class="bt1">确定</div>
         <div @click="dialogVisible = false" class="bt2">取消</div>
@@ -213,7 +145,7 @@
 import Aside from "../Aside";
 export default {
   components: {
-    Aside,
+    Aside
   },
   // watch: {
   //   tableData: {
@@ -243,28 +175,28 @@ export default {
           name: "0kg～1kg",
           sex: "1.70元",
           age: "1.60元",
-          address: "1.50元",
+          address: "1.50元"
         },
         {
           id: 2,
           name: "续重/1kg",
           sex: "1.00元",
           age: "1.00元",
-          address: "1.00元",
+          address: "1.00元"
         },
         {
           id: 3,
           name: "升级费用",
           sex: "0元",
           age: "20元",
-          address: "50元",
-        },
+          address: "50元"
+        }
       ],
       dialogVisible: false,
       payImg: "",
       zgPrice: 0,
       zzPrice: 0,
-      grade: "",
+      grade: ""
     };
   },
   created() {
@@ -273,18 +205,18 @@ export default {
   methods: {
     async getData() {
       const res = await this.$api.upLevelDefault({
-        token: sessionStorage.getItem("token"),
+        token: sessionStorage.getItem("token")
       });
       if (res.code == 200) {
         console.log(res.data);
-                  this.dataObj = res.data;
-        if(res.data.price){
-        this.tableData[0].sex = res.data.price.pt_kg;
-        this.tableData[1].sex = res.data.price.pt_kg_add;
-        this.tableData[0].age = res.data.price.zg_kg;
-        this.tableData[1].age = res.data.price.zg_kg_add;
-        this.tableData[0].address = res.data.price.zz_kg;
-        this.tableData[1].address = res.data.price.zz_kg_add;
+        this.dataObj = res.data;
+        if (res.data.price) {
+          this.tableData[0].sex = res.data.price.pt_kg;
+          this.tableData[1].sex = res.data.price.pt_kg_add;
+          this.tableData[0].age = res.data.price.zg_kg;
+          this.tableData[1].age = res.data.price.zg_kg_add;
+          this.tableData[0].address = res.data.price.zz_kg;
+          this.tableData[1].address = res.data.price.zz_kg_add;
         }
         this.tableData[2].sex = `${res.data.up_level.pt}元`;
         this.tableData[2].age = `${res.data.up_level.zg}元`;
@@ -303,7 +235,7 @@ export default {
           const res2 = await this.$api.alipayGetPay({
             token: sessionStorage.getItem("token"),
             type: 2,
-            level: this.nowVip + 1,
+            level: this.nowVip + 1
           });
           console.log(res2);
           if (res2.code == 200) {
@@ -316,14 +248,14 @@ export default {
     },
     async changeRadVal1(val) {
       var obj = {};
-      obj = this.dataObj.yc.find(function (item) {
+      obj = this.dataObj.yc.find(function(item) {
         return item.name === val;
       });
       // console.log(obj.id); //label值
       const res = await this.$api.searchData({
         token: sessionStorage.getItem("token"),
         type: 1,
-        id: obj.id,
+        id: obj.id
       });
       console.log(res.data);
       this.$set(this.dataObj, "kd", res.data.kd);
@@ -337,14 +269,14 @@ export default {
     },
     async changeRadVal2(val) {
       var obj = {};
-      obj = this.dataObj.kd.find(function (item) {
+      obj = this.dataObj.kd.find(function(item) {
         return item.name === val;
       });
       // console.log(obj.id); //label值
       const res = await this.$api.searchData({
         token: sessionStorage.getItem("token"),
         type: 2,
-        id: obj.id,
+        id: obj.id
       });
       this.tableData[0].sex = res.data.pt_kg;
       this.tableData[1].sex = res.data.pt_kg_add;
@@ -368,21 +300,21 @@ export default {
     async vipSubmit() {
       const res = await this.$api.userAddLevel({
         token: sessionStorage.getItem("token"),
-        level: this.nowVip + 1,
+        level: this.nowVip + 1
       });
       console.log(res);
       if (res.code == 200) {
         this.$message({
           message: res.msg,
-          type: "success",
+          type: "success"
         });
         this.dialogVisible = false;
-        this.getData()
-      }else{
+        this.getData();
+      } else {
         this.$message.error(res.msg);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -506,7 +438,7 @@ export default {
         .nav1-2 {
           opacity: 1;
           font-size: 13px;
-          font-family: zw;;
+          font-family: zw;
           font-weight: 400;
           text-align: center;
           color: #868686;
@@ -603,7 +535,7 @@ export default {
         .txt1 {
           opacity: 1;
           font-size: 16px;
-          font-family: zw;;
+          font-family: zw;
           font-weight: 400;
           text-align: center;
           color: #000000;
@@ -636,7 +568,7 @@ export default {
               margin-bottom: 3px;
               opacity: 1;
               font-size: 14px;
-              font-family: zw;;
+              font-family: zw;
               font-weight: 400;
               color: #000000;
             }
@@ -645,7 +577,7 @@ export default {
         .txt3 {
           margin-top: 30px;
           font-size: 16px;
-          font-family: zw;;
+          font-family: zw;
           font-weight: 400;
           color: #707071;
           .blue {
