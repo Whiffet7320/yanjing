@@ -125,6 +125,10 @@ export default {
         this.total = res.data.total;
       } else {
         this.$message.error(res.msg);
+         setTimeout(() => {
+          sessionStorage.setItem("isLogin", "123");
+          this.$router.go(0);
+        }, 3000);
       }
     },
     copy() {},

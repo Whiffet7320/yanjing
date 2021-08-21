@@ -200,7 +200,7 @@ export default {
   },
   data() {
     return {
-      xqObj:{},
+      xqObj: {},
       dialogVisible: false,
       formInline: {
         monthTime: "",
@@ -236,6 +236,12 @@ export default {
     };
   },
   created() {
+    if (sessionStorage.getItem("token") == "null") {
+      setTimeout(() => {
+        sessionStorage.setItem("isLogin", "123");
+        this.$router.go(0);
+      }, 3000);
+    }
     this.getData();
   },
   methods: {
@@ -264,24 +270,28 @@ export default {
           kd_order: this.formInline.kd_order
         });
         console.log(res);
-        this.tableData = res.data.data;
-        this.total = res.data.total;
-        this.tableData.forEach(ele => {
-          if (ele.import_mode == 1) {
-            ele.import_mode = "淘宝";
-          } else if (ele.import_mode == 2) {
-            ele.import_mode = "京东";
-          } else if (ele.import_mode == 3) {
-            ele.import_mode = "拼多多";
-          } else if (ele.import_mode == 4) {
-            ele.import_mode = "抖音";
-          }
-          if (ele.ship_status == 1) {
-            ele.ship_status = "未发货";
-          } else if (ele.ship_status == 3) {
-            ele.ship_status = "已发货";
-          }
-        });
+        if (res.code == 200) {
+          this.tableData = res.data.data;
+          this.total = res.data.total;
+          this.tableData.forEach(ele => {
+            if (ele.import_mode == 1) {
+              ele.import_mode = "淘宝";
+            } else if (ele.import_mode == 2) {
+              ele.import_mode = "京东";
+            } else if (ele.import_mode == 3) {
+              ele.import_mode = "拼多多";
+            } else if (ele.import_mode == 4) {
+              ele.import_mode = "抖音";
+            }
+            if (ele.ship_status == 1) {
+              ele.ship_status = "未发货";
+            } else if (ele.ship_status == 3) {
+              ele.ship_status = "已发货";
+            }
+          });
+        } else {
+          this.$message.error(res.msg);
+        }
       } else {
         const res = await this.$api.getOrder({
           token: sessionStorage.getItem("token"),
@@ -296,24 +306,28 @@ export default {
           kd_order: this.formInline.kd_order
         });
         console.log(res);
-        this.tableData = res.data.data;
-        this.total = res.data.total;
-        this.tableData.forEach(ele => {
-          if (ele.import_mode == 1) {
-            ele.import_mode = "淘宝";
-          } else if (ele.import_mode == 2) {
-            ele.import_mode = "京东";
-          } else if (ele.import_mode == 3) {
-            ele.import_mode = "拼多多";
-          } else if (ele.import_mode == 4) {
-            ele.import_mode = "抖音";
-          }
-          if (ele.ship_status == 1) {
-            ele.ship_status = "未发货";
-          } else if (ele.ship_status == 3) {
-            ele.ship_status = "已发货";
-          }
-        });
+        if (res.code == 200) {
+          this.tableData = res.data.data;
+          this.total = res.data.total;
+          this.tableData.forEach(ele => {
+            if (ele.import_mode == 1) {
+              ele.import_mode = "淘宝";
+            } else if (ele.import_mode == 2) {
+              ele.import_mode = "京东";
+            } else if (ele.import_mode == 3) {
+              ele.import_mode = "拼多多";
+            } else if (ele.import_mode == 4) {
+              ele.import_mode = "抖音";
+            }
+            if (ele.ship_status == 1) {
+              ele.ship_status = "未发货";
+            } else if (ele.ship_status == 3) {
+              ele.ship_status = "已发货";
+            }
+          });
+        } else {
+          this.$message.error(res.msg);
+        }
       }
     },
     changeRadioVal1() {
@@ -507,21 +521,21 @@ export default {
     color: #5c5c5c;
   }
 }
-.xiangqinBox{
+.xiangqinBox {
   display: flex;
-  .see-pic1{
+  .see-pic1 {
     width: 120px;
     height: 120px;
     margin-right: 20px;
   }
-  .tit1{
+  .tit1 {
     width: 200px;
     margin-right: 20px;
   }
-  .tit2{
- width: 308px;
+  .tit2 {
+    width: 308px;
   }
-  .txt1{
+  .txt1 {
     font-size: 14px;
     line-height: 20px;
     margin-bottom: 6px;

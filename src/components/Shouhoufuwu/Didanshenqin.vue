@@ -7,7 +7,11 @@
       <div class="nav1">当前位置：售后服务 > 单底申请</div>
       <div class="nav2">
         <div class="tit1">
-          <img style="width: 24px;height: 24px;margin-right: 12px;" src="../../assets/newImg/tubiao301.png" alt="" />
+          <img
+            style="width: 24px;height: 24px;margin-right: 12px;"
+            src="../../assets/newImg/tubiao301.png"
+            alt
+          />
           <div class="txt1">单底申请</div>
         </div>
         <div class="tit2">
@@ -28,11 +32,7 @@
               <el-row>
                 <el-col :span="10">
                   <el-form-item label="Email">
-                    <el-input
-                      placeholder="请输入email"
-                      class="email"
-                      v-model="form.val2"
-                    ></el-input>
+                    <el-input placeholder="请输入email" class="email" v-model="form.val2"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -45,20 +45,10 @@
       <div class="nav3">
         <div class="myTable">
           <vxe-table align="center" :data="tableData">
-            <vxe-table-column
-              width="80"
-              field="delivery_id"
-              title="编号"
-            ></vxe-table-column>
-            <vxe-table-column
-              field="logi_no"
-              title="快递单号"
-            ></vxe-table-column>
+            <vxe-table-column width="80" field="delivery_id" title="编号"></vxe-table-column>
+            <vxe-table-column field="logi_no" title="快递单号"></vxe-table-column>
             <vxe-table-column field="mail" title="接收邮件"></vxe-table-column>
-            <vxe-table-column
-              field="myStatus"
-              title="申请状态"
-            ></vxe-table-column>
+            <vxe-table-column field="myStatus" title="申请状态"></vxe-table-column>
             <vxe-table-column field="ctime" title="申请时间"></vxe-table-column>
             <template #empty>
               <div class="tabEmpty">
@@ -74,8 +64,7 @@
             :page-size="10"
             layout="total, prev, pager, next, jumper"
             :total="this.total"
-          >
-          </el-pagination>
+          ></el-pagination>
         </div>
       </div>
     </div>
@@ -87,62 +76,72 @@ import Aside from "../Aside";
 import { mapState } from "vuex";
 export default {
   components: {
-    Aside,
+    Aside
   },
   computed: {
-    ...mapState(["didanshenqinPage"]),
+    ...mapState(["didanshenqinPage"])
   },
   watch: {
-    didanshenqinPage: function (page) {
+    didanshenqinPage: function(page) {
       this.$store.commit("didanshenqinPage", page);
       //   this.getData();
-    },
+    }
   },
   data() {
     return {
       form: {
         val1: "",
-        val2: "",
+        val2: ""
       },
       tableData: [],
-      total: 0,
+      total: 0
     };
   },
   created() {
+    if (sessionStorage.getItem("token") == "null") {
+      setTimeout(() => {
+        sessionStorage.setItem("isLogin", "123");
+        this.$router.go(0);
+      }, 3000);
+    }
     this.getData();
   },
   methods: {
     async getData() {
       const res = await this.$api.AftermarketGetData({
-        token: sessionStorage.getItem("token"),
+        token: sessionStorage.getItem("token")
       });
-      console.log(res.data);
-      this.tableData = res.data.data;
-      this.total = res.data.total;
-      this.tableData.forEach((ele) => {
-        if (ele.status == 1) {
-          ele.myStatus = "已申请";
-        } else if (ele.status == 2) {
-          ele.myStatus = "已处理";
-        }
-      });
+      if (res.code == 200) {
+        console.log(res.data);
+        this.tableData = res.data.data;
+        this.total = res.data.total;
+        this.tableData.forEach(ele => {
+          if (ele.status == 1) {
+            ele.myStatus = "已申请";
+          } else if (ele.status == 2) {
+            ele.myStatus = "已处理";
+          }
+        });
+      } else {
+        this.$message.error(res.msg);
+      }
     },
     async onSubmit() {
       // console.log(this.form);
       const res = await this.$api.AftermarketAddData({
         token: sessionStorage.getItem("token"),
         kd_order: this.form.val1,
-        mail: this.form.val2,
+        mail: this.form.val2
       });
       console.log(res);
       if (res.code == 200) {
         this.$message({
           message: res.msg,
-          type: "success",
+          type: "success"
         });
-        this.getData()
-        this.form.val1 = '';
-        this.form.val2 = '';
+        this.getData();
+        this.form.val1 = "";
+        this.form.val2 = "";
       } else {
         this.$message.error(res.msg);
       }
@@ -150,8 +149,8 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.$store.commit("didanshenqinPage", val);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -268,7 +267,7 @@ export default {
           box-shadow: inset 0px 0 16px 2px #dddddd !important;
           border-radius: 4px;
           font-size: 16px;
-          font-family: zw;;
+          font-family: zw;
           font-weight: 400;
           line-height: 49px;
           text-align: center;
@@ -308,7 +307,7 @@ export default {
   }
   .txt {
     font-size: 14px;
-    font-family: zw;;
+    font-family: zw;
     font-weight: 400;
     text-align: center;
     color: #5c5c5c;

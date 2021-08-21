@@ -173,6 +173,7 @@ export default {
       }
     },
     tuichuLogin() {
+      sessionStorage.setItem("token", "null");
       sessionStorage.setItem("username", "null");
       sessionStorage.setItem("isLogin", "123");
       this.$router.go(0);

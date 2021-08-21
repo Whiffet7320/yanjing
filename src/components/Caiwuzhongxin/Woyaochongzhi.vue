@@ -65,6 +65,12 @@ export default {
     };
   },
   created() {
+    if (sessionStorage.getItem("token") == "null") {
+      setTimeout(() => {
+        sessionStorage.setItem("isLogin", "123");
+        this.$router.go(0);
+      }, 3000);
+    }
     this.getData();
     if (this.isYueTixian) {
       this.txt = "余额提现";
@@ -79,7 +85,12 @@ export default {
         token: sessionStorage.getItem("token")
       });
       console.log(res);
-      this.dataObj = res.data;
+      if(res.code == 200){
+        this.dataObj = res.data;
+      }else{
+        this.$message.error(res.msg);
+      }
+      
     },
     async yueTixian() {
       const res = await this.$api.userReCharge({

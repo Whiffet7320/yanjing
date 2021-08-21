@@ -159,6 +159,13 @@ export default {
     };
   },
   created() {
+    if (sessionStorage.getItem("token") == "null") {
+      this.$message.error('登录已经失效，请重新登录！');
+      setTimeout(() => {
+        sessionStorage.setItem("isLogin", "123");
+        this.$router.go(0);
+      }, 3000);
+    }
     this.formone.phone = sessionStorage.getItem("username");
   },
   methods: {

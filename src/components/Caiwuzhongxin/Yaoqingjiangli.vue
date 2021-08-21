@@ -9,17 +9,17 @@
         <div class="box1">
           <div class="txt1">总邀请奖励</div>
           <div class="txt2">{{count_sum}}</div>
-          <img class="pic1" src="../../assets/newImg/zu232.png" alt="" />
+          <img class="pic1" src="../../assets/newImg/zu232.png" alt />
         </div>
         <div class="box1">
           <div class="txt1">上个月邀请奖励</div>
           <div class="txt2 yellow">{{count_upmonth}}</div>
-          <img class="pic1" src="../../assets/newImg/zu233-1.png" alt="" />
+          <img class="pic1" src="../../assets/newImg/zu233-1.png" alt />
         </div>
         <div class="box1">
           <div class="txt1">本月邀请奖励</div>
           <div class="txt2 red">{{count_month}}</div>
-          <img class="pic1" src="../../assets/newImg/zu233-2.png" alt="" />
+          <img class="pic1" src="../../assets/newImg/zu233-2.png" alt />
         </div>
       </div>
       <!-- <div class="nav3">
@@ -35,7 +35,7 @@
         <div @click="editTime(4)" :class="{ txt: true, active: time == 4 }">
           三个月
         </div>
-      </div> -->
+      </div>-->
       <div class="nav4">
         <div class="myForm">
           <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -47,27 +47,20 @@
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
-              >
-              </el-date-picker>
+              ></el-date-picker>
             </el-form-item>
             <el-form-item label="类型">
               <el-select v-model="formInline.region" placeholder="请选择">
                 <el-option label="全部" value="quanbu"></el-option>
               </el-select>
             </el-form-item>
-            <el-button type="info" plain icon="el-icon-search" @click="onSubmit"
-              >搜索</el-button
-            >
+            <el-button type="info" plain icon="el-icon-search" @click="onSubmit">搜索</el-button>
           </el-form>
         </div>
       </div>
       <div class="nav6">
         <div class="myTable">
-          <vxe-table
-            :cell-class-name="cellClassName"
-            align="center"
-            :data="tableData"
-          >
+          <vxe-table :cell-class-name="cellClassName" align="center" :data="tableData">
             <vxe-table-column field="id" width="60" title="编号"></vxe-table-column>
             <vxe-table-column field="source_id" title="订单号"></vxe-table-column>
             <vxe-table-column field="username" title="手机号码"></vxe-table-column>
@@ -87,8 +80,7 @@
             :page-size="10"
             layout="total, prev, pager, next, jumper"
             :total="this.total"
-          >
-          </el-pagination>
+          ></el-pagination>
         </div>
       </div>
     </div>
@@ -100,27 +92,27 @@ import Aside from "../Aside";
 import { mapState } from "vuex";
 export default {
   components: {
-    Aside,
+    Aside
   },
   computed: {
-    ...mapState(["yaoqingjiangliPage"]),
+    ...mapState(["yaoqingjiangliPage"])
   },
   watch: {
-    yaoqingjiangliPage: function (page) {
+    yaoqingjiangliPage: function(page) {
       this.$store.commit("yaoqingjiangliPage", page);
       //   this.getData();
-    },
+    }
   },
   data() {
     return {
       time: 1,
-      count_sum:0,
-      count_upmonth:0,
-      count_month:0,
+      count_sum: 0,
+      count_upmonth: 0,
+      count_month: 0,
       formInline: {
         time: [],
         region: "全部",
-        radioVal1: "全部订单",
+        radioVal1: "全部订单"
       },
       tableData: [
         {
@@ -129,7 +121,7 @@ export default {
           role: "Designer",
           sex: "+50.00",
           age: 24,
-          address: "Shanghai",
+          address: "Shanghai"
         },
         {
           id: 10004,
@@ -137,41 +129,51 @@ export default {
           role: "Designer",
           sex: "-60.00",
           age: 24,
-          address: "Shanghai",
-        },
+          address: "Shanghai"
+        }
       ],
-      total: 0,
+      total: 0
     };
   },
-  created(){
-    this.getData()
+  created() {
+    if (sessionStorage.getItem("token") == "null") {
+      setTimeout(() => {
+        sessionStorage.setItem("isLogin", "123");
+        this.$router.go(0);
+      }, 3000);
+    }
+    this.getData();
   },
   methods: {
-    async getData(){
-      if(!this.formInline.time){
-        this.formInline.time = '';
+    async getData() {
+      if (!this.formInline.time) {
+        this.formInline.time = "";
       }
-      console.log(this.formInline)
+      console.log(this.formInline);
       const res = await this.$api.userInvitationReward({
-        token:sessionStorage.getItem("token"),
-        page:this.yaoqingjiangliPage,
-        limit:10,
-        start_time:this.formInline.time[0],
-        end_time:this.formInline.time[1],
-      })
-      console.log(res)
-      this.tableData = res.data.data;
-      this.total = res.data.total;
-      this.count_month = res.data.count_month;
-      this.count_sum = res.data.count_sum;
-      this.count_upmonth = res.data.count_upmonth;
+        token: sessionStorage.getItem("token"),
+        page: this.yaoqingjiangliPage,
+        limit: 10,
+        start_time: this.formInline.time[0],
+        end_time: this.formInline.time[1]
+      });
+      console.log(res);
+      if (res.code == 200) {
+        this.tableData = res.data.data;
+        this.total = res.data.total;
+        this.count_month = res.data.count_month;
+        this.count_sum = res.data.count_sum;
+        this.count_upmonth = res.data.count_upmonth;
+      } else {
+        this.$message.error(res.msg);
+      }
     },
     editTime(val) {
       this.time = val;
     },
     onSubmit() {
       console.log(this.formInline);
-      this.getData()
+      this.getData();
     },
     cellClassName({ column, row }) {
       if (column.property == "sex" && Number(row.sex) > 0) {
@@ -184,8 +186,8 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.$store.commit("yaoqingjiangliPage", val);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -206,7 +208,7 @@ export default {
       margin-top: 20px;
       // background: #ffffff;
       background-image: url("../../assets/newImg/kk8.png");
-    background-size: 100% 100%;
+      background-size: 100% 100%;
       border-radius: 10px;
       height: 180px;
       display: flex;
@@ -277,7 +279,7 @@ export default {
       padding: 28px;
       // background: #ffffff;
       background-image: url("../../assets/newImg/kk6.png");
-    background-size: 100% 100%;
+      background-size: 100% 100%;
       border-radius: 10px;
       display: flex;
       justify-content: center;
@@ -326,7 +328,7 @@ export default {
   }
   .txt {
     font-size: 14px;
-    font-family: zw;;
+    font-family: zw;
     font-weight: 400;
     text-align: center;
     color: #5c5c5c;

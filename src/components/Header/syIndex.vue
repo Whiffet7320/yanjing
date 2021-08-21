@@ -70,6 +70,7 @@ export default {
       this.$router.go(0);
     },
     outLogin() {
+      sessionStorage.setItem("token", "null");
       // sessionStorage.setItem("isLogin", "123");
       sessionStorage.setItem("username", "null");
       this.$router.go(0);

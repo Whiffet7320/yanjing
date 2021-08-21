@@ -200,6 +200,12 @@ export default {
     };
   },
   created() {
+    if (sessionStorage.getItem("token") == "null") {
+      setTimeout(() => {
+        sessionStorage.setItem("isLogin", "123");
+        this.$router.go(0);
+      }, 3000);
+    }
     this.getData();
   },
   methods: {

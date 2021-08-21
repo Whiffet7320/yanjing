@@ -189,6 +189,10 @@ export default {
         this.dataObj = res.data;
       } else {
         this.$message.error(res.msg);
+        setTimeout(() => {
+          sessionStorage.setItem("isLogin", "123");
+          this.$router.go(0);
+        }, 3000);
       }
     },
     toYueTixian(){

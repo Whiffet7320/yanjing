@@ -7,22 +7,14 @@
       <div class="nav1">当前位置：财务中心 > 资金明细</div>
       <div class="txt1">
         <div class="txt1-1">
-          <img style="width: 24px;height: 24px;" src="../../assets/newImg/tubiao301.png" alt="" />
+          <img style="width: 24px;height: 24px;" src="../../assets/newImg/tubiao301.png" alt />
           <div class="txt1-1-1">资金明细</div>
         </div>
         <div class="txt1-2">
-          <div @click="editTime(1)" :class="{ txt: true, active: time == 1 }">
-            今天
-          </div>
-          <div @click="editTime(2)" :class="{ txt: true, active: time == 2 }">
-            一周
-          </div>
-          <div @click="editTime(3)" :class="{ txt: true, active: time == 3 }">
-            一个月
-          </div>
-          <div @click="editTime(4)" :class="{ txt: true, active: time == 4 }">
-            三个月
-          </div>
+          <div @click="editTime(1)" :class="{ txt: true, active: time == 1 }">今天</div>
+          <div @click="editTime(2)" :class="{ txt: true, active: time == 2 }">一周</div>
+          <div @click="editTime(3)" :class="{ txt: true, active: time == 3 }">一个月</div>
+          <div @click="editTime(4)" :class="{ txt: true, active: time == 4 }">三个月</div>
         </div>
       </div>
       <div class="txt2">
@@ -36,17 +28,14 @@
                 range-separator="至"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
-              >
-              </el-date-picker>
+              ></el-date-picker>
             </el-form-item>
             <el-form-item label="类型">
               <el-select v-model="formInline.region" placeholder="请选择">
                 <el-option label="全部" value="quanbu"></el-option>
               </el-select>
             </el-form-item>
-            <el-button type="info" plain icon="el-icon-search" @click="onSubmit"
-              >搜索</el-button
-            >
+            <el-button type="info" plain icon="el-icon-search" @click="onSubmit">搜索</el-button>
           </el-form>
         </div>
       </div>
@@ -66,12 +55,8 @@
       </div>
       <div class="txt4">
         <div class="myTable">
-          <vxe-table
-            :cell-class-name="cellClassName"
-            align="center"
-            :data="tableData"
-          >
-          <vxe-table-column field="id" title="ID"></vxe-table-column>
+          <vxe-table :cell-class-name="cellClassName" align="center" :data="tableData">
+            <vxe-table-column field="id" title="ID"></vxe-table-column>
             <vxe-table-column field="ctime" title="创建时间"></vxe-table-column>
             <vxe-table-column field="memo" title="描述"></vxe-table-column>
             <vxe-table-column field="myMoney" title="资金变动"></vxe-table-column>
@@ -90,8 +75,7 @@
             :page-size="10"
             layout="total, prev, pager, next, jumper"
             :total="this.total"
-          >
-          </el-pagination>
+          ></el-pagination>
         </div>
       </div>
     </div>
@@ -103,24 +87,24 @@ import Aside from "../Aside";
 import { mapState } from "vuex";
 export default {
   components: {
-    Aside,
+    Aside
   },
   computed: {
-    ...mapState(["zijinmingxiPage"]),
+    ...mapState(["zijinmingxiPage"])
   },
   watch: {
-    zijinmingxiPage: function (page) {
+    zijinmingxiPage: function(page) {
       this.$store.commit("zijinmingxiPage", page);
       //   this.getData();
-    },
+    }
   },
   data() {
     return {
-      time: '',
+      time: "",
       formInline: {
         time: [],
         region: "全部",
-        radioVal1: "全部订单",
+        radioVal1: "全部订单"
       },
       tableData: [
         {
@@ -129,7 +113,7 @@ export default {
           role: "Designer",
           myMoney: "+50.00",
           age: 24,
-          address: "Shanghai",
+          address: "Shanghai"
         },
         {
           id: 10004,
@@ -137,21 +121,27 @@ export default {
           role: "Designer",
           myMoney: "-60.00",
           age: 24,
-          address: "Shanghai",
-        },
+          address: "Shanghai"
+        }
       ],
       total: 0,
-      time_type:'',
-      type:'',
+      time_type: "",
+      type: ""
     };
   },
   created() {
+    if (sessionStorage.getItem("token") == "null") {
+      setTimeout(() => {
+        sessionStorage.setItem("isLogin", "123");
+        this.$router.go(0);
+      }, 3000);
+    }
     this.getData();
   },
   methods: {
     async getData() {
-      if(!this.formInline.time){
-        this.formInline.time = '';
+      if (!this.formInline.time) {
+        this.formInline.time = "";
       }
       if (this.formInline.radioVal1 == "全部订单") {
         this.type = "";
@@ -179,8 +169,8 @@ export default {
       } else if (this.time == 4) {
         this.time_type = "threeMonth";
       }
-      this.time_type = !this.formInline.time[0] ? this.time_type : '';
-      this.time = !this.formInline.time[0] ? this.time : '';
+      this.time_type = !this.formInline.time[0] ? this.time_type : "";
+      this.time = !this.formInline.time[0] ? this.time : "";
       const res = await this.$api.userMoneyList({
         token: sessionStorage.getItem("token"),
         limit: 13,
@@ -188,17 +178,21 @@ export default {
         start_time: this.formInline.time[0],
         end_time: this.formInline.time[1],
         type: this.type,
-        time_type: this.time_type,
+        time_type: this.time_type
       });
       console.log(res);
-      this.total = res.data.total;
-      this.tableData = res.data.data;
-      this.tableData.forEach(ele=>{
-        ele.myMoney = `${ele.manner}${ele.money}`
-      })
+      if (res.code == 200) {
+        this.total = res.data.total;
+        this.tableData = res.data.data;
+        this.tableData.forEach(ele => {
+          ele.myMoney = `${ele.manner}${ele.money}`;
+        });
+      } else {
+        this.$message.error(res.msg);
+      }
     },
-    changeVal1(){
-      this.getData()
+    changeVal1() {
+      this.getData();
     },
     onSubmit() {
       console.log(this.formInline);
@@ -218,8 +212,8 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.$store.commit("zijinmingxiPage", val);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -283,7 +277,7 @@ export default {
       // height: 80px;
       // background: #ffffff;
       background-image: url("../../assets/newImg/kk6.png");
-    background-size: 100% 100%;
+      background-size: 100% 100%;
       border-radius: 10px;
       display: flex;
       justify-content: center;
@@ -299,7 +293,7 @@ export default {
         }
       }
     }
-    .txt3{
+    .txt3 {
       margin: 0 16px 16px 16px;
     }
     .txt4 {
@@ -334,7 +328,7 @@ export default {
   }
   .txt {
     font-size: 14px;
-    font-family: zw;;
+    font-family: zw;
     font-weight: 400;
     text-align: center;
     color: #5c5c5c;
