@@ -35,16 +35,14 @@
               </div>
             </div>
             <div class="myRadio">
-              <div class="rad1">
-                <el-radio-group @change="changeRadVal1" v-model="radioVal1" size="small">
-                  <el-radio-button v-for="item in dataObj.yc" :key="item.id" :label="item.name"></el-radio-button>
-                </el-radio-group>
-              </div>
-              <div class="rad2">
-                <el-radio-group @change="changeRadVal2" v-model="radioVal2" size="small">
-                  <el-radio-button v-for="item in dataObj.kd" :key="item.id" :label="item.name"></el-radio-button>
-                </el-radio-group>
-              </div>
+              <el-radio-group @change="changeRadVal1" v-model="radioVal1" size="small">
+                <el-radio-button v-for="item in dataObj.yc" :key="item.id" :label="item.name"></el-radio-button>
+              </el-radio-group>
+              <el-radio-group @change="changeRadVal2" v-model="radioVal2" size="small">
+                <el-radio-button v-for="item in dataObj.kd" :key="item.id" :label="item.name"></el-radio-button>
+                <!-- <el-radio-button label="申通快递(拼多多面单)"></el-radio-button>
+                <el-radio-button label="广州极兔仓"></el-radio-button>-->
+              </el-radio-group>
             </div>
           </div>
           <div class="right">
@@ -90,7 +88,7 @@
                 <vxe-table-column field="address" title="Address" show-overflow></vxe-table-column>
               </vxe-table>
             </div>
-            <!-- <div @click="dialogVisible = true" class="r-2" v-if="nowVip != 3">
+            <div @click="dialogVisible = true" class="r-2" v-if="nowVip != 3">
               <img class="pic1" src="../../assets/newImg/zu257.png" alt />
               <template v-if="nowVip == 1">
                 <img class="pic2" src="../../assets/newImg/zu217.png" alt />
@@ -120,7 +118,7 @@
             </div>
             <div class="r-3-right" v-if="nowVip != 3">
               <img class="pic1" src="../../assets/newImg/zu215.png" alt />
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
@@ -335,12 +333,8 @@ export default {
   .myRadio {
     display: flex;
     flex-direction: column;
-    // align-items: center;
-    margin-left: 38px;
+    align-items: center;
     transform: translateY(-14px);
-    .el-radio-group{
-      flex-direction: row;
-    }
   }
 
   .nav1 {
@@ -355,7 +349,7 @@ export default {
     // box-shadow: 0px 3px 10px 0px rgba(167, 167, 167, 0.2);
     margin-top: 18px;
     width: 100%;
-    // height: 760px;
+    height: 760px;
     // background: #ffffff;
     background-image: url("../../assets/newImg/kk1.png");
     background-size: 100% 100%;
@@ -420,6 +414,7 @@ export default {
       flex-direction: column;
     }
     .left {
+      width: 220px;
       margin-left: 20px;
       .top {
         margin-top: 20px;
@@ -461,9 +456,8 @@ export default {
       }
     }
     .right {
-      width: 1000px;
+      width: 800px;
       //   margin-top: 20px;
-      margin-left: 56px;
       .r-1 {
         margin-left: 100px;
         display: flex;
@@ -473,7 +467,7 @@ export default {
           box-shadow: inset 0px 0 10px 2px #ccc !important;
         }
         .btns1 {
-          width: 299px;
+          width: 233px;
           height: 50px;
           opacity: 1;
           display: flex;
@@ -506,7 +500,6 @@ export default {
       }
       .rTable {
         margin-top: 10px;
-        margin-bottom: 40px;
       }
       .r-2 {
         cursor: pointer;
@@ -601,7 +594,7 @@ export default {
         }
       }
       .r-3-right {
-        transform: translate(600px, -385px);
+        transform: translate(400px, -365px);
         width: 280px;
         height: 270px;
         opacity: 1;

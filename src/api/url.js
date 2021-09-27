@@ -3,6 +3,7 @@ export default {
     // baseUrl: 'http://47.100.26.153',
     // baseUrl: 'http://192.168.50.132',
     baseUrl:'http://ht.yuncanggift.com',
+    // baseUrl:'http://lpw.zhangba.shop',
     getVerificationCode: '/home/Comment/getVerificationCode', //获取短信验证码
     login:'/home/Login/login',//登录
     username:'/home/Reg/reg',//注册
@@ -35,4 +36,11 @@ export default {
     userReCharge:'/home/user/reCharge',//余额提现
     userCommission:'/home/user/commission',//佣金提现
     alipayQueryOrder:'/home/alipay/queryOrder',//查询订单是否支付成功
+    orderCutAddress:'/home/order/cutAddress',//确认信息
+    OrderBg:'/home/Order/bg',//订单接口
+    OrderDaochu_order:'/home/Order/daochu_order',//导出订单
+    OrderDaochu:'/home/Order/daochu',//导出包裹
+    OrderExport:'/home/Order/export',//导出
+    orderBg_info:'/home/order/bg_info',//包裹详情
+    orderBg_pay:'/home/order/bg_pay',//支付订单
 }

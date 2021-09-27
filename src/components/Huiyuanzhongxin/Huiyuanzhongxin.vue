@@ -17,7 +17,7 @@
               <img class="pic1-1" src="../../assets/newImg/zu95.png" alt />
               <div class="txt1-1">等级</div>
               <div class="txt1-2">{{ dataObj.user_data.grade }}会员</div>
-              <div @click="$router.push({name:'ShengjiVIP'})" class="sjbtn">升级VIP</div>
+              <!-- <div @click="$router.push({name:'ShengjiVIP'})" class="sjbtn">升级VIP</div> -->
             </div>
             <div class="txt1">
               <img class="pic1-2" src="../../assets/newImg/zu97.png" alt />
@@ -39,9 +39,21 @@
               <div class="txt1-1">余额</div>
               <div class="txt1-2">{{ dataObj.user_data.balance }}元</div>
               <div @click="$router.push({name:'Woyaochongzhi'})" class="sjbtn bt1">立即充值</div>
-              <div v-if="dataObj.user_data.yue_tixian != 0" @click="toYueTixian" :class="{'sjbtn':true, 'bt2':true}">余额提现</div>
-              <div v-if="dataObj.user_data.yongjin_tixian != 0 && dataObj.user_data.yue_tixian != 0" @click="toYongjinTixian" :class="{'sjbtn':true, 'bt3':true}">佣金提现</div>
-              <div v-if="dataObj.user_data.yongjin_tixian != 0 && dataObj.user_data.yue_tixian == 0" @click="toYongjinTixian" :class="{'sjbtn':true, 'bt2':true}">佣金提现</div>
+              <div
+                v-if="dataObj.user_data.yue_tixian != 0"
+                @click="toYueTixian"
+                :class="{'sjbtn':true, 'bt2':true}"
+              >余额提现</div>
+              <div
+                v-if="dataObj.user_data.yongjin_tixian != 0 && dataObj.user_data.yue_tixian != 0"
+                @click="toYongjinTixian"
+                :class="{'sjbtn':true, 'bt3':true}"
+              >佣金提现</div>
+              <div
+                v-if="dataObj.user_data.yongjin_tixian != 0 && dataObj.user_data.yue_tixian == 0"
+                @click="toYongjinTixian"
+                :class="{'sjbtn':true, 'bt2':true}"
+              >佣金提现</div>
             </div>
           </div>
         </div>
@@ -101,35 +113,35 @@
           <div class="txt1">订单管理</div>
         </div>
         <div class="tit2">
-          <div class="box1">
+          <div class="box1" @click="toDD(0)">
             <img class="pic1-1" src="../../assets/newImg/tubiao100.png" alt />
-            <div class="txt1">待付款</div>
-            <div class="txt2">0</div>
+            <div class="txt1">全部订单</div>
+            <div class="txt2">{{ dataObj.order_no + dataObj.order_yes }}</div>
           </div>
           <img class="imgg" src="../../assets/newImg/shuxian1.png" alt />
-          <div class="box1">
+          <!-- <div class="box1">
             <img class="pic1-2" src="../../assets/newImg/tubiao101.png" alt />
             <div class="txt1">任务处理中</div>
             <div class="txt2" style="color: #5c5c5c">0</div>
           </div>
-          <img class="imgg" src="../../assets/newImg/shuxian1.png" alt />
-          <div class="box1">
+          <img class="imgg" src="../../assets/newImg/shuxian1.png" alt />-->
+          <div class="box1" @click="toDD(1)">
             <img class="pic1-3" src="../../assets/newImg/tubiao103.png" alt />
             <div class="txt1">未发货</div>
             <div class="txt2">{{ dataObj.order_no }}</div>
           </div>
           <img class="imgg" src="../../assets/newImg/shuxian1.png" alt />
-          <div class="box1">
+          <div class="box1" @click="toDD(2)">
             <img class="pic1-4" src="../../assets/newImg/tubiao104.png" alt />
             <div class="txt1">已发货</div>
             <div class="txt2" style="color: #5c5c5c">{{ dataObj.order_yes }}</div>
           </div>
-          <img class="imgg" src="../../assets/newImg/shuxian1.png" alt />
+          <!-- <img class="imgg" src="../../assets/newImg/shuxian1.png" alt />
           <div class="box1">
             <img class="pic1-5" src="../../assets/newImg/tubiao105.png" alt />
             <div class="txt1">发货完成</div>
             <div class="txt2" style="color: #5c5c5c">0</div>
-          </div>
+          </div>-->
         </div>
       </div>
       <div class="nav4">
@@ -177,7 +189,7 @@ export default {
   },
   created() {
     this.getData();
-    sessionStorage.setItem("isPay",'false');
+    sessionStorage.setItem("isPay", "false");
   },
   methods: {
     async getData() {
@@ -195,17 +207,25 @@ export default {
         }, 3000);
       }
     },
-    toYueTixian(){
-      this.$store.commit('isYongjinTixian',null);
-      this.$store.commit('commission',null);
-      this.$store.commit('isYueTixian',true)
-      this.$router.push({name:'Woyaochongzhi'})
+    toDD(val) {
+      this.$router.push({
+        name: "Dingdanliebiao",
+        query: {
+          status: val
+        }
+      });
     },
-    toYongjinTixian(){
-      this.$store.commit('isYueTixian',null)
-      this.$store.commit('isYongjinTixian',true);
-      this.$store.commit('commission',this.dataObj.user_data.commission);
-      this.$router.push({name:'Woyaochongzhi'})
+    toYueTixian() {
+      this.$store.commit("isYongjinTixian", null);
+      this.$store.commit("commission", null);
+      this.$store.commit("isYueTixian", true);
+      this.$router.push({ name: "Woyaochongzhi" });
+    },
+    toYongjinTixian() {
+      this.$store.commit("isYueTixian", null);
+      this.$store.commit("isYongjinTixian", true);
+      this.$store.commit("commission", this.dataObj.user_data.commission);
+      this.$router.push({ name: "Woyaochongzhi" });
     },
     myTo(index) {
       this.toIndex = index;
@@ -216,6 +236,10 @@ export default {
       } else if (index == 2) {
         setTimeout(() => {
           this.$router.push({ name: "Dingdanliebiao" });
+        }, 500);
+      } else if (index == 3) {
+        setTimeout(() => {
+          this.$router.push({ name: "Shouhouchajian" });
         }, 500);
       } else if (index == 4) {
         setTimeout(() => {
@@ -327,10 +351,10 @@ export default {
             line-height: 38px;
             color: #ea8e11;
           }
-          .sjbtn.bt2{
+          .sjbtn.bt2 {
             left: 386px;
           }
-          .sjbtn.bt3{
+          .sjbtn.bt3 {
             left: 506px;
           }
           .sjbtn.bt1 {
@@ -488,6 +512,7 @@ export default {
       display: flex;
       justify-content: space-around;
       .box1 {
+        cursor: pointer;
         margin-top: 30px;
         display: flex;
         flex-direction: column;

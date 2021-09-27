@@ -7,17 +7,14 @@ const vue = new Vue()
 let myPost = axios.create({
     baseURL: urls.baseUrl,
     method: 'post',
-    timeout: 1000,
 })
 let myGet = axios.create({
     baseURL: urls.baseUrl,
     method: 'get',
-    timeout: 1000,
 })
 let myDelete = axios.create({
     baseURL: urls.baseUrl,
     method: 'delete',
-    timeout: 1000,
 })
 
 myDelete.interceptors.request.use(config => {
@@ -407,6 +404,62 @@ export default {
     alipayQueryOrder(obj) {
         return myPost({
             url: urls.alipayQueryOrder,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    orderCutAddress(obj) {
+        return myPost({
+            url: urls.orderCutAddress,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    OrderBg(obj) {
+        return myGet({
+            url: urls.OrderBg,
+            params: {
+                ...obj,
+            }
+        })
+    },
+    OrderDaochu_order(obj) {
+        return myGet({
+            url: urls.OrderDaochu_order,
+            params: {
+                ...obj,
+            }
+        })
+    },
+    OrderDaochu(obj) {
+        return myGet({
+            url: urls.OrderDaochu,
+            params: {
+                ...obj,
+            }
+        })
+    },
+    OrderExport(obj) {
+        return myGet({
+            url: urls.OrderExport,
+            params: {
+                ...obj,
+            }
+        })
+    },
+    orderBg_info(obj) {
+        return myPost({
+            url: urls.orderBg_info,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    orderBg_pay(obj) {
+        return myPost({
+            url: urls.orderBg_pay,
             data: {
                 ...obj,
             }

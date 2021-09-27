@@ -10,7 +10,7 @@
           <img style="width: 24px;height: 24px;" src="../../assets/newImg/tubiao301.png" alt />
           <div class="txt1-1-1">订单列表</div>
         </div>
-        <div class="txt1-2">
+        <!-- <div class="txt1-2">
           <div
             @click="editTime('day')"
             :class="{ txt: true, active: formInline.monthTime == 'day' }"
@@ -27,7 +27,7 @@
             @click="editTime('threeMonth')"
             :class="{ txt: true, active: formInline.monthTime == 'threeMonth' }"
           >三个月</div>
-        </div>
+        </div>-->
       </div>
       <div class="txt2">
         <div class="myForm">
@@ -37,8 +37,9 @@
             </el-form-item>
             <el-form-item label="订单状态">
               <el-select v-model="formInline.ship_status" placeholder="请选择">
-                <el-option label="全部" value="1"></el-option>
-                <!-- <el-option label="已发货" value="3"></el-option> -->
+                <el-option label="全部订单" value="0"></el-option>
+                <el-option label="未发货" value="1"></el-option>
+                <el-option label="已发货" value="2"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="起始时间">
@@ -76,10 +77,10 @@
       </div>
       <div class="txt3">
         <div class="myRadio">
-          <el-radio-group @change="changeRadioVal1" v-model="formInline.radioVal1" size="small">
-            <el-radio-button label="全部订单"></el-radio-button>
-            <el-radio-button label="未发货"></el-radio-button>
-            <el-radio-button label="已发货"></el-radio-button>
+          <el-radio-group @change="changeRadioVal1" v-model="formInline.ship_status" size="small">
+            <el-radio-button label="0">全部订单</el-radio-button>
+            <el-radio-button label="1">未发货</el-radio-button>
+            <el-radio-button label="2">已发货</el-radio-button>
             <!-- <el-radio-button label="待付款"></el-radio-button>
             <el-radio-button label="任务处理中"></el-radio-button>
             <el-radio-button label="可发货"></el-radio-button>
@@ -87,17 +88,18 @@
             <el-radio-button label="发货完成"></el-radio-button>
             <el-radio-button label="撤销订单"></el-radio-button>-->
           </el-radio-group>
+          <el-button size="small" class="btn" plain @click="daochuTable">导出</el-button>
         </div>
       </div>
       <div class="txt4">
         <div class="myTable">
           <vxe-table :cell-class-name="cellClassName" align="center" :data="tableData">
-            <vxe-table-column show-overflow="title" field="dsf_order" title="订单号"></vxe-table-column>
-            <vxe-table-column show-overflow="title" field="ship_status" title="订单状态"></vxe-table-column>
+            <vxe-table-column show-overflow="title" field="order" title="订单号"></vxe-table-column>
+            <vxe-table-column show-overflow="title" field="status" title="订单状态"></vxe-table-column>
             <vxe-table-column show-overflow="title" field="import_mode" title="导入方式"></vxe-table-column>
-            <vxe-table-column show-overflow="title" field="ctime" title="支付时间"></vxe-table-column>
-            <vxe-table-column show-overflow="title" field="order_amount" title="总费用"></vxe-table-column>
-            <vxe-table-column show-overflow="title" field="remarks" title="备注"></vxe-table-column>
+            <vxe-table-column show-overflow="title" field="stime" title="支付时间"></vxe-table-column>
+            <vxe-table-column show-overflow="title" field="money" title="总费用"></vxe-table-column>
+            <vxe-table-column show-overflow="title" field="beizhu" title="备注"></vxe-table-column>
             <vxe-table-column title="操作状态" width="180">
               <template slot-scope="scope">
                 <div class="flex">
@@ -125,15 +127,22 @@
                     type="text"
                     size="small"
                   >发货完成</div>
-                  <!-- <div
+                  <div
+                    v-if="scope.row.status == '未付款'"
                     class="delBtn"
                     @click="del(scope.row)"
                     type="text"
                     size="small"
-                  >
-                    撤销订单
-                  </div>-->
+                  >撤销订单</div>
                   <div
+                    v-if="scope.row.status == '未付款'"
+                    class="delBtn blue"
+                    @click="pay(scope.row)"
+                    type="text"
+                    size="small"
+                  >立即支付</div>
+                  <div
+                    v-if="scope.row.status == '已付款'"
                     class="delBtn blue"
                     @click="seeDingdan(scope.row)"
                     type="text"
@@ -152,7 +161,7 @@
           <el-pagination
             class="fenye"
             @current-change="this.handleCurrentChange"
-            :current-page="this.baoguoliebiaoPage"
+            :current-page="this.dingdanliebiaoPage"
             :page-size="10"
             layout="total, prev, pager, next, jumper"
             :total="total"
@@ -190,11 +199,11 @@ export default {
     Aside
   },
   computed: {
-    ...mapState(["baoguoliebiaoPage"])
+    ...mapState(["dingdanliebiaoPage"])
   },
   watch: {
-    baoguoliebiaoPage: function(page) {
-      this.$store.commit("baoguoliebiaoPage", page);
+    dingdanliebiaoPage: function(page) {
+      this.$store.commit("dingdanliebiaoPage", page);
       this.getData();
     }
   },
@@ -206,7 +215,7 @@ export default {
         monthTime: "",
         name: "",
         time: "",
-        ship_status: "1",
+        ship_status: "0",
         radioVal1: "全部订单",
         kd_order: "",
         order_id: "",
@@ -236,6 +245,9 @@ export default {
     };
   },
   created() {
+    if(this.$route.query.status){
+      this.formInline.ship_status = this.$route.query.status.toString()
+    }
     if (sessionStorage.getItem("token") == "null") {
       setTimeout(() => {
         sessionStorage.setItem("isLogin", "123");
@@ -246,89 +258,111 @@ export default {
   },
   methods: {
     async getData() {
-      var ship_status = "";
-      if (this.formInline.radioVal1 == "全部订单") {
-        ship_status = "";
-      } else if (this.formInline.radioVal1 == "未发货") {
-        ship_status = "1";
-      } else if (this.formInline.radioVal1 == "已发货") {
-        ship_status = "3";
-      }
-      if (this.formInline.time[0]) {
-        const res = await this.$api.getOrder({
-          token: sessionStorage.getItem("token"),
-          limit: 10,
-          page: this.baoguoliebiaoPage,
-          // ship_status: this.formInline.ship_status,
-          ship_status: ship_status,
-          time_type: "1",
-          start_time: this.formInline.time[0],
-          end_time: this.formInline.time[1],
-          keyword: this.formInline.name,
-          order_id: this.formInline.order_id,
-          dsf_order: this.formInline.dsf_order,
-          kd_order: this.formInline.kd_order
-        });
-        console.log(res);
-        if (res.code == 200) {
-          this.tableData = res.data.data;
-          this.total = res.data.total;
-          this.tableData.forEach(ele => {
-            if (ele.import_mode == 1) {
-              ele.import_mode = "淘宝";
-            } else if (ele.import_mode == 2) {
-              ele.import_mode = "京东";
-            } else if (ele.import_mode == 3) {
-              ele.import_mode = "拼多多";
-            } else if (ele.import_mode == 4) {
-              ele.import_mode = "抖音";
-            }
-            if (ele.ship_status == 1) {
-              ele.ship_status = "未发货";
-            } else if (ele.ship_status == 3) {
-              ele.ship_status = "已发货";
-            }
-          });
-        } else {
-          this.$message.error(res.msg);
-        }
-      } else {
-        const res = await this.$api.getOrder({
-          token: sessionStorage.getItem("token"),
-          limit: 10,
-          page: this.baoguoliebiaoPage,
-          ship_status: ship_status,
-          time_type: "2",
-          time_name: this.formInline.monthTime,
-          keyword: this.formInline.name,
-          order_id: this.formInline.order_id,
-          dsf_order: this.formInline.dsf_order,
-          kd_order: this.formInline.kd_order
-        });
-        console.log(res);
-        if (res.code == 200) {
-          this.tableData = res.data.data;
-          this.total = res.data.total;
-          this.tableData.forEach(ele => {
-            if (ele.import_mode == 1) {
-              ele.import_mode = "淘宝";
-            } else if (ele.import_mode == 2) {
-              ele.import_mode = "京东";
-            } else if (ele.import_mode == 3) {
-              ele.import_mode = "拼多多";
-            } else if (ele.import_mode == 4) {
-              ele.import_mode = "抖音";
-            }
-            if (ele.ship_status == 1) {
-              ele.ship_status = "未发货";
-            } else if (ele.ship_status == 3) {
-              ele.ship_status = "已发货";
-            }
-          });
-        } else {
-          this.$message.error(res.msg);
-        }
-      }
+      const res = await this.$api.OrderBg({
+        limit: 10,
+        page: this.dingdanliebiaoPage,
+        token: sessionStorage.getItem("token"),
+        status: this.formInline.ship_status,
+        start_time: this.formInline.time[0],
+        end_time: this.formInline.time[1]
+      });
+      console.log(res.data);
+      this.total = res.data.count;
+      this.tableData = res.data.data;
+      // var ship_status = "";
+      // if (this.formInline.radioVal1 == "全部订单") {
+      //   ship_status = "";
+      // } else if (this.formInline.radioVal1 == "未发货") {
+      //   ship_status = "1";
+      // } else if (this.formInline.radioVal1 == "已发货") {
+      //   ship_status = "3";
+      // }
+      // if (this.formInline.time[0]) {
+      //   const res = await this.$api.OrderBg({
+      //     token: sessionStorage.getItem("token"),
+      //     limit: 10,
+      //     page: this.dingdanliebiaoPage,
+      //     // ship_status: this.formInline.ship_status,
+      //     ship_status: ship_status,
+      //     time_type: "1",
+      //     start_time: this.formInline.time[0],
+      //     end_time: this.formInline.time[1],
+      //     keyword: this.formInline.name,
+      //     order_id: this.formInline.order_id,
+      //     dsf_order: this.formInline.dsf_order,
+      //     kd_order: this.formInline.kd_order
+      //   });
+      //   console.log(res);
+      //   if (res.code == 200) {
+      //     this.tableData = res.data.data;
+      //     this.total = res.data.total;
+      //     this.tableData.forEach(ele => {
+      //       if (ele.import_mode == 1) {
+      //         ele.import_mode = "淘宝";
+      //       } else if (ele.import_mode == 2) {
+      //         ele.import_mode = "京东";
+      //       } else if (ele.import_mode == 3) {
+      //         ele.import_mode = "拼多多";
+      //       } else if (ele.import_mode == 4) {
+      //         ele.import_mode = "抖音";
+      //       }
+      //       if (ele.ship_status == 1) {
+      //         ele.ship_status = "未发货";
+      //       } else if (ele.ship_status == 3) {
+      //         ele.ship_status = "已发货";
+      //       }
+      //     });
+      //   } else {
+      //     this.$message.error(res.msg);
+      //   }
+      // } else {
+      //   const res = await this.$api.getOrder({
+      //     token: sessionStorage.getItem("token"),
+      //     limit: 10,
+      //     page: this.dingdanliebiaoPage,
+      //     ship_status: ship_status,
+      //     time_type: "2",
+      //     time_name: this.formInline.monthTime,
+      //     keyword: this.formInline.name,
+      //     order_id: this.formInline.order_id,
+      //     dsf_order: this.formInline.dsf_order,
+      //     kd_order: this.formInline.kd_order
+      //   });
+      //   console.log(res);
+      //   if (res.code == 200) {
+      //     this.tableData = res.data.data;
+      //     this.total = res.data.total;
+      //     this.tableData.forEach(ele => {
+      //       if (ele.import_mode == 1) {
+      //         ele.import_mode = "淘宝";
+      //       } else if (ele.import_mode == 2) {
+      //         ele.import_mode = "京东";
+      //       } else if (ele.import_mode == 3) {
+      //         ele.import_mode = "拼多多";
+      //       } else if (ele.import_mode == 4) {
+      //         ele.import_mode = "抖音";
+      //       }
+      //       if (ele.ship_status == 1) {
+      //         ele.ship_status = "未发货";
+      //       } else if (ele.ship_status == 3) {
+      //         ele.ship_status = "已发货";
+      //       }
+      //     });
+      //   } else {
+      //     this.$message.error(res.msg);
+      //   }
+      // }
+    },
+    async daochuTable() {
+      const res = await this.$api.OrderExport({
+        token: sessionStorage.getItem("token"),
+        start_time: this.formInline.time[0],
+        end_time: this.formInline.time[1],
+        status: this.formInline.ship_status,
+        type: "2"
+      });
+      console.log(res.data);
+      window.open(res.data);
     },
     changeRadioVal1() {
       this.getData();
@@ -340,14 +374,36 @@ export default {
     // 查看订单
     seeDingdan(row) {
       console.log(row);
-      this.xqObj = row;
-      this.dialogVisible = true;
+      this.$router.push({
+        name: "Baoguoliebiao",
+        query: {
+          order: row.order
+        }
+      });
+    },
+    // 支付
+    async pay(row) {
+      const res = await this.$api.orderBg_pay({
+        token: sessionStorage.getItem("token"),
+        bg: row.order
+      });
+      if (res.code == 200) {
+        this.$message({
+          message: res.msg,
+          type: "success"
+        });
+        setTimeout(() => {
+          this.getData();
+        }, 500);
+      } else {
+        this.$message.error(res.msg);
+      }
     },
     async del(row) {
       console.log(row);
       const res = await this.$api.orderDelOrder({
         token: sessionStorage.getItem("token"),
-        order: row.order_id
+        bg: row.order
       });
       console.log(res);
       if (res.code == 200) {
@@ -372,7 +428,7 @@ export default {
         monthTime: "",
         name: "",
         time: "",
-        ship_status: "1",
+        ship_status: "0",
         radioVal1: "全部订单",
         kd_order: "",
         order_id: "",
@@ -394,7 +450,7 @@ export default {
     // 分页
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
-      this.$store.commit("baoguoliebiaoPage", val);
+      this.$store.commit("dingdanliebiaoPage", val);
     }
   }
 };
@@ -482,6 +538,14 @@ export default {
     }
     .txt3 {
       margin: 0 14px 14px 14px;
+      .myRadio {
+        display: flex;
+        align-content: center;
+        /deep/ .el-button--small {
+          height: 30px;
+          margin-top: 10px;
+        }
+      }
     }
     .txt4 {
       margin: 14px;

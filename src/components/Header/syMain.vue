@@ -107,7 +107,7 @@
         <img class="picc1" src="../../assets/newImg/lujin215.png" alt />
         <div class="txtt1">客服QQ</div>
       </div>
-      <div class="txt3">353546372</div>
+      <div class="txt3">{{qq}}</div>
       <div class="line line2"></div>
       <div class="tit tit2">
         <img class="picc1" src="../../assets/newImg/lujin521.png" alt />
@@ -141,6 +141,7 @@ export default {
     return {
       zxkfDialogVisible: false,
       kefuImg: "",
+      qq:'',
     };
   },
   async created(){
@@ -148,7 +149,8 @@ export default {
         token: sessionStorage.getItem("token"),
       });
       console.log(res);
-      this.kefuImg = res.data;
+      this.kefuImg = res.data.wx;
+      this.qq = res.data.qq;
   },
   methods: {
     async toZaixiankefu() {
@@ -156,7 +158,8 @@ export default {
         token: sessionStorage.getItem("token"),
       });
       console.log(res);
-      this.kefuImg = res.data;
+      this.kefuImg = res.data.wx;
+      this.qq = res.data.qq;
       this.zxkfDialogVisible = true;
     },
     shouye() {

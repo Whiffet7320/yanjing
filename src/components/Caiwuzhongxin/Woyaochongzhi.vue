@@ -37,9 +37,9 @@
         <div v-else @click="chongzhi" class="txt5">确定充值</div>
       </div>
     </div>
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+    <el-dialog title="提示" @closed='closeDia' :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
       <div class="payImg">
-        <div class="txt">充值完成后，请重新刷新页面！</div>
+        <div class="txt">充值完成后，点击关闭后自动刷新页面</div>
       </div>
     </el-dialog>
   </div>
@@ -90,7 +90,9 @@ export default {
       }else{
         this.$message.error(res.msg);
       }
-      
+    },
+    closeDia(){
+      this.$router.go(0)
     },
     async yueTixian() {
       const res = await this.$api.userReCharge({

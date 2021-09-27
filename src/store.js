@@ -23,7 +23,9 @@ export default new Vuex.Store({
     // 财务中心-邀请奖励
     yaoqingjiangliPage: 1,
     // 订单管理-包裹列表
-    baoguoliebiaoPage: 1,
+    dingdanliebiaoPage: 1,
+     // 订单管理-订单列表
+     baoguoliebiaoPage: 1,
     // 立即发货-添加/编辑商品
     tianjiabianjiPage: 1,
     // 分站与api-帮助中心
@@ -35,6 +37,9 @@ export default new Vuex.Store({
     commission:null,
   },
   mutations: {
+    dingdanliebiaoPage(state, str) {
+      state.dingdanliebiaoPage = str;
+    },
     aliPay(state, str) {
       state.aliPay = str;
     },

@@ -12,7 +12,6 @@
             <el-radio-button label="京东"></el-radio-button>
             <el-radio-button label="拼多多"></el-radio-button>
             <el-radio-button label="抖音"></el-radio-button>
-            <el-radio-button label="其他"></el-radio-button>
           </el-radio-group>
         </div>
       </div>
@@ -22,7 +21,7 @@
           <el-radio-group v-model="radioVal2" size="small">
             <el-radio-button label="手动输入"></el-radio-button>
             <el-radio-button label="模板导入"></el-radio-button>
-            <!-- <el-radio-button label="智能筛选"></el-radio-button> -->
+            <el-radio-button label="智能筛选"></el-radio-button>
             <!-- <el-radio-button
               v-if="radioVal1 == '淘宝/天猫'"
               label="淘宝一键下单"
@@ -58,11 +57,11 @@
           <div class="myTable1">
             <vxe-table :data="createTableData">
               <vxe-table-column field="id" width="50" title="#"></vxe-table-column>
-              <vxe-table-column field="order" title="订单编号"></vxe-table-column>
+              <vxe-table-column field="ddnum" title="订单编号"></vxe-table-column>
               <vxe-table-column field="name" title="姓名"></vxe-table-column>
               <vxe-table-column field="phone" title="电话"></vxe-table-column>
-              <vxe-table-column field="myAddress" title="地址"></vxe-table-column>
-              <vxe-table-column field="msg" title="状态"></vxe-table-column>
+              <vxe-table-column field="address" title="地址"></vxe-table-column>
+              <vxe-table-column field="status" title="状态"></vxe-table-column>
               <vxe-table-column title="操作" width="120">
                 <template slot-scope="scope">
                   <div class="flex">
@@ -177,29 +176,6 @@
             <img class="pic" src="../../assets/newImg/zu139.png" alt />
             <div class="txt">确认上传</div>
           </div>
-          <!-- 生成表格 -->
-          <div class="myTable1 tab2">
-            <vxe-table :data="createTableData">
-              <vxe-table-column field="id" width="50" title="#"></vxe-table-column>
-              <vxe-table-column field="order" title="订单编号"></vxe-table-column>
-              <vxe-table-column field="name" title="姓名"></vxe-table-column>
-              <vxe-table-column field="phone" title="电话"></vxe-table-column>
-              <vxe-table-column field="myAddress" title="地址"></vxe-table-column>
-              <vxe-table-column field="msg" title="状态"></vxe-table-column>
-              <vxe-table-column title="操作" width="120">
-                <template slot-scope="scope">
-                  <div class="flex">
-                    <el-button
-                      size="small"
-                      @click="tabEdit(scope.row,scope.rowIndex)"
-                      type="text"
-                    >编辑</el-button>
-                    <el-button size="small" @click="tabDel(scope.row,scope.rowIndex)" type="text">删除</el-button>
-                  </div>
-                </template>
-              </vxe-table-column>
-            </vxe-table>
-          </div>
         </div>
         <div class="nav4">
           <div class="txt1">最后一步：选择赠送礼品</div>
@@ -255,7 +231,7 @@
               <el-input class="labInp" v-model="sdsrcwbzVal1"></el-input>
             </div>
             <div class="footer">
-              <div @click="querenShangchuan2" class="btn">确认订单</div>
+              <div @click="querenShangchuan" class="btn">确认订单</div>
               <!-- <div class="txt">总共 0 个 收件人，每位价格 ￥ 0</div> -->
             </div>
           </div>
@@ -565,8 +541,8 @@
                     <el-radio-button
                       v-for="item in dataObj.yun_cang"
                       :key="item.id"
-                      :label="item.id"
-                    >{{item.logi_name}}</el-radio-button>
+                      :label="item.logi_name"
+                    ></el-radio-button>
                   </el-radio-group>
                 </el-form-item>
                 <el-form-item label="面单：">
@@ -683,7 +659,7 @@
               </template>
             </vxe-table>
             <div class="rightBox">
-              <div class="r-nav1">{{ ycVal }}</div>
+              <div class="r-nav1">{{ form.cangchu }}</div>
               <div class="r-nav2">注：下单后每个收件人将收到以上产品</div>
               <div class="r-nav3">
                 <div class="nav1">
@@ -697,7 +673,7 @@
                 <div v-if="tableData3[0]">
                   <div class="nav1">
                     <div class="txt1">快递运费</div>
-                    <div class="txt2">¥{{ kdyunfei.toFixed(2) }}</div>
+                    <div class="txt2">¥{{ kdyunfei }}</div>
                   </div>
                   <div class="nav1">
                     <div class="txt1">共计：</div>
@@ -843,7 +819,7 @@
       <div class="myTabDialog">
         <el-form ref="myTabForm" :model="myTabForm" label-width="80px">
           <el-form-item label="订单编号：">
-            <el-input size="small" v-model="myTabForm.order"></el-input>
+            <el-input size="small" v-model="myTabForm.ddnum"></el-input>
           </el-form-item>
           <el-form-item label="姓名：">
             <el-input size="small" v-model="myTabForm.name"></el-input>
@@ -852,7 +828,7 @@
             <el-input size="small" v-model="myTabForm.phone"></el-input>
           </el-form-item>
           <el-form-item label="地址：">
-            <el-input size="small" type="textarea" v-model="myTabForm.myAddress"></el-input>
+            <el-input size="small" type="textarea" v-model="myTabForm.address"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button size="small" type="info" @click="myTabOnSubmit">确认修改</el-button>
@@ -901,31 +877,31 @@ export default {
       this.$store.commit("tianjiabianjiPage", page);
       this.getData();
     },
-    addShopNum: {
-      deep: true, //深度监听设置为 true
-      handler: function() {
-        if (this.tableData3[0]) {
-          if (Number(this.tableData3[0].weight) * this.addShopNum < 1) {
-            this.kdyunfei = Number(this.dataObj.kd_price.kg);
-          } else {
-            var num = parseInt(
-              (Number(this.tableData3[0].weight) * this.addShopNum) / 1
-            );
-            this.kdyunfei =
-              Number(this.dataObj.kd_price.kg) +
-              num * this.dataObj.kd_price.kg_add;
-          }
-        }
-        if (this.radioVal2 == "手动输入") {
-          if (this.radioVal2 == "手动输入") {
-            this.peopleNum = this.textarea1.split(";").length - 1;
-          }
-        }
-        this.shopPrice =
-          this.tableData3[0].price * this.addShopNum + this.kdyunfei;
-        this.zongPrice = this.shopPrice * this.peopleNum;
-      }
-    },
+    // addShopNum: {
+    //   deep: true, //深度监听设置为 true
+    //   handler: function () {
+    //     if (this.tableData3[0]) {
+    //       if (Number(this.tableData3[0].weight) * this.addShopNum < 1) {
+    //         this.kdyunfei = Number(this.dataObj.kd_price.kg);
+    //       } else {
+    //         var num = parseInt(
+    //           (Number(this.tableData3[0].weight) * this.addShopNum) / 1
+    //         );
+    //         this.kdyunfei =
+    //           Number(this.dataObj.kd_price.kg) +
+    //           num * this.dataObj.kd_price.kg_add;
+    //       }
+    //     }
+    //     if (this.radioVal2 == "手动输入") {
+    //       if (this.radioVal2 == "手动输入") {
+    //         this.peopleNum = this.textarea1.split(";").length - 1;
+    //       }
+    //     }
+    //     this.shopPrice =
+    //       this.tableData3[0].price * this.addShopNum + this.kdyunfei;
+    //     this.zongPrice = this.shopPrice * this.peopleNum;
+    //   },
+    // },
     tableData3: {
       deep: true, //深度监听设置为 true
       handler: function() {
@@ -962,7 +938,6 @@ export default {
             this.kdyunfei =
               Number(this.dataObj.kd_price.kg) +
               num * this.dataObj.kd_price.kg_add;
-            console.log(this.kdyunfei);
           }
         }
         if (this.radioVal2 == "手动输入") {
@@ -977,7 +952,6 @@ export default {
   },
   data() {
     return {
-      createTableData2: [],
       myTabDialogVisible: false,
       myTabArr: [],
       createTableArr: [],
@@ -1003,7 +977,7 @@ export default {
       searchVal: "",
       form: {
         fenlei: "礼品商城",
-        cangchu: "",
+        cangchu: "华北云仓",
         miandan: "海带宝",
         paixu: "",
         jiage: 0,
@@ -1326,7 +1300,6 @@ export default {
           ]
         }
       ],
-      ycVal:'',
       //   新增店铺
       xzdpDialogVisible: false,
       xzdpForm: {
@@ -1390,8 +1363,6 @@ export default {
         this.total = res.data.total;
         this.dataObj = res.data;
         this.ycId = res.data.yun_cang[0].id;
-        this.form.cangchu = this.ycId;
-        this.ycVal = res.data.yun_cang[0].logi_name;
         this.flId = res.data.goods_classify[0].id;
         this.kdId = res.data.kd_data[0].id;
       }
@@ -1424,7 +1395,7 @@ export default {
     myTabHandleClose() {
       this.myTabDialogVisible = false;
     },
-    async wanchengtianjia() {
+    wanchengtianjia() {
       if (this.tableData3[0]) {
         if (Number(this.tableData3[0].weight) * this.addShopNum < 1) {
           this.kdyunfei = Number(this.dataObj.kd_price.kg);
@@ -1449,55 +1420,37 @@ export default {
       }
 
       this.zongPrice = this.shopPrice * this.peopleNum;
-      // this.createTable();//生成表格
-      const res = await this.$api.orderCutAddress({
-        token: sessionStorage.getItem("token"),
-        data: this.textarea1,
-        yc: this.form.cangchu
-      });
-      console.log(res, 1111111);
-      this.createTableData = res.data.data;
-      this.createTableData.forEach(ele => {
-        ele.myAddress = `${ele.address.province}${ele.address.city}${ele.address.county}${ele.address.address}`;
-      });
+      this.createTable();
     },
     isPoneAvailable(pone) {
       var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
       if (!myreg.test(pone)) {
-        return "false";
+        return 'false';
       } else {
-        return "true";
+        return 'true';
       }
     },
     myTabOnSubmit() {
       for (const key in this.myTabForm) {
         // if(this.createTableData[this.myTabIndex])
-        if (key == "phone") {
-          this.myTabForm.status =
-            this.isPoneAvailable(this.myTabForm[key]) == "true"
-              ? "验证通过"
-              : "验证未通过";
-          this.$set(
-            this.createTableData[this.myTabIndex],
-            "status",
-            this.myTabForm.status
-          );
-        }
         this.$set(
           this.createTableData[this.myTabIndex],
           key,
           this.myTabForm[key]
         );
+        if(key == 'phone'){
+           this.myTabForm.status = this.isPoneAvailable(this.myTabForm[key]) == 'true' ? '验证通过' : '验证未通过';
+        }
         // this.createTableArr
         this.createTableData.forEach((ele, i) => {
           if (i >= 1) {
             this.createTableArr[
               i
-            ] = `\n${ele.order},${ele.name},${ele.phone},${ele.myAddress};`;
+            ] = `\n${ele.ddnum},${ele.name},${ele.phone},${ele.address};`;
           } else {
             this.createTableArr[
               i
-            ] = `${ele.order},${ele.name},${ele.phone},${ele.myAddress};`;
+            ] = `${ele.ddnum},${ele.name},${ele.phone},${ele.address};`;
           }
         });
         this.textarea1 = "";
@@ -1506,7 +1459,7 @@ export default {
         });
         this.myTabDialogVisible = false;
         console.log(this.createTableArr, this.textarea1);
-        this.wanchengtianjia();
+        this.createTable()
       }
     },
     createTable() {
@@ -1529,8 +1482,7 @@ export default {
         obj.name = newArr[1];
         obj.phone = newArr[2];
         obj.address = newArr[3];
-        obj.status =
-          this.isPoneAvailable(newArr[2]) == "true" ? "验证通过" : "验证未通过";
+        obj.status = this.isPoneAvailable(newArr[2]) == 'true' ? '验证通过' : '验证未通过';
         // this.createTableData.push(obj)
         this.$set(this.createTableData, i, obj);
       });
@@ -1541,12 +1493,10 @@ export default {
       this.getData();
     },
     async changeVal1(val) {
-      console.log(val)
       var obj = {};
       obj = this.dataObj.yun_cang.find(function(item) {
-        return item.id === val;
+        return item.logi_name === val;
       });
-      this.ycVal = obj.logi_name;
       // console.log(obj.id); //label值
       const res = await this.$api.switchYc({
         token: sessionStorage.getItem("token"),
@@ -1655,8 +1605,6 @@ export default {
           this.import_mode = 3;
         } else if (this.radioVal1 == "抖音") {
           this.import_mode = 4;
-        } else if (this.radioVal1 == "其他") {
-          this.import_mode = 5;
         }
         if (this.radioVal2 == "手动输入") {
           this.import_type = 2;
@@ -1673,8 +1621,7 @@ export default {
           goods_id: this.tableData3[0] ? this.tableData3[0].id : "",
           kd_id: this.kdId,
           goods_member: this.tableData3[0] ? this.tableData3[0].num : 0,
-          remarks: this.sdsrcwbzVal1,
-          yc: this.form.cangchu
+          remarks: this.sdsrcwbzVal1
         });
         console.log(res);
         if (res.code == 200) {
@@ -1693,88 +1640,62 @@ export default {
       });
     },
     // 模板导入的确认订单
-    querenShangchuan() {
-      console.log(this.createTableData2);
-      this.createTableData = this.createTableData2;
-      this.createTableData.forEach(ele => {
-        ele.myAddress = `${ele.address.province}${ele.address.city}${ele.address.county}${ele.address.address}`;
-      });
-    },
-    async querenShangchuan2() {
-      this.myformData = new FormData();
-      this.$confirm("确定支付?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消"
-      }).then(async () => {
-        if (this.radioVal1 == "淘宝/天猫") {
-          this.import_mode = 1;
-        } else if (this.radioVal1 == "京东") {
-          this.import_mode = 2;
-        } else if (this.radioVal1 == "拼多多") {
-          this.import_mode = 3;
-        } else if (this.radioVal1 == "抖音") {
-          this.import_mode = 4;
+    async querenShangchuan() {
+      if (this.radioVal1 == "淘宝/天猫") {
+        this.import_mode = 1;
+      } else if (this.radioVal1 == "京东") {
+        this.import_mode = 2;
+      } else if (this.radioVal1 == "拼多多") {
+        this.import_mode = 3;
+      } else if (this.radioVal1 == "抖音") {
+        this.import_mode = 4;
+      }
+      if (this.radioVal2 == "手动输入") {
+        this.import_type = 2;
+      } else if (this.radioVal2 == "模板导入") {
+        this.import_type = 1;
+      } else if (this.radioVal2 == "智能筛选") {
+        this.import_type = 3;
+      }
+      this.myformData.append("token", sessionStorage.getItem("token"));
+      this.myformData.append("import_mode", this.import_mode);
+      this.myformData.append("type", this.import_type);
+      this.myformData.append(
+        "goods_id",
+        this.tableData3[0] ? this.tableData3[0].id : ""
+      );
+      this.myformData.append("kd_id", this.kdId);
+      this.myformData.append(
+        "goods_member",
+        this.tableData3[0] ? this.tableData3[0].num : 0
+      );
+      this.myformData.append("remarks", this.sdsrcwbzVal1);
+      var configs = {
+        headers: {
+          "Content-Type": "multipart/form-data;charse=UTF-8"
         }
-        if (this.radioVal2 == "手动输入") {
-          this.import_type = 2;
-        } else if (this.radioVal2 == "模板导入") {
-          this.import_type = 1;
-        } else if (this.radioVal2 == "智能筛选") {
-          this.import_type = 3;
-        }
-        this.myformData.append("token", sessionStorage.getItem("token"));
-        this.myformData.append("import_mode", this.import_mode);
-        this.myformData.append("yc", this.form.cangchu);
-        this.myformData.append("data", this.textarea1);
-        this.myformData.append(
-          "goods_id",
-          this.tableData3[0] ? this.tableData3[0].id : ""
-        );
-        this.myformData.append("kd_id", this.kdId);
-        this.myformData.append(
-          "goods_member",
-          this.tableData3[0] ? this.tableData3[0].num : 0
-        );
-        this.myformData.append("remarks", this.sdsrcwbzVal1);
-        var configs = {
-          headers: {
-            "Content-Type": "multipart/form-data;charse=UTF-8"
+      };
+      axios
+        .post(
+          "http://47.100.26.153/home/order/insertData",
+          this.myformData,
+          configs
+        )
+        .then(res => {
+          console.log(res);
+          if (res.data.code == 200) {
+            this.$message({
+              message: res.data.msg,
+              type: "success"
+            });
+            this.$router.push({ name: "Dingdanliebiao" });
+          } else {
+            this.$message({
+              message: res.data.msg,
+              type: "warning"
+            });
           }
-        };
-        const res = await this.$api.orderInsertData({
-          token: sessionStorage.getItem("token"),
-          import_mode: this.import_mode,
-          type: this.import_type,
-          data: this.textarea1,
-          goods_id: this.tableData3[0] ? this.tableData3[0].id : "",
-          kd_id: this.kdId,
-          goods_member: this.tableData3[0] ? this.tableData3[0].num : 0,
-          remarks: this.sdsrcwbzVal1,
-          yc: this.form.cangchu
         });
-        console.log(res);
-        axios
-          .post(
-            "http://ht.yuncanggift.com/home/order/insertData",
-            this.myformData,
-            configs
-          )
-          .then(res => {
-            console.log(res);
-            if (res.data.code == 200) {
-              this.$message({
-                message: res.data.msg,
-                type: "success"
-              });
-              this.$router.push({ name: "Dingdanliebiao" });
-            } else {
-              this.$message({
-                message: res.data.msg,
-                type: "warning"
-              });
-            }
-          });
-      });
     },
     // 智能筛选的确认订单
     async onSubmitZhineng() {
@@ -1821,45 +1742,25 @@ export default {
     // 上传文件
     upLoadSuccess(response, file) {
       console.log(file.raw);
-      this.myformData2 = new FormData();
-      this.myformData2.append("formData", file.raw);
-      this.myformData2.append("token", sessionStorage.getItem("token"));
-      this.myformData2.append("yc", this.form.cangchu);
-      var configs = {
-        headers: {
-          "Content-Type": "multipart/form-data;charse=UTF-8"
-        }
-      };
-      axios
-        .post(
-          "http://ht.yuncanggift.com/home/order/getFilterData",
-          this.myformData2,
-          configs
-        )
-        .then(res => {
-          console.log(res.data, 22222222);
-          if (res.data.code == 200) {
-            this.createTableData2 = res.data.data.data;
-          } else {
-            this.$message({
-              message: res.data.msg,
-              type: "warning"
-            });
-          }
-        });
+      this.myformData = new FormData();
+      this.myformData.append("formData", file.raw);
       if (this.radioVal2 == "智能筛选") {
         this.myformData2 = new FormData();
         this.myformData2.append("formData", file.raw);
         this.myformData2.append("token", sessionStorage.getItem("token"));
-        this.myformData2.append("yc", this.form.cangchu);
+        var configs = {
+          headers: {
+            "Content-Type": "multipart/form-data;charse=UTF-8"
+          }
+        };
         axios
           .post(
-            "http://ht.yuncanggift.com/home/order/getFilterData",
+            "http://47.100.26.153/home/order/getFilterData",
             this.myformData2,
             configs
           )
           .then(res => {
-            console.log(res.data, 22222222);
+            console.log(res.data);
             if (res.data.code == 200) {
               this.orderArr = res.data.data.order;
               this.strDataArr = res.data.data.strData;
@@ -3202,11 +3103,6 @@ export default {
   /deep/ .el-dialog__body {
     background: #f5f7fa !important;
   }
-}
-.myTable1.tab2 {
-  margin-left: 0px;
-  margin-top: 20px;
-  margin-bottom: 10px;
 }
 .myTable1 {
   width: 1040px;

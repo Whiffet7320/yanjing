@@ -10,43 +10,21 @@
           <el-tab-pane label="系统公告" name="3">
             <div class="xtgg">
               <div class="nav1" v-if="!Bangzhuzhongxinxiangqin">
-                <img style="width: 24px;height: 24px;" src="../../assets/newImg/tubiao301.png" alt="" />
+                <img style="width: 24px;height: 24px;" src="../../assets/newImg/tubiao301.png" alt />
                 <div class="txt1">最新通知</div>
                 <div class="bt1" @click="onfabu">
                   <div :class="{ txt: true, active: fabu == 1 }">最新发布</div>
-                  <img
-                    class="pic"
-                    v-if="fabu == 1"
-                    src="../../assets/newImg/zu69.png"
-                    alt=""
-                  />
-                  <img
-                    class="pic"
-                    v-else
-                    src="../../assets/newImg/zu71.png"
-                    alt=""
-                  />
+                  <img class="pic" v-if="fabu == 1" src="../../assets/newImg/zu69.png" alt />
+                  <img class="pic" v-else src="../../assets/newImg/zu71.png" alt />
                 </div>
                 <div class="bt1 bt2" @click="onpaixu">
-                  <div :class="{ txt: true, active: morenpaixu == 1 }">
-                    默认排序
-                  </div>
-                  <img
-                    class="pic"
-                    v-if="morenpaixu == 1"
-                    src="../../assets/newImg/zu69.png"
-                    alt=""
-                  />
-                  <img
-                    class="pic"
-                    v-else
-                    src="../../assets/newImg/zu71.png"
-                    alt=""
-                  />
+                  <div :class="{ txt: true, active: morenpaixu == 1 }">默认排序</div>
+                  <img class="pic" v-if="morenpaixu == 1" src="../../assets/newImg/zu69.png" alt />
+                  <img class="pic" v-else src="../../assets/newImg/zu71.png" alt />
                 </div>
               </div>
               <div v-else class="nav11" @click="toBack">
-                <img class="pic1" src="../../assets/newImg/zu119.png" alt="" />
+                <img class="pic1" src="../../assets/newImg/zu119.png" alt />
                 <div class="txt1">返回上一层</div>
               </div>
               <template v-if="!Bangzhuzhongxinxiangqin">
@@ -56,37 +34,26 @@
                     <div class="txt2">{{ item.ctime }}</div>
                   </div>
                   <div class="tit2">
-                    <div class="txt1">
-                      {{ item.brief }}
-                    </div>
-                    <div class="txt2" @click="toXiangqin(item.id)">
-                      查看详情
-                    </div>
+                    <div class="txt1">{{ item.brief }}</div>
+                    <div class="txt2" @click="toXiangqin(item.id)">查看详情</div>
                   </div>
                 </div>
               </template>
 
               <div v-else class="nav3">
-                <div class="tit1">
-                  通知：{{ Bangzhuzhongxinxiangqin.title }}
-                </div>
+                <div class="tit1">通知：{{ Bangzhuzhongxinxiangqin.title }}</div>
                 <div class="tit2">
-                  <div class="txt1">
-                    来源：{{ Bangzhuzhongxinxiangqin.title1 }}
-                  </div>
-                  <div class="txt1">
-                    发布时间:{{ Bangzhuzhongxinxiangqin.title2 }}
-                  </div>
-                  <div class="txt1">
-                    浏览量:{{ Bangzhuzhongxinxiangqin.title3 }}
-                  </div>
+                  <div class="txt1">来源：{{ Bangzhuzhongxinxiangqin.title1 }}</div>
+                  <div class="txt1">发布时间:{{ Bangzhuzhongxinxiangqin.title2 }}</div>
+                  <div class="txt1">浏览量:{{ Bangzhuzhongxinxiangqin.title3 }}</div>
                 </div>
-                <div v-html="Bangzhuzhongxinxiangqin.title4" class="tit3">
-                  {{ Bangzhuzhongxinxiangqin.title4 }}
-                </div>
+                <div
+                  v-html="encodeHtml(Bangzhuzhongxinxiangqin.title4)"
+                  class="tit3"
+                >{{ Bangzhuzhongxinxiangqin.title4 }}</div>
                 <!-- <div v-html="Bangzhuzhongxinxiangqin11" class="tit3">
                   {{ Bangzhuzhongxinxiangqin.title4 }}
-                </div> -->
+                </div>-->
               </div>
               <!-- 分页 -->
               <div v-if="!Bangzhuzhongxinxiangqin" class="nav4">
@@ -98,51 +65,28 @@
                   layout="prev, pager, next, jumper"
                   :total="total"
                   background
-                >
-                </el-pagination>
+                ></el-pagination>
               </div>
             </div>
           </el-tab-pane>
           <el-tab-pane label="新闻资讯" name="4">
             <div class="xtgg">
               <div class="nav1" v-if="!Bangzhuzhongxinxiangqin">
-                <img style="width: 24px;height: 24px;" src="../../assets/newImg/tubiao301.png" alt="" />
+                <img style="width: 24px;height: 24px;" src="../../assets/newImg/tubiao301.png" alt />
                 <div class="txt1">最新通知</div>
                 <div class="bt1" @click="onfabu">
                   <div :class="{ txt: true, active: fabu == 1 }">最新发布</div>
-                  <img
-                    class="pic"
-                    v-if="fabu == 1"
-                    src="../../assets/newImg/zu69.png"
-                    alt=""
-                  />
-                  <img
-                    class="pic"
-                    v-else
-                    src="../../assets/newImg/zu71.png"
-                    alt=""
-                  />
+                  <img class="pic" v-if="fabu == 1" src="../../assets/newImg/zu69.png" alt />
+                  <img class="pic" v-else src="../../assets/newImg/zu71.png" alt />
                 </div>
                 <div class="bt1 bt2" @click="onpaixu">
-                  <div :class="{ txt: true, active: morenpaixu == 1 }">
-                    默认排序
-                  </div>
-                  <img
-                    class="pic"
-                    v-if="morenpaixu == 1"
-                    src="../../assets/newImg/zu69.png"
-                    alt=""
-                  />
-                  <img
-                    class="pic"
-                    v-else
-                    src="../../assets/newImg/zu71.png"
-                    alt=""
-                  />
+                  <div :class="{ txt: true, active: morenpaixu == 1 }">默认排序</div>
+                  <img class="pic" v-if="morenpaixu == 1" src="../../assets/newImg/zu69.png" alt />
+                  <img class="pic" v-else src="../../assets/newImg/zu71.png" alt />
                 </div>
               </div>
               <div v-else class="nav11" @click="toBack">
-                <img class="pic1" src="../../assets/newImg/zu119.png" alt="" />
+                <img class="pic1" src="../../assets/newImg/zu119.png" alt />
                 <div class="txt1">返回上一层</div>
               </div>
               <template v-if="!Bangzhuzhongxinxiangqin">
@@ -152,34 +96,23 @@
                     <div class="txt2">{{ item.ctime }}</div>
                   </div>
                   <div class="tit2">
-                    <div class="txt1">
-                      {{ item.brief }}
-                    </div>
-                    <div class="txt2" @click="toXiangqin(item.id)">
-                      查看详情
-                    </div>
+                    <div class="txt1">{{ item.brief }}</div>
+                    <div class="txt2" @click="toXiangqin(item.id)">查看详情</div>
                   </div>
                 </div>
               </template>
 
               <div v-else class="nav3">
-                <div class="tit1">
-                  通知：{{ Bangzhuzhongxinxiangqin.title }}
-                </div>
+                <div class="tit1">通知：{{ Bangzhuzhongxinxiangqin.title }}</div>
                 <div class="tit2">
-                  <div class="txt1">
-                    来源：{{ Bangzhuzhongxinxiangqin.title1 }}
-                  </div>
-                  <div class="txt1">
-                    发布时间:{{ Bangzhuzhongxinxiangqin.title2 }}
-                  </div>
-                  <div class="txt1">
-                    浏览量:{{ Bangzhuzhongxinxiangqin.title3 }}
-                  </div>
+                  <div class="txt1">来源：{{ Bangzhuzhongxinxiangqin.title1 }}</div>
+                  <div class="txt1">发布时间:{{ Bangzhuzhongxinxiangqin.title2 }}</div>
+                  <div class="txt1">浏览量:{{ Bangzhuzhongxinxiangqin.title3 }}</div>
                 </div>
-                <div v-html="Bangzhuzhongxinxiangqin.title4" class="tit3">
-                  {{ Bangzhuzhongxinxiangqin.title4 }}
-                </div>
+                <div
+                  v-html="encodeHtml(Bangzhuzhongxinxiangqin.title4)"
+                  class="tit3"
+                >{{ Bangzhuzhongxinxiangqin.title4 }}</div>
               </div>
               <!-- 分页 -->
               <div v-if="!Bangzhuzhongxinxiangqin" class="nav4">
@@ -191,51 +124,28 @@
                   layout="prev, pager, next, jumper"
                   :total="total"
                   background
-                >
-                </el-pagination>
+                ></el-pagination>
               </div>
             </div>
           </el-tab-pane>
           <el-tab-pane label="行业资讯" name="5">
             <div class="xtgg">
               <div class="nav1" v-if="!Bangzhuzhongxinxiangqin">
-                <img style="width: 24px;height: 24px;" src="../../assets/newImg/tubiao301.png" alt="" />
+                <img style="width: 24px;height: 24px;" src="../../assets/newImg/tubiao301.png" alt />
                 <div class="txt1">最新通知</div>
                 <div class="bt1" @click="onfabu">
                   <div :class="{ txt: true, active: fabu == 1 }">最新发布</div>
-                  <img
-                    class="pic"
-                    v-if="fabu == 1"
-                    src="../../assets/newImg/zu69.png"
-                    alt=""
-                  />
-                  <img
-                    class="pic"
-                    v-else
-                    src="../../assets/newImg/zu71.png"
-                    alt=""
-                  />
+                  <img class="pic" v-if="fabu == 1" src="../../assets/newImg/zu69.png" alt />
+                  <img class="pic" v-else src="../../assets/newImg/zu71.png" alt />
                 </div>
                 <div class="bt1 bt2" @click="onpaixu">
-                  <div :class="{ txt: true, active: morenpaixu == 1 }">
-                    默认排序
-                  </div>
-                  <img
-                    class="pic"
-                    v-if="morenpaixu == 1"
-                    src="../../assets/newImg/zu69.png"
-                    alt=""
-                  />
-                  <img
-                    class="pic"
-                    v-else
-                    src="../../assets/newImg/zu71.png"
-                    alt=""
-                  />
+                  <div :class="{ txt: true, active: morenpaixu == 1 }">默认排序</div>
+                  <img class="pic" v-if="morenpaixu == 1" src="../../assets/newImg/zu69.png" alt />
+                  <img class="pic" v-else src="../../assets/newImg/zu71.png" alt />
                 </div>
               </div>
               <div v-else class="nav11" @click="toBack">
-                <img class="pic1" src="../../assets/newImg/zu119.png" alt="" />
+                <img class="pic1" src="../../assets/newImg/zu119.png" alt />
                 <div class="txt1">返回上一层</div>
               </div>
               <template v-if="!Bangzhuzhongxinxiangqin">
@@ -245,34 +155,23 @@
                     <div class="txt2">{{ item.ctime }}</div>
                   </div>
                   <div class="tit2">
-                    <div class="txt1">
-                      {{ item.brief }}
-                    </div>
-                    <div class="txt2" @click="toXiangqin(item.id)">
-                      查看详情
-                    </div>
+                    <div class="txt1">{{ item.brief }}</div>
+                    <div class="txt2" @click="toXiangqin(item.id)">查看详情</div>
                   </div>
                 </div>
               </template>
 
               <div v-else class="nav3">
-                <div class="tit1">
-                  通知：{{ Bangzhuzhongxinxiangqin.title }}
-                </div>
+                <div class="tit1">通知：{{ Bangzhuzhongxinxiangqin.title }}</div>
                 <div class="tit2">
-                  <div class="txt1">
-                    来源：{{ Bangzhuzhongxinxiangqin.title1 }}
-                  </div>
-                  <div class="txt1">
-                    发布时间:{{ Bangzhuzhongxinxiangqin.title2 }}
-                  </div>
-                  <div class="txt1">
-                    浏览量:{{ Bangzhuzhongxinxiangqin.title3 }}
-                  </div>
+                  <div class="txt1">来源：{{ Bangzhuzhongxinxiangqin.title1 }}</div>
+                  <div class="txt1">发布时间:{{ Bangzhuzhongxinxiangqin.title2 }}</div>
+                  <div class="txt1">浏览量:{{ Bangzhuzhongxinxiangqin.title3 }}</div>
                 </div>
-                <div v-html="Bangzhuzhongxinxiangqin.title4" class="tit3">
-                  {{ Bangzhuzhongxinxiangqin.title4 }}
-                </div>
+                <div
+                  v-html="encodeHtml(Bangzhuzhongxinxiangqin.title4)"
+                  class="tit3"
+                >{{ Bangzhuzhongxinxiangqin.title4 }}</div>
               </div>
               <!-- 分页 -->
               <div v-if="!Bangzhuzhongxinxiangqin" class="nav4">
@@ -284,51 +183,28 @@
                   layout="prev, pager, next, jumper"
                   :total="total"
                   background
-                >
-                </el-pagination>
+                ></el-pagination>
               </div>
             </div>
           </el-tab-pane>
           <el-tab-pane label="常见问题" name="6">
             <div class="xtgg">
               <div class="nav1" v-if="!Bangzhuzhongxinxiangqin">
-                <img style="width: 24px;height: 24px;" src="../../assets/newImg/tubiao301.png" alt="" />
+                <img style="width: 24px;height: 24px;" src="../../assets/newImg/tubiao301.png" alt />
                 <div class="txt1">最新通知</div>
                 <div class="bt1" @click="onfabu">
                   <div :class="{ txt: true, active: fabu == 1 }">最新发布</div>
-                  <img
-                    class="pic"
-                    v-if="fabu == 1"
-                    src="../../assets/newImg/zu69.png"
-                    alt=""
-                  />
-                  <img
-                    class="pic"
-                    v-else
-                    src="../../assets/newImg/zu71.png"
-                    alt=""
-                  />
+                  <img class="pic" v-if="fabu == 1" src="../../assets/newImg/zu69.png" alt />
+                  <img class="pic" v-else src="../../assets/newImg/zu71.png" alt />
                 </div>
                 <div class="bt1 bt2" @click="onpaixu">
-                  <div :class="{ txt: true, active: morenpaixu == 1 }">
-                    默认排序
-                  </div>
-                  <img
-                    class="pic"
-                    v-if="morenpaixu == 1"
-                    src="../../assets/newImg/zu69.png"
-                    alt=""
-                  />
-                  <img
-                    class="pic"
-                    v-else
-                    src="../../assets/newImg/zu71.png"
-                    alt=""
-                  />
+                  <div :class="{ txt: true, active: morenpaixu == 1 }">默认排序</div>
+                  <img class="pic" v-if="morenpaixu == 1" src="../../assets/newImg/zu69.png" alt />
+                  <img class="pic" v-else src="../../assets/newImg/zu71.png" alt />
                 </div>
               </div>
               <div v-else class="nav11" @click="toBack">
-                <img class="pic1" src="../../assets/newImg/zu119.png" alt="" />
+                <img class="pic1" src="../../assets/newImg/zu119.png" alt />
                 <div class="txt1">返回上一层</div>
               </div>
               <template v-if="!Bangzhuzhongxinxiangqin">
@@ -338,34 +214,23 @@
                     <div class="txt2">{{ item.ctime }}</div>
                   </div>
                   <div class="tit2">
-                    <div class="txt1">
-                      {{ item.brief }}
-                    </div>
-                    <div class="txt2" @click="toXiangqin(item.id)">
-                      查看详情
-                    </div>
+                    <div class="txt1">{{ item.brief }}</div>
+                    <div class="txt2" @click="toXiangqin(item.id)">查看详情</div>
                   </div>
                 </div>
               </template>
 
               <div v-else class="nav3">
-                <div class="tit1">
-                  通知：{{ Bangzhuzhongxinxiangqin.title }}
-                </div>
+                <div class="tit1">通知：{{ Bangzhuzhongxinxiangqin.title }}</div>
                 <div class="tit2">
-                  <div class="txt1">
-                    来源：{{ Bangzhuzhongxinxiangqin.title1 }}
-                  </div>
-                  <div class="txt1">
-                    发布时间:{{ Bangzhuzhongxinxiangqin.title2 }}
-                  </div>
-                  <div class="txt1">
-                    浏览量:{{ Bangzhuzhongxinxiangqin.title3 }}
-                  </div>
+                  <div class="txt1">来源：{{ Bangzhuzhongxinxiangqin.title1 }}</div>
+                  <div class="txt1">发布时间:{{ Bangzhuzhongxinxiangqin.title2 }}</div>
+                  <div class="txt1">浏览量:{{ Bangzhuzhongxinxiangqin.title3 }}</div>
                 </div>
-                <div v-html="Bangzhuzhongxinxiangqin.title4" class="tit3">
-                  {{ Bangzhuzhongxinxiangqin.title4 }}
-                </div>
+                <div
+                  v-html="encodeHtml(Bangzhuzhongxinxiangqin.title4)"
+                  class="tit3"
+                >{{ Bangzhuzhongxinxiangqin.title4 }}</div>
               </div>
               <!-- 分页 -->
               <div v-if="!Bangzhuzhongxinxiangqin" class="nav4">
@@ -377,8 +242,7 @@
                   layout="prev, pager, next, jumper"
                   :total="total"
                   background
-                >
-                </el-pagination>
+                ></el-pagination>
               </div>
             </div>
           </el-tab-pane>
@@ -387,54 +251,36 @@
               <div class="nav1" v-if="!guanyuwomenxiangqin">
                 <div class="bt1" @click="onfabu">
                   <div :class="{ txt: true, active: fabu == 1 }">最新发布</div>
-                  <img
-                    class="pic"
-                    v-if="fabu == 1"
-                    src="../../assets/newImg/zu69.png"
-                    alt=""
-                  />
-                  <img
-                    class="pic"
-                    v-else
-                    src="../../assets/newImg/zu71.png"
-                    alt=""
-                  />
+                  <img class="pic" v-if="fabu == 1" src="../../assets/newImg/zu69.png" alt />
+                  <img class="pic" v-else src="../../assets/newImg/zu71.png" alt />
                 </div>
                 <div class="bt1 bt2" @click="onpaixu">
-                  <div :class="{ txt: true, active: morenpaixu == 1 }">
-                    默认排序
-                  </div>
-                  <img
-                    class="pic"
-                    v-if="morenpaixu == 1"
-                    src="../../assets/newImg/zu69.png"
-                    alt=""
-                  />
-                  <img
-                    class="pic"
-                    v-else
-                    src="../../assets/newImg/zu71.png"
-                    alt=""
-                  />
+                  <div :class="{ txt: true, active: morenpaixu == 1 }">默认排序</div>
+                  <img class="pic" v-if="morenpaixu == 1" src="../../assets/newImg/zu69.png" alt />
+                  <img class="pic" v-else src="../../assets/newImg/zu71.png" alt />
                 </div>
               </div>
               <div v-else class="nav11" @click="toguanyuwomenBack">
-                <img class="pic1" src="../../assets/newImg/zu119.png" alt="" />
+                <img class="pic1" src="../../assets/newImg/zu119.png" alt />
                 <div class="txt1">返回上一层</div>
               </div>
               <template v-if="!guanyuwomenxiangqin">
                 <div class="nav2">
                   <div class="tit1">
                     <div class="txt1">
-                      <img style="width: 24px;height: 24px;" src="../../assets/newImg/tubiao301.png" alt="" />
+                      <img
+                        style="width: 24px;height: 24px;"
+                        src="../../assets/newImg/tubiao301.png"
+                        alt
+                      />
                       <div class="txt1-1">关于我们</div>
                     </div>
                     <div class="txt2">2021-06-21 03:31</div>
                   </div>
                   <div class="tit2">
-                    <div class="txt1">
-                      礼品代发平台成立于2018年是一家专业的小礼品代发平台，专注为商家提供一系列礼品代发服务，一件代发，共享云仓，全国包邮，公司主营业务有电商系列软件开发，礼品代发，电商工具箱等，致力于打造一站式电商服务平台体系，为商家提供更便捷的一站式服务。
-                    </div>
+                    <div
+                      class="txt1"
+                    >礼品代发平台成立于2018年是一家专业的小礼品代发平台，专注为商家提供一系列礼品代发服务，一件代发，共享云仓，全国包邮，公司主营业务有电商系列软件开发，礼品代发，电商工具箱等，致力于打造一站式电商服务平台体系，为商家提供更便捷的一站式服务。</div>
                     <div class="txt2" @click="togywmXiangqin">查看详情</div>
                   </div>
                 </div>
@@ -461,16 +307,16 @@ import { mapState } from "vuex";
 import Aside from "../Aside";
 export default {
   components: {
-    Aside,
+    Aside
   },
   computed: {
-    ...mapState(["lipingshangchengPage", "myactiveName"]),
+    ...mapState(["lipingshangchengPage", "myactiveName"])
   },
   watch: {
-    lipingshangchengPage: function (page) {
+    lipingshangchengPage: function(page) {
       this.$store.commit("lipingshangchengPage", page);
       this.getData();
-    },
+    }
   },
   data() {
     return {
@@ -481,7 +327,7 @@ export default {
       guanyuwomenxiangqin: null,
       tabData1: [],
       total: 0,
-      sort: "desc",
+      sort: "desc"
     };
   },
   created() {
@@ -490,6 +336,9 @@ export default {
       this.activeName = this.myactiveName;
     }
     this.getData();
+    console.log(
+      this.encodeHtml("&lt;p&gt;公告6公告6公告6公告6公告6公告6公告6&lt;/p&gt;")
+    );
   },
   methods: {
     async getData() {
@@ -498,11 +347,20 @@ export default {
         type_id: this.activeName,
         page: 1,
         limit: 10,
-        sort: this.sort,
+        sort: this.sort
       });
       console.log(res);
       this.tabData1 = res.data.data;
       this.total = res.data.total;
+    },
+    encodeHtml(str) {
+      str = str.replace(/&amp;/g, "&");
+      str = str.replace(/&lt;/g, "<");
+      str = str.replace(/&gt;/g, ">");
+      str = str.replace(/&acute;/g, "'");
+      str = str.replace(/&quot;/g, `"`);
+      str = str.replace(/&brvbar;/g, "|");
+      return str;
     },
     handleClick(tab) {
       console.log(tab);
@@ -541,7 +399,7 @@ export default {
       // };
       const res = await this.$api.ArticleInfo({
         token: sessionStorage.getItem("token"),
-        id: id,
+        id: id
       });
       console.log(res);
       this.$set(this.Bangzhuzhongxinxiangqin, "title", res.data.title);
@@ -557,7 +415,7 @@ export default {
         title2: "发布时间:2021-06-21 12:11",
         title3: "浏览量:100次",
         title4:
-          "礼品代发平台成立于2018年是一家专业的小礼品代发平台，专注为商家提供一系列礼品代发服务，一件代发，共享云仓，全国包邮，公司主营业务有电商系列软件开发，礼品代发，电商工具箱等，致力于打造一站式电商服务平台体系，为商家提供更便捷的一站式服务。",
+          "礼品代发平台成立于2018年是一家专业的小礼品代发平台，专注为商家提供一系列礼品代发服务，一件代发，共享云仓，全国包邮，公司主营业务有电商系列软件开发，礼品代发，电商工具箱等，致力于打造一站式电商服务平台体系，为商家提供更便捷的一站式服务。"
       };
     },
     toguanyuwomenBack() {
@@ -570,8 +428,8 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.$store.commit("lipingshangchengPage", val);
-    },
-  },
+    }
+  }
 };
 </script>
 
