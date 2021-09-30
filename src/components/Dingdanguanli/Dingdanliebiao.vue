@@ -100,7 +100,7 @@
             <vxe-table-column show-overflow="title" field="stime" title="支付时间"></vxe-table-column>
             <vxe-table-column show-overflow="title" field="money" title="总费用"></vxe-table-column>
             <vxe-table-column show-overflow="title" field="beizhu" title="备注"></vxe-table-column>
-            <vxe-table-column title="操作状态" width="180">
+            <vxe-table-column title="操作状态" width="260">
               <template slot-scope="scope">
                 <div class="flex">
                   <!-- 任务处理中 -->
@@ -142,7 +142,6 @@
                     size="small"
                   >立即支付</div>
                   <div
-                    v-if="scope.row.status == '已付款'"
                     class="delBtn blue"
                     @click="seeDingdan(scope.row)"
                     type="text"

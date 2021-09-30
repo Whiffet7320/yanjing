@@ -185,7 +185,11 @@
               <vxe-table-column field="name" title="姓名"></vxe-table-column>
               <vxe-table-column field="phone" title="电话"></vxe-table-column>
               <vxe-table-column field="myAddress" title="地址"></vxe-table-column>
-              <vxe-table-column field="msg" title="状态"></vxe-table-column>
+              <vxe-table-column field="msg" title="状态">
+                <template slot-scope="scope">
+                  <span :class="{'myRed':scope.row.status == 0}">{{scope.row.msg}}</span>
+                </template>
+              </vxe-table-column>
               <vxe-table-column title="操作" width="120">
                 <template slot-scope="scope">
                   <div class="flex">
@@ -255,8 +259,8 @@
               <el-input class="labInp" v-model="sdsrcwbzVal1"></el-input>
             </div>
             <div class="footer">
-              <div @click="querenShangchuan2" class="btn">确认订单</div>
-              <!-- <div class="txt">总共 0 个 收件人，每位价格 ￥ 0</div> -->
+              <div @click="querenShangchuan2" class="btn">确认订单￥{{ zongPrice.toFixed(2) }}</div>
+              <div class="txt">总共 {{ peopleNum }} 个 收件人，每位价格 ￥ {{ shopPrice.toFixed(2) }}</div>
             </div>
           </div>
         </div>
@@ -897,6 +901,25 @@ export default {
         });
       }
     },
+    storageText: {
+      immediate: true,
+      handler: function() {
+        console.log(this.storageText);
+        if (this.storageText == "") {
+          this.peopleNum = 0;
+        } else {
+          this.peopleNum = this.storageText.split("\n").length;
+        }
+      }
+    },
+    // storageText: function() {
+    //   console.log(this.storageText);
+    //   if (this.storageText == "") {
+    //     this.peopleNum = 0;
+    //   } else {
+    //     this.peopleNum = this.storageText.split("\n").length;
+    //   }
+    // },
     tianjiabianjiPage: function(page) {
       this.$store.commit("tianjiabianjiPage", page);
       this.getData();
@@ -916,11 +939,12 @@ export default {
               num * this.dataObj.kd_price.kg_add;
           }
         }
-        if (this.radioVal2 == "手动输入") {
-          if (this.radioVal2 == "手动输入") {
-            this.peopleNum = this.textarea1.split(";").length - 1;
-          }
-        }
+        // if (this.radioVal2 == "手动输入") {
+        //   if (this.radioVal2 == "手动输入") {
+        //     // this.peopleNum = this.textarea1.split("\n").length - 1;
+        //     this.peopleNum = this.storageText.split("\n").length;
+        //   }
+        // }
         this.shopPrice =
           this.tableData3[0].price * this.addShopNum + this.kdyunfei;
         this.zongPrice = this.shopPrice * this.peopleNum;
@@ -941,9 +965,9 @@ export default {
               num * this.dataObj.kd_price.kg_add;
           }
         }
-        if (this.radioVal2 == "手动输入") {
-          this.peopleNum = this.textarea1.split(";").length - 1;
-        }
+        // if (this.radioVal2 == "手动输入") {
+        //   this.peopleNum = this.storageText.split("\n").length;
+        // }
         this.shopPrice =
           this.tableData3[0].price * this.addShopNum + this.kdyunfei;
         this.zongPrice = this.shopPrice * this.peopleNum;
@@ -965,9 +989,9 @@ export default {
             console.log(this.kdyunfei);
           }
         }
-        if (this.radioVal2 == "手动输入") {
-          this.peopleNum = this.textarea1.split(";").length - 1;
-        }
+        // if (this.radioVal2 == "手动输入") {
+        //   this.peopleNum = this.storageText.split("\n").length;
+        // }
         this.shopPrice =
           this.tableData3[0].price * this.addShopNum + this.kdyunfei;
         this.zongPrice = this.shopPrice * this.peopleNum;
@@ -977,6 +1001,7 @@ export default {
   },
   data() {
     return {
+      storageText: "",
       createTableData2: [],
       myTabDialogVisible: false,
       myTabArr: [],
@@ -1326,7 +1351,7 @@ export default {
           ]
         }
       ],
-      ycVal:'',
+      ycVal: "",
       //   新增店铺
       xzdpDialogVisible: false,
       xzdpForm: {
@@ -1409,22 +1434,24 @@ export default {
         if (i >= 1) {
           this.createTableArr[
             i
-          ] = `\n${ele.ddnum},${ele.name},${ele.phone},${ele.address};`;
+          ] = `\n${ele.order},${ele.name},${ele.phone},${ele.myAddress};`;
         } else {
           this.createTableArr[
             i
-          ] = `${ele.ddnum},${ele.name},${ele.phone},${ele.address};`;
+          ] = `${ele.order},${ele.name},${ele.phone},${ele.myAddress};`;
         }
       });
       this.textarea1 = "";
+      this.storageText = "";
       this.createTableArr.forEach(ele => {
-        this.textarea1 += ele;
+        this.storageText += ele;
       });
+      console.log(this.storageText);
     },
     myTabHandleClose() {
       this.myTabDialogVisible = false;
     },
-    async wanchengtianjia() {
+    async wanchengtianjia(val = "") {
       if (this.tableData3[0]) {
         if (Number(this.tableData3[0].weight) * this.addShopNum < 1) {
           this.kdyunfei = Number(this.dataObj.kd_price.kg);
@@ -1437,12 +1464,10 @@ export default {
             num * this.dataObj.kd_price.kg_add;
         }
       }
-      if (this.radioVal2 == "手动输入") {
-        if (this.radioVal2 == "手动输入") {
-          this.createTableArr = this.textarea1.split(";");
-          this.peopleNum = this.textarea1.split(";").length - 1;
-        }
-      }
+      // if (this.radioVal2 == "手动输入") {
+      this.createTableArr = this.textarea1.split("\n");
+      this.peopleNum = this.storageText.split("\n").length;
+      // }
       if (this.tableData3[0]) {
         this.shopPrice =
           this.tableData3[0].price * this.addShopNum + this.kdyunfei;
@@ -1455,9 +1480,41 @@ export default {
         data: this.textarea1,
         yc: this.form.cangchu
       });
+
+      // this.storageText += this.textarea1;
       console.log(res, 1111111);
-      this.createTableData = res.data.data;
+      if (res.code == 200) {
+        if (val != "edit") {
+          this.createTableData = this.createTableData.concat(res.data.data);
+        } else {
+          this.createTableData = res.data.data;
+        }
+      }
+
+      this.createTableArr = [];
+      this.createTableData.forEach((ele, i) => {
+        ele.myAddress = `${ele.address.province}${ele.address.city}${ele.address.county}${ele.address.address}`;
+        console.log(ele);
+        if (i >= 1) {
+          this.createTableArr[
+            i
+          ] = `\n${ele.order},${ele.name},${ele.phone},${ele.myAddress};`;
+        } else {
+          this.createTableArr[
+            i
+          ] = `${ele.order},${ele.name},${ele.phone},${ele.myAddress};`;
+        }
+      });
+      this.textarea1 = "";
+      this.storageText = "";
+      this.createTableArr.forEach(ele => {
+        console.log(ele);
+        this.storageText += ele;
+      });
+      console.log(this.createTableData);
       this.createTableData.forEach(ele => {
+        // if (ele.status == 0) {
+        // }
         ele.myAddress = `${ele.address.province}${ele.address.city}${ele.address.county}${ele.address.address}`;
       });
     },
@@ -1489,25 +1546,26 @@ export default {
           this.myTabForm[key]
         );
         // this.createTableArr
-        this.createTableData.forEach((ele, i) => {
-          if (i >= 1) {
-            this.createTableArr[
-              i
-            ] = `\n${ele.order},${ele.name},${ele.phone},${ele.myAddress};`;
-          } else {
-            this.createTableArr[
-              i
-            ] = `${ele.order},${ele.name},${ele.phone},${ele.myAddress};`;
-          }
-        });
-        this.textarea1 = "";
-        this.createTableArr.forEach(ele => {
-          this.textarea1 += ele;
-        });
-        this.myTabDialogVisible = false;
-        console.log(this.createTableArr, this.textarea1);
-        this.wanchengtianjia();
+        // this.wanchengtianjia();
       }
+      this.createTableData.forEach((ele, i) => {
+        if (i >= 1) {
+          this.createTableArr[
+            i
+          ] = `\n${ele.order},${ele.name},${ele.phone},${ele.myAddress};`;
+        } else {
+          this.createTableArr[
+            i
+          ] = `${ele.order},${ele.name},${ele.phone},${ele.myAddress};`;
+        }
+      });
+      this.textarea1 = "";
+      this.createTableArr.forEach(ele => {
+        this.textarea1 += ele;
+      });
+      this.myTabDialogVisible = false;
+      console.log(this.createTableArr, this.textarea1);
+      this.wanchengtianjia("edit");
     },
     createTable() {
       var newArr = [];
@@ -1516,7 +1574,7 @@ export default {
         if (ele == "") {
           this.createTableArr.pop();
         } else {
-          this.textarea1.split(";");
+          this.textarea1.split("\n");
         }
       });
       this.createTableArr.forEach((ele, i) => {
@@ -1541,7 +1599,7 @@ export default {
       this.getData();
     },
     async changeVal1(val) {
-      console.log(val)
+      console.log(val);
       var obj = {};
       obj = this.dataObj.yun_cang.find(function(item) {
         return item.id === val;
@@ -1647,6 +1705,12 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       }).then(async () => {
+        const loading = this.$loading({
+          lock: true,
+          text: "请稍后",
+          spinner: "el-icon-loading",
+          background: "rgba(0, 0, 0, 0.7)"
+        });
         if (this.radioVal1 == "淘宝/天猫") {
           this.import_mode = 1;
         } else if (this.radioVal1 == "京东") {
@@ -1669,7 +1733,7 @@ export default {
           token: sessionStorage.getItem("token"),
           import_mode: this.import_mode,
           type: this.import_type,
-          data: this.textarea1,
+          data: this.storageText,
           goods_id: this.tableData3[0] ? this.tableData3[0].id : "",
           kd_id: this.kdId,
           goods_member: this.tableData3[0] ? this.tableData3[0].num : 0,
@@ -1677,13 +1741,14 @@ export default {
           yc: this.form.cangchu
         });
         console.log(res);
+        loading.close();
         if (res.code == 200) {
           this.$message({
             message: res.msg,
             type: "success"
           });
           this.textarea1 = "";
-          this.$router.push({ name: "Dingdanliebiao" });
+          this.$router.push({ name: "Baoguoliebiao" });
         } else {
           this.$message({
             message: res.msg,
@@ -1694,11 +1759,24 @@ export default {
     },
     // 模板导入的确认订单
     querenShangchuan() {
-      console.log(this.createTableData2);
+      console.log(this.createTableData2, this.createTableArr);
       this.createTableData = this.createTableData2;
-      this.createTableData.forEach(ele => {
+      this.createTableData.forEach((ele, i) => {
         ele.myAddress = `${ele.address.province}${ele.address.city}${ele.address.county}${ele.address.address}`;
+        if (i >= 1) {
+          this.createTableArr[
+            i
+          ] = `\n${ele.order},${ele.name},${ele.phone},${ele.myAddress};`;
+        } else {
+          this.createTableArr[
+            i
+          ] = `${ele.order},${ele.name},${ele.phone},${ele.myAddress};`;
+        }
       });
+      this.createTableArr.forEach(ele => {
+        this.textarea1 += ele;
+      });
+      this.wanchengtianjia();
     },
     async querenShangchuan2() {
       this.myformData = new FormData();
@@ -1736,16 +1814,16 @@ export default {
           this.tableData3[0] ? this.tableData3[0].num : 0
         );
         this.myformData.append("remarks", this.sdsrcwbzVal1);
-        var configs = {
-          headers: {
-            "Content-Type": "multipart/form-data;charse=UTF-8"
-          }
-        };
+        // var configs = {
+        //   headers: {
+        //     "Content-Type": "multipart/form-data;charse=UTF-8"
+        //   }
+        // };
         const res = await this.$api.orderInsertData({
           token: sessionStorage.getItem("token"),
           import_mode: this.import_mode,
           type: this.import_type,
-          data: this.textarea1,
+          data: this.storageText,
           goods_id: this.tableData3[0] ? this.tableData3[0].id : "",
           kd_id: this.kdId,
           goods_member: this.tableData3[0] ? this.tableData3[0].num : 0,
@@ -1753,27 +1831,39 @@ export default {
           yc: this.form.cangchu
         });
         console.log(res);
-        axios
-          .post(
-            "http://ht.yuncanggift.com/home/order/insertData",
-            this.myformData,
-            configs
-          )
-          .then(res => {
-            console.log(res);
-            if (res.data.code == 200) {
-              this.$message({
-                message: res.data.msg,
-                type: "success"
-              });
-              this.$router.push({ name: "Dingdanliebiao" });
-            } else {
-              this.$message({
-                message: res.data.msg,
-                type: "warning"
-              });
-            }
+        if (res.code == 200) {
+          this.$message({
+            message: res.msg,
+            type: "success"
           });
+          this.$router.push({ name: "Dingdanliebiao" });
+        } else {
+          this.$message({
+            message: res.data.msg,
+            type: "warning"
+          });
+        }
+        // axios
+        //   .post(
+        //     "http://ht.yuncanggift.com/home/order/insertData",
+        //     this.myformData,
+        //     configs
+        //   )
+        //   .then(res => {
+        //     console.log(res);
+        //     if (res.data.code == 200) {
+        //       this.$message({
+        //         message: res.data.msg,
+        //         type: "success"
+        //       });
+        //       this.$router.push({ name: "Dingdanliebiao" });
+        //     } else {
+        //       this.$message({
+        //         message: res.data.msg,
+        //         type: "warning"
+        //       });
+        //     }
+        //   });
       });
     },
     // 智能筛选的确认订单
@@ -3243,5 +3333,8 @@ export default {
     text-align: center;
     border-radius: 4px;
   }
+}
+.myRed {
+  color: #e64950;
 }
 </style>
