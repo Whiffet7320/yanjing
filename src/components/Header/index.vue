@@ -158,7 +158,7 @@ export default {
         token: sessionStorage.getItem("token"),
       });
       console.log(res);
-      this.kefuImg = res.data;
+      this.kefuImg = res.data.wx;
       this.zxkfDialogVisible = true;
     },
     zxkfHandleClose() {

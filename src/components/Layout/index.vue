@@ -12,6 +12,24 @@
           <el-container>
             <!-- <el-aside><Aside /></el-aside> -->
             <el-main>
+              <div class="fiexd-box">
+                <div class="f-b1 b1">
+                  <img class="pic" src="../../assets/newImg/lujin526.png" alt />
+                  <div class="txt">微信咨询</div>
+                  <div class="b1-hov">
+                    <img :src="kefuImg" alt />
+                  </div>
+                </div>
+                <div class="f-b1 b2">
+                  <img class="pic" src="../../assets/newImg/lujin527.png" alt />
+                  <div class="txt">QQ咨询</div>
+                  <div class="b2-hov">{{qq}}</div>
+                </div>
+                <div class="f-b1 b3" @click="toTop">
+                  <img class="pic b3" src="../../assets/newImg/zu297.png" alt />
+                  <div class="txt">返回顶部</div>
+                </div>
+              </div>
               <RouterView></RouterView>
             </el-main>
           </el-container>
@@ -53,10 +71,12 @@ export default {
     return {
       isLogin: "false",
       path: "",
-      aliPay: false
+      aliPay: false,
+      kefuImg:'',
+      qq:'',
     };
   },
-  created() {
+  async created() {
     console.log(this.aliPay);
     console.log(sessionStorage.getItem("routerParams"), "ccccc");
     this.routerParams = sessionStorage.getItem("routerParams");
@@ -65,10 +85,20 @@ export default {
     }
     this.isLogin = sessionStorage.getItem("isLogin");
     console.log(this.isLogin);
+    const res = await this.$api.getKefu({
+      token: sessionStorage.getItem("token")
+    });
+    console.log(res);
+    this.kefuImg = res.data.wx;
+    this.qq = res.data.qq;
   },
   mounted() {
     // history.pushState(null, null, location.href)
     window.addEventListener("popstate", this.disableBrowserBack);
+    window.addEventListener("scroll", this.scrollToTop);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.scrollToTop);
   },
   components: {
     Login,
@@ -79,6 +109,30 @@ export default {
     AliPay
   },
   methods: {
+    toTop() {
+      let that = this;
+      let timer = setInterval(() => {
+        let ispeed = Math.floor(-that.scrollTop / 5);
+        document.documentElement.scrollTop = document.body.scrollTop =
+          that.scrollTop + ispeed;
+        if (that.scrollTop === 0) {
+          clearInterval(timer);
+        }
+      }, 16);
+    },
+    scrollToTop() {
+      let that = this;
+      let scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      that.scrollTop = scrollTop;
+      if (that.scrollTop > 200) {
+        that.btnFlag = true;
+      } else {
+        that.btnFlag = false;
+      }
+    },
     disableBrowserBack() {
       console.log(this.isLogin, this.routerParams);
 
@@ -106,14 +160,10 @@ export default {
       this.isLogin = sessionStorage.getItem("isLogin");
     }
   },
-  destroyed() {
-    // 清除popstate事件 否则会影响到其他页面
-    window.removeEventListener("popstate", this.disableBrowserBack, false);
-  }
 };
 </script>
 
-<style>
+<style lang="scss">
 .footerImg {
   width: 100%;
   height: 103px;
@@ -155,4 +205,89 @@ export default {
 }
 .syIndex {
 }
+
+.fiexd-box {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 90px;
+    height: 300px;
+    background: #fe8800;
+    border-radius: 10px;
+    box-shadow: 0px 3px 10px 0px rgba(167, 167, 167, 0.2);
+    right: 80px;
+    z-index: 99999;
+    .f-b1 {
+      height: 100px;
+      width: 90px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      .pic {
+        width: 50px;
+        height: 40px;
+      }
+      .pic.b3 {
+        width: 41px;
+        height: 21px;
+      }
+      .txt {
+        margin-top: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: center;
+        color: #ffffff;
+      }
+    }
+    .f-b1.b2 {
+      .b2-hov {
+        font-size: 14px;
+        display: none;
+      }
+      position: relative;
+      background: #ff6a00;
+      .pic {
+        width: 39px;
+        height: 43px;
+      }
+    }
+    .f-b1.b2:hover .b2-hov {
+      display: flex;
+      transform: translate(-100px, -26px);
+      width: 100px;
+      height: 60px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: #fff;
+      background-size: 100% auto;
+      position: absolute;
+      top: 50px;
+      left: 0;
+      z-index: 99999;
+    }
+    .f-b1.b1 {
+      position: relative;
+      .b1-hov {
+        display: none;
+        // transform: translateX(-120px);
+        img {
+          width: 100px;
+          height: 100px;
+        }
+      }
+    }
+    .f-b1.b1:hover .b1-hov {
+      display: block;
+      transform: translate(-100px, -50px);
+      position: absolute;
+      top: 50px;
+      left: 0;
+      z-index: 99999;
+    }
+    .hov.qq {
+    }
+  }
 </style>

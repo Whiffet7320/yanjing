@@ -2,8 +2,8 @@ export default {
     // baseUrl: '',
     // baseUrl: 'http://47.100.26.153',
     // baseUrl: 'http://192.168.50.132',
+    // baseUrl:'http://branch.yuncanggift.com',
     baseUrl:'http://ht.yuncanggift.com',
-    // baseUrl:'http://lpw.zhangba.shop',
     getVerificationCode: '/home/Comment/getVerificationCode', //获取短信验证码
     login:'/home/Login/login',//登录
     username:'/home/Reg/reg',//注册

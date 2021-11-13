@@ -6,69 +6,72 @@
     <div class="right">
       <div class="nav2">
         <div class="tit1">
-          <img style="width: 24px;height: 24px;margin-right: 12px;" src="../../assets/newImg/tubiao301.png" alt="" />
+          <img
+            style="width: 24px;height: 24px;margin-right: 12px;"
+            src="../../assets/newImg/tubiao301.png"
+            alt
+          />
           <div class="txt1">升级VIP</div>
         </div>
         <div class="tit2">
           <div class="nav1">
             <div class="txt1">方法一：</div>
             <div class="txt2">
-              推荐 <span>{{ dataObj.ff1 }}</span
-              >人注册，立即成为<span>尊贵vip（升级直接扣费）！</span>
+              推荐
+              <span>{{ dataObj.ff1 }}</span>人注册，立即成为
+              <span>尊贵vip（升级直接扣费）！</span>
             </div>
           </div>
           <div class="nav1">
             <div class="txt1">方法二：</div>
             <div class="txt2">
-              推荐 <span>{{ dataObj.ff2 }}</span
-              >人注册，立即成为<span>至尊vip（升级直接扣费）！</span>
+              推荐
+              <span>{{ dataObj.ff2 }}</span>人注册，立即成为
+              <span>至尊vip（升级直接扣费）！</span>
             </div>
           </div>
           <div class="nav2-2">
             <div class="nav2-3">
               <div id="copyVal" class="txt3">
                 我发现一个好用礼品代发网站，你也看看，注册网址是
-                <a class="color">{{
+                <a class="color">
+                  {{
                   yqm
-                }}</a>
+                  }}
+                </a>
               </div>
             </div>
-            <!-- <div @click="copy" class="txt4">复制</div> -->
+            <div @click="copy" class="txt4">复制</div>
           </div>
         </div>
       </div>
       <div class="nav3">
-        <img class="pic1" src="../../assets/newImg/mcz31.png" alt="" />
+        <img class="pic1" src="../../assets/newImg/mcz31.png" alt />
         <div class="left">
           <div class="txt1">
-            <div class="dian"></div>
-            您已成功邀请<span class="color">{{ dataObj.invited }}</span
-            >人
+            <div class="dian"></div>您已成功邀请
+            <span class="color">{{ dataObj.invited }}</span>人
           </div>
         </div>
         <div class="right">
           <div class="txt1">邀请好友永久提成奖励</div>
-          <div class="txt1">
-            推荐收益计算方式 = 被邀请人支付订单包裹数 * 0.01/单
-          </div>
+          <div class="txt1">推荐收益计算方式 = 被邀请人支付订单包裹数 * 0.01/单</div>
         </div>
       </div>
       <div class="nav4">
         <div class="tit1">
-          <img style="width: 24px;height: 24px;margin-right: 12px;" src="../../assets/newImg/tubiao301.png" alt="" />
+          <img
+            style="width: 24px;height: 24px;margin-right: 12px;"
+            src="../../assets/newImg/tubiao301.png"
+            alt
+          />
           <div class="txt1">我推荐的商家</div>
         </div>
         <div class="myTable">
           <vxe-table align="center" :data="tableData">
-            <vxe-table-column
-              field="username"
-              title="手机号码"
-            ></vxe-table-column>
+            <vxe-table-column field="username" title="手机号码"></vxe-table-column>
             <vxe-table-column field="ctime" title="注册时间"></vxe-table-column>
-            <vxe-table-column
-              field="renshu"
-              title="下级人数"
-            ></vxe-table-column>
+            <vxe-table-column field="renshu" title="下级人数"></vxe-table-column>
           </vxe-table>
           <el-pagination
             class="fenye"
@@ -77,8 +80,7 @@
             :page-size="10"
             layout="total, prev, pager, next, jumper"
             :total="this.total"
-          >
-          </el-pagination>
+          ></el-pagination>
         </div>
       </div>
     </div>
@@ -90,23 +92,23 @@ import Aside from "../Aside";
 import { mapState } from "vuex";
 export default {
   components: {
-    Aside,
+    Aside
   },
   computed: {
-    ...mapState(["wotuijiandeshangjiaPage"]),
+    ...mapState(["wotuijiandeshangjiaPage"])
   },
   watch: {
-    wotuijiandeshangjiaPage: function (page) {
+    wotuijiandeshangjiaPage: function(page) {
       this.$store.commit("wotuijiandeshangjiaPage", page);
       //   this.getData();
-    },
+    }
   },
   data() {
     return {
       yqm: "",
       tableData: [],
       total: 0,
-      dataObj: {},
+      dataObj: {}
     };
   },
   created() {
@@ -115,7 +117,7 @@ export default {
   methods: {
     async getData() {
       const res = await this.$api.inviteReward({
-        token: sessionStorage.getItem("token"),
+        token: sessionStorage.getItem("token")
       });
       if (res.code == 200) {
         console.log(res.data);
@@ -125,19 +127,28 @@ export default {
         this.total = res.data.total;
       } else {
         this.$message.error(res.msg);
-         setTimeout(() => {
+        setTimeout(() => {
           sessionStorage.setItem("isLogin", "123");
           this.$router.go(0);
         }, 3000);
       }
     },
-    copy() {},
+    copy() {
+      // const res = await this.$copyText(this.yqm)
+      this.$copyText(this.yqm).then(res => {
+        console.log(res);
+        this.$message({
+          message: "已复制",
+          type: "success"
+        });
+      });
+    },
     // 分页
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.$store.commit("wotuijiandeshangjiaPage", val);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -188,14 +199,14 @@ export default {
         .txt1 {
           opacity: 1;
           font-size: 16px;
-          font-family: zw;;
+          font-family: zw;
           font-weight: 400;
           color: #000000;
         }
         .txt2 {
           opacity: 1;
           font-size: 16px;
-          font-family: zw;;
+          font-family: zw;
           font-weight: 400;
           color: #000000;
           span {
@@ -219,7 +230,7 @@ export default {
             margin-left: 20px;
             opacity: 1;
             font-size: 14px;
-            font-family: zw;;
+            font-family: zw;
             font-weight: 400;
             line-height: 50px;
             color: #707071;
@@ -243,7 +254,7 @@ export default {
     }
   }
   .nav3 {
-    margin: 14px ;
+    margin: 14px;
     position: relative;
     width: 100%;
     height: 131px;
@@ -340,14 +351,14 @@ export default {
         .txt1 {
           opacity: 1;
           font-size: 16px;
-          font-family: zw;;
+          font-family: zw;
           font-weight: 400;
           color: #000000;
         }
         .txt2 {
           opacity: 1;
           font-size: 16px;
-          font-family: zw;;
+          font-family: zw;
           font-weight: 400;
           color: #000000;
           span {
@@ -371,7 +382,7 @@ export default {
             margin-left: 20px;
             opacity: 1;
             font-size: 14px;
-            font-family: zw;;
+            font-family: zw;
             font-weight: 400;
             line-height: 50px;
             color: #707071;

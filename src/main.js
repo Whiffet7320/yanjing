@@ -11,12 +11,14 @@ import 'xe-utils';
 import VXETable from 'vxe-table';
 import 'vxe-table/lib/style.css';
 import './assets/font.css'
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
 Vue.use(VXETable)
 
 Vue.prototype.$api = api;
 // Vue.prototype.$url = 'http://192.168.1.128:8094/admin'
-Vue.prototype.$url = 'https://hii7mo3m.dnat.tech/admin'
-// Vue.prototype.$url = 'https://water.5laoye.com/admin'
+// Vue.prototype.$url = 'http://branch.yuncanggift.com/admin'
+Vue.prototype.$url = 'http://ht.yuncanggift.com/admin'
 
 Vue.use(ElementUI);
 Vue.use(Viewer)

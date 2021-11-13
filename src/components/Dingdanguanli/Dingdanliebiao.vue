@@ -33,7 +33,7 @@
         <div class="myForm">
           <el-form :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item label="快捷查询">
-              <el-input placeholder="输入订单号/收件人手机号" v-model="formInline.name"></el-input>
+              <el-input placeholder="输入订单号" v-model="formInline.name"></el-input>
             </el-form-item>
             <el-form-item label="订单状态">
               <el-select v-model="formInline.ship_status" placeholder="请选择">
@@ -94,12 +94,13 @@
       <div class="txt4">
         <div class="myTable">
           <vxe-table :cell-class-name="cellClassName" align="center" :data="tableData">
-            <vxe-table-column show-overflow="title" field="order" title="订单号"></vxe-table-column>
-            <vxe-table-column show-overflow="title" field="status" title="订单状态"></vxe-table-column>
-            <vxe-table-column show-overflow="title" field="import_mode" title="导入方式"></vxe-table-column>
-            <vxe-table-column show-overflow="title" field="stime" title="支付时间"></vxe-table-column>
-            <vxe-table-column show-overflow="title" field="money" title="总费用"></vxe-table-column>
-            <vxe-table-column show-overflow="title" field="beizhu" title="备注"></vxe-table-column>
+            <vxe-table-column field="order" title="订单号"></vxe-table-column>
+            <vxe-table-column field="status" title="订单状态"></vxe-table-column>
+            <vxe-table-column field="import_mode" title="导入方式"></vxe-table-column>
+            <vxe-table-column field="stime" title="支付时间"></vxe-table-column>
+            <vxe-table-column field="money" title="总费用"></vxe-table-column>
+            <vxe-table-column field="count" title="包裹数"></vxe-table-column>
+            <vxe-table-column field="beizhu" title="备注"></vxe-table-column>
             <vxe-table-column title="操作状态" width="260">
               <template slot-scope="scope">
                 <div class="flex">
@@ -358,7 +359,8 @@ export default {
         start_time: this.formInline.time[0],
         end_time: this.formInline.time[1],
         status: this.formInline.ship_status,
-        type: "2"
+        type: "2",
+        keyword:this.formInline.name
       });
       console.log(res.data);
       window.open(res.data);

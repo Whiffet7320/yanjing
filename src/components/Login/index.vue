@@ -22,7 +22,7 @@
                 <div class="inputshu"></div>
                 <el-input
                   @keyup.enter.native="onLogin"
-                  placeholder="请输入用户名"
+                  placeholder="请输入手机号"
                   v-model="loginForm.userName"
                 >
                   <template slot="prepend">
@@ -115,7 +115,7 @@
                 <div class="inputshu"></div>
                 <el-input
                   @keyup.enter.native="onLogin"
-                  placeholder="请输入用户名"
+                  placeholder="请输入手机号"
                   v-model="loginForm.userName"
                 >
                   <template slot="prepend">
@@ -227,7 +227,7 @@
                 <div class="inputshu"></div>
                 <el-input
                   @keyup.enter.native="onZhuce"
-                  placeholder="请输入用户名"
+                  placeholder="请输入手机号"
                   v-model="loginForm.userName"
                 >
                   <template slot="prepend">

@@ -94,13 +94,13 @@
       <div class="txt4">
         <div class="myTable">
           <vxe-table :cell-class-name="cellClassName" align="center" :data="tableData">
-            <vxe-table-column show-overflow="title" field="kd_order" title="快递单号"></vxe-table-column>
-            <vxe-table-column show-overflow="title" field="kd_gongsi" title="快递公司"></vxe-table-column>
-            <vxe-table-column show-overflow="title" field="sj_username" title="收货人"></vxe-table-column>
-            <vxe-table-column show-overflow="title" field="pay_status" title="订单状态"></vxe-table-column>
-            <vxe-table-column show-overflow="title" field="ctime" title="支付时间"></vxe-table-column>
-            <vxe-table-column show-overflow="title" field="order_amount" title="总费用"></vxe-table-column>
-            <vxe-table-column show-overflow="title" field="remarks" title="备注"></vxe-table-column>
+            <vxe-table-column field="kd_order" title="快递单号"></vxe-table-column>
+            <vxe-table-column field="kd_gongsi" title="快递公司"></vxe-table-column>
+            <vxe-table-column field="sj_username" title="收货人"></vxe-table-column>
+            <vxe-table-column field="pay_status" title="订单状态"></vxe-table-column>
+            <vxe-table-column field="ctime" title="支付时间"></vxe-table-column>
+            <vxe-table-column field="order_amount" title="总费用"></vxe-table-column>
+            <vxe-table-column field="remarks" title="备注"></vxe-table-column>
             <vxe-table-column title="操作状态" width="180">
               <template slot-scope="scope">
                 <div class="flex">
@@ -164,9 +164,9 @@
       </div>
     </div>
     <!-- 查看详情 -->
-    <el-dialog title="订单信息" :visible.sync="dialogVisible" width="800" :before-close="handleClose">
+    <el-dialog title="订单信息" :visible.sync="dialogVisible" width="800px" :before-close="handleClose">
       <div class="xiangqinBox">
-        <img class="see-pic1" src="../../assets/newImg/zu193.png" alt />
+        <img class="see-pic1" :src="xqObj.img" alt />
         <div class="tit1">
           <div class="txt1">商品名称：{{xqObj.lp_name}}</div>
           <div class="txt1">购买数量：{{xqObj.member}}</div>
@@ -241,6 +241,7 @@ export default {
   created() {
     if(this.$route.query.order){
       this.formInline.name = this.$route.query.order;
+       this.$store.commit('baoguoliebiaoPage',1)
       this.getData()
     }
     if (sessionStorage.getItem("token") == "null") {
@@ -363,6 +364,7 @@ export default {
         end_time: this.formInline.time[1],
         status: this.formInline.ship_status,
         type:'1',
+        keyword:this.formInline.name
       })
       console.log(res.data)
       window.open(res.data)

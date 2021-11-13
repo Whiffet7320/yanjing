@@ -12,7 +12,7 @@
             <div class="txt1">我的账户</div>
             <!-- <div class="heng"></div> -->
           </div>
-          <div class="tit2">
+          <div class="tit2" v-if="dataObj.user_data">
             <div class="txt1">
               <img class="pic1-1" src="../../assets/newImg/zu95.png" alt />
               <div class="txt1-1">等级</div>
@@ -44,7 +44,7 @@
                 @click="toYueTixian"
                 :class="{'sjbtn':true, 'bt2':true}"
               >余额提现</div>
-              <div
+              <!-- <div
                 v-if="dataObj.user_data.yongjin_tixian != 0 && dataObj.user_data.yue_tixian != 0"
                 @click="toYongjinTixian"
                 :class="{'sjbtn':true, 'bt3':true}"
@@ -53,7 +53,7 @@
                 v-if="dataObj.user_data.yongjin_tixian != 0 && dataObj.user_data.yue_tixian == 0"
                 @click="toYongjinTixian"
                 :class="{'sjbtn':true, 'bt2':true}"
-              >佣金提现</div>
+              >佣金提现</div>-->
             </div>
           </div>
         </div>
@@ -64,7 +64,7 @@
             <div class="txt1">联系客服</div>
             <!-- <div class="heng"></div> -->
           </div>
-          <div class="tit2">
+          <div class="tit2" v-if="dataObj.kf">
             <div class="txt1">
               <img class="pic2-1" src="../../assets/newImg/lujin215.png" alt />
               <div class="txt1-1">QQ</div>
@@ -78,10 +78,19 @@
                 <div class="txt">扫码添加微信</div>
               </div>
             </div>
-            <div class="txt1">
+            <div class="txt1 yj">
               <img class="pic1-2" src="../../assets/newImg/zu97.png" alt />
-              <div class="txt1-1">电话</div>
-              <div class="txt1-2">{{ dataObj.kf.mobile }}</div>
+              <div class="txt1-1">佣金</div>
+              <div class="txt1-2">{{ dataObj.user_data.commission }}</div>
+              <div
+                @click="toYongjinTixian"
+                :class="{'sjbtn':true, 'bt2':true}"
+              >佣金提现</div>
+              <div
+                v-if="dataObj.user_data.yongjin_tixian != 0 && dataObj.user_data.yue_tixian == 0"
+                @click="toYongjinTixian"
+                :class="{'sjbtn':true, 'bt2':true}"
+              >佣金提现</div>
             </div>
           </div>
         </div>
@@ -321,6 +330,9 @@ export default {
             }
           }
         }
+        .txt1.yj{
+          margin-top: -4px;
+        }
         .txt1 {
           display: flex;
           align-items: center;
@@ -352,10 +364,13 @@ export default {
             color: #ea8e11;
           }
           .sjbtn.bt2 {
-            left: 386px;
+            // left: 386px;
+            left: 800px;
+            margin-top: 2px;
           }
           .sjbtn.bt3 {
-            left: 506px;
+            // left: 506px;
+            left: 926px;
           }
           .sjbtn.bt1 {
             // margin-left: 10px;

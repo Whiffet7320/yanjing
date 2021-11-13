@@ -34,6 +34,13 @@
             </el-input>
           </div>
           <div class="box1">
+            <el-input placeholder="请输入内容（提现使用）" v-model="dataObj.aliphone">
+              <template slot="prepend">支付宝账号</template>
+              <!-- <el-button @click="toTixian" slot="append">提现</el-button> -->
+              <el-button @click="onSubmit" slot="append">完成</el-button>
+            </el-input>
+          </div>
+          <div class="box1">
             <el-input placeholder="请输入内容" v-model="dataObj.qq">
               <template slot="prepend">Q Q</template>
               <el-button @click="onSubmit" slot="append">完成</el-button>
@@ -60,7 +67,8 @@ export default {
   data() {
     return {
       input1: "",
-      dataObj: {}
+      dataObj: {},
+      dataObj2:{},
     };
   },
   created() {
@@ -77,13 +85,22 @@ export default {
       const res = await this.$api.editIndex({
         token: sessionStorage.getItem("token")
       });
-      console.log(res)
-      if(res.code == 200){
-         this.dataObj = res.data;
-      }else{
+      console.log(res);
+      if (res.code == 200) {
+        this.dataObj = res.data;
+      } else {
         this.$message.error(res.msg);
       }
-     
+      const res2 = await this.$api.userInfo({
+        token: sessionStorage.getItem("token")
+      });
+      this.dataObj2 = res2.data;
+    },
+    toTixian() {
+      this.$store.commit("isYueTixian", null);
+      this.$store.commit("isYongjinTixian", true);
+      this.$store.commit("commission", this.dataObj2.user_data.commission);
+      this.$router.push({ name: "Woyaochongzhi" });
     },
     async onSubmit() {
       const res = await this.$api.editData({
@@ -91,7 +108,8 @@ export default {
         wx: this.dataObj.wx,
         qq: this.dataObj.qq,
         mail: this.dataObj.mail,
-        truename: this.dataObj.truename
+        truename: this.dataObj.truename,
+        aliphone: this.dataObj.aliphone
       });
       console.log(res);
       if (res.code == 200) {
@@ -124,7 +142,7 @@ export default {
   .nav2 {
     margin-top: 18px;
     width: 100%;
-    height: 420px;
+    height: 480px;
     // background: #ffffff;
     background-image: url("../../assets/newImg/kk12.png");
     background-size: 100% 100%;
