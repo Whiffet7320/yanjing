@@ -586,8 +586,8 @@
                     <el-radio-button
                       v-for="item in dataObj.kd_data"
                       :key="item.id"
-                      :label="item.name"
-                    ></el-radio-button>
+                      :label="item.id"
+                    >{{item.name}}</el-radio-button>
                   </el-radio-group>
                 </el-form-item>
                 <el-form-item label="排序：">
@@ -885,7 +885,7 @@ export default {
     Aside
   },
   computed: {
-    ...mapState(["tianjiabianjiPage", "shopObj"])
+    ...mapState(["tianjiabianjiPage", "shopObj",'lpscKdId','cangchu'])
   },
   watch: {
     radioVal1: function() {
@@ -958,6 +958,7 @@ export default {
         }
         this.shopPrice =
           this.tableData3[0].price * this.addShopNum + this.kdyunfei;
+          console.log(this.tableData3[0].price, this.kdyunfei)
         this.zongPrice = this.shopPrice * this.peopleNum;
       }
     },
@@ -985,10 +986,12 @@ export default {
       }
     },
     dataObj: {
+       immediate: true,
       deep: true, //深度监听设置为 true
       handler: function() {
         if (this.tableData3[0]) {
           if (Number(this.tableData3[0].weight) * this.addShopNum <= 1) {
+            console.log(this.dataObj)
             this.kdyunfei = Number(this.dataObj.kd_price.kg);
           } else {
             var num = parseInt(
@@ -1005,6 +1008,7 @@ export default {
         }
         this.shopPrice =
           this.tableData3[0].price * this.addShopNum + this.kdyunfei;
+          console.log(this.tableData3[0].price,  this.kdyunfei);
         this.zongPrice = this.shopPrice * this.peopleNum;
         console.log(this.peopleNum, this.zongPrice);
       }
@@ -1397,9 +1401,15 @@ export default {
   },
   created() {
     this.getData();
+    console.log(this.shopObj)
     if (this.shopObj) {
       this.$set(this.tableData3, 0, this.shopObj);
       this.addShopNum = this.shopObj.num;
+      setTimeout(()=>{
+        this.changeVal1(this.cangchu)
+      },500)
+      // this.$set(this.form,'cangchu',this.cangchu)
+      console.log(this.form.cangchu)
     }
   },
   methods: {
@@ -1610,7 +1620,7 @@ export default {
       this.getData();
     },
     async changeVal1(val) {
-      console.log(val);
+      console.log(val,this.dataObj);
       var obj = {};
       obj = this.dataObj.yun_cang.find(function(item) {
         return item.id === val;
@@ -1626,7 +1636,7 @@ export default {
       console.log(this.ycId)
       console.log(res.data);
       this.$set(this.dataObj, "kd_data", res.data.kd_data);
-      this.form.miandan = res.data.kd_data[0].name;
+      this.form.miandan = res.data.kd_data[0].id;
       this.$set(this.dataObj, "kd_price", res.data.kd_price);
       this.getData();
     },
@@ -1646,7 +1656,7 @@ export default {
       console.log(res.data);
       this.kdId = obj.id;
       // this.$set(this.dataObj,'kd_data',res.data.kd_data)
-      // this.form.miandan = res.data.kd_data[0].name;
+      // this.form.miandan = res.data.kd_data[0].id;
       this.$set(this.dataObj.kd_price, "kg", res.data.kg);
       this.$set(this.dataObj.kd_price, "kg_add", res.data.kg_add);
     },
@@ -1742,13 +1752,14 @@ export default {
         } else if (this.radioVal2 == "智能筛选") {
           this.import_type = 3;
         }
+        
         const res = await this.$api.orderInsertData({
           token: sessionStorage.getItem("token"),
           import_mode: this.import_mode,
           type: this.import_type,
           data: this.storageText,
           goods_id: this.tableData3[0] ? this.tableData3[0].id : "",
-          kd_id: this.kdId,
+          kd_id: this.lpscKdId ? this.lpscKdId : this.kdId,
           goods_member: this.tableData3[0] ? this.tableData3[0].num : 0,
           remarks: this.sdsrcwbzVal1,
           yc: this.form.cangchu

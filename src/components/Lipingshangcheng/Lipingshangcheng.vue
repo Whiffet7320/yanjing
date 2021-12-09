@@ -17,7 +17,7 @@
         <img class="pic b3" src="../../assets/newImg/zu297.png" alt />
         <div class="txt">返回顶部</div>
       </div>
-    </div> -->
+    </div>-->
     <!-- <div class="nav2">
       <div class="tit1">当前位置：首页-礼品商城</div>
     </div>-->
@@ -38,14 +38,17 @@
             <el-radio-button
               v-for="item in dataObj.yun_cang"
               :key="item.id"
-              :label="item.logi_name"
-              :value="item.id"
-            ></el-radio-button>
+              :label="item.id"
+            >{{item.logi_name}}</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="面单：">
           <el-radio-group v-model="form.miandan" size="small">
-            <el-radio-button v-for="item in dataObj.kd_data" :key="item.id" :label="item.name"></el-radio-button>
+            <el-radio-button
+              v-for="item in dataObj.kd_data"
+              :key="item.id"
+              :label="item.id"
+            >{{item.name}}</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="排序：">
@@ -133,8 +136,8 @@
                   <el-radio-button
                     v-for="item in dataObj.yun_cang"
                     :key="item.id"
-                    :label="item.logi_name"
-                  ></el-radio-button>
+                    :label="item.id"
+                  >{{item.logi_name}}</el-radio-button>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="面单：">
@@ -142,8 +145,8 @@
                   <el-radio-button
                     v-for="item in dataObj.kd_data"
                     :key="item.id"
-                    :label="item.name"
-                  ></el-radio-button>
+                    :label="item.id"
+                  >{{item.name}}</el-radio-button>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="排序：">
@@ -474,7 +477,7 @@ export default {
     async changeVal1(val) {
       var obj = {};
       obj = this.dataObj.yun_cang.find(function(item) {
-        return item.logi_name === val;
+        return item.id === val;
       });
       // console.log(obj.id); //label值
       const res = await this.$api.switchYc({
@@ -482,11 +485,13 @@ export default {
         id: obj.id
       });
       this.ycId = obj.id;
+      // this.mykdId = res.data.kd_data[]
       console.log(res.data);
       this.$set(this.dataObj, "kd_data", res.data.kd_data);
-      this.form.miandan = res.data.kd_data[0].name;
+      this.form.miandan = res.data.kd_data[0].id;
       this.$set(this.dataObj, "kd_price", res.data.kd_price);
       this.getData();
+      console.log(this.form.cangchu);
     },
     async changeVal2(val) {
       var obj = {};
@@ -502,7 +507,7 @@ export default {
       });
       console.log(res.data);
       // this.$set(this.dataObj,'kd_data',res.data.kd_data)
-      // this.form.miandan = res.data.kd_data[0].name;
+      // this.form.miandan = res.data.kd_data[0].id;
       this.$set(this.dataObj.kd_price, "kg", res.data.kg);
       this.$set(this.dataObj.kd_price, "kg_add", res.data.kg_add);
     },
@@ -521,8 +526,11 @@ export default {
       console.log(this.tableData3);
     },
     toLJFH() {
+      console.log(this.form.miandan);
       this.$set(this.tableData3[0], "num", this.addShopNum);
       this.$store.commit("shopObj", this.tableData3[0]);
+      this.$store.commit("lpscKdId", this.form.miandan);
+      this.$store.commit("cangchu", this.form.cangchu);
       this.$router.push({ name: "Lijifahuo" });
     },
     delShop() {

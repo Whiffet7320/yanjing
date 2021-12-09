@@ -35,8 +35,16 @@ export default new Vuex.Store({
     isYueTixian:null,
     isYongjinTixian:null,
     commission:null,
+    lpscKdId:null,
+    cangchu:null,
   },
   mutations: {
+    cangchu(state, str) {
+      state.cangchu = str;
+    },
+    lpscKdId(state, str) {
+      state.lpscKdId = str;
+    },
     dingdanliebiaoPage(state, str) {
       state.dingdanliebiaoPage = str;
     },
