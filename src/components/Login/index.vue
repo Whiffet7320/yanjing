@@ -361,7 +361,7 @@ export default {
         yzm: ""
       },
       identifyCode: "",
-      identifyCodes: "0123456789abcdwerwshdjeJKDHRJHKOOPLMKQ", //随便打的
+      identifyCodes: "123456789abcdwerwshdjeJKDHRJHKPLMKQ", //随便打的
       iswjmm: false,
       ismszc: false,
       // 登录

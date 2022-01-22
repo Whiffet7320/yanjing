@@ -121,6 +121,14 @@
         <div class="txtt3">客服QQ</div>
       </div>
     </div>
+    <div class="footerLay">
+      <a
+        id="domain"
+        class="beian"
+        href="https://beian.miit.gov.cn/#/Integrated/index"
+        target="_blank"
+      >浙ICP备2021026509号-1</a>
+    </div>
     <!-- 在线客服 -->
     <el-dialog :visible.sync="zxkfDialogVisible" width="400px" :before-close="zxkfHandleClose">
       <div class="zxkf">
@@ -141,21 +149,21 @@ export default {
     return {
       zxkfDialogVisible: false,
       kefuImg: "",
-      qq:'',
+      qq: ""
     };
   },
-  async created(){
+  async created() {
     const res = await this.$api.getKefu({
-        token: sessionStorage.getItem("token"),
-      });
-      console.log(res);
-      this.kefuImg = res.data.wx;
-      this.qq = res.data.qq;
+      token: sessionStorage.getItem("token")
+    });
+    console.log(res);
+    this.kefuImg = res.data.wx;
+    this.qq = res.data.qq;
   },
   methods: {
     async toZaixiankefu() {
       const res = await this.$api.getKefu({
-        token: sessionStorage.getItem("token"),
+        token: sessionStorage.getItem("token")
       });
       console.log(res);
       this.kefuImg = res.data.wx;
@@ -205,7 +213,7 @@ export default {
       // this.$store.commit('routerParams',true)
       sessionStorage.setItem("routerParams", true);
       this.$router.push({
-        name: "Fenzhanyuapi",
+        name: "Fenzhanyuapi"
       });
       setTimeout(() => {
         this.$router.go(0);
@@ -217,12 +225,26 @@ export default {
     },
     zxkfHandleClose() {
       this.zxkfDialogVisible = false;
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
+.footerLay{
+  padding:10px 0 30px 0;
+  display: flex;
+  justify-content: center;
+}
+.beian {
+  font-size: 14px;
+  text-decoration: none;
+  color: #aaaaaa !important;
+  cursor: pointer;
+}
+.beian:hover{
+  color: #007aff !important;
+}
 .index {
   // height: calc(100vh - );
   position: relative;

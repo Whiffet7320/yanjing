@@ -36,6 +36,14 @@
         </div>
         <el-footer>
           <img class="footerImg" src="../../assets/newImg/组件2–74.png" alt />
+          <div class="footerLay">
+            <a
+              id="domain"
+              class="beian"
+              href="https://beian.miit.gov.cn/#/Integrated/index"
+              target="_blank"
+            >浙ICP备2021026509号-1</a>
+          </div>
         </el-footer>
       </template>
     </el-container>
@@ -72,8 +80,8 @@ export default {
       isLogin: "false",
       path: "",
       aliPay: false,
-      kefuImg:'',
-      qq:'',
+      kefuImg: "",
+      qq: ""
     };
   },
   async created() {
@@ -159,11 +167,25 @@ export default {
       sessionStorage.setItem("isLogin", "123");
       this.isLogin = sessionStorage.getItem("isLogin");
     }
-  },
+  }
 };
 </script>
 
 <style lang="scss">
+.footerLay{
+  padding:10px 0 30px 0;
+  display: flex;
+  justify-content: center;
+}
+.beian {
+  font-size: 14px;
+  text-decoration: none;
+  color: #aaaaaa !important;
+  cursor: pointer;
+}
+.beian:hover{
+  color: #007aff !important;
+}
 .footerImg {
   width: 100%;
   height: 103px;
@@ -207,87 +229,87 @@ export default {
 }
 
 .fiexd-box {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 90px;
+  height: 300px;
+  background: #fe8800;
+  border-radius: 10px;
+  box-shadow: 0px 3px 10px 0px rgba(167, 167, 167, 0.2);
+  right: 80px;
+  z-index: 99999;
+  .f-b1 {
+    height: 100px;
     width: 90px;
-    height: 300px;
-    background: #fe8800;
-    border-radius: 10px;
-    box-shadow: 0px 3px 10px 0px rgba(167, 167, 167, 0.2);
-    right: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     z-index: 99999;
-    .f-b1 {
-      height: 100px;
-      width: 90px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 99999;
-      .pic {
-        width: 50px;
-        height: 40px;
-      }
-      .pic.b3 {
-        width: 41px;
-        height: 21px;
-      }
-      .txt {
-        margin-top: 12px;
-        font-size: 14px;
-        font-weight: 500;
-        text-align: center;
-        color: #ffffff;
-      }
+    .pic {
+      width: 50px;
+      height: 40px;
     }
-    .f-b1.b2 {
-      .b2-hov {
-        font-size: 14px;
-        display: none;
-      }
-      position: relative;
-      background: #ff6a00;
-      .pic {
-        width: 39px;
-        height: 43px;
-      }
+    .pic.b3 {
+      width: 41px;
+      height: 21px;
     }
-    .f-b1.b2:hover .b2-hov {
-      display: flex;
-      transform: translate(-100px, -26px);
-      width: 100px;
-      height: 60px;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-      background: #fff;
-      background-size: 100% auto;
-      position: absolute;
-      top: 50px;
-      left: 0;
-      z-index: 99999;
-    }
-    .f-b1.b1 {
-      position: relative;
-      .b1-hov {
-        display: none;
-        // transform: translateX(-120px);
-        img {
-          width: 100px;
-          height: 100px;
-        }
-      }
-    }
-    .f-b1.b1:hover .b1-hov {
-      display: block;
-      transform: translate(-100px, -50px);
-      position: absolute;
-      top: 50px;
-      left: 0;
-      z-index: 99999;
-    }
-    .hov.qq {
+    .txt {
+      margin-top: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: center;
+      color: #ffffff;
     }
   }
+  .f-b1.b2 {
+    .b2-hov {
+      font-size: 14px;
+      display: none;
+    }
+    position: relative;
+    background: #ff6a00;
+    .pic {
+      width: 39px;
+      height: 43px;
+    }
+  }
+  .f-b1.b2:hover .b2-hov {
+    display: flex;
+    transform: translate(-100px, -26px);
+    width: 100px;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #fff;
+    background-size: 100% auto;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    z-index: 99999;
+  }
+  .f-b1.b1 {
+    position: relative;
+    .b1-hov {
+      display: none;
+      // transform: translateX(-120px);
+      img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  }
+  .f-b1.b1:hover .b1-hov {
+    display: block;
+    transform: translate(-100px, -50px);
+    position: absolute;
+    top: 50px;
+    left: 0;
+    z-index: 99999;
+  }
+  .hov.qq {
+  }
+}
 </style>

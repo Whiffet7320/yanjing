@@ -36,6 +36,7 @@
         <el-form-item label="仓储：">
           <el-radio-group @change="changeVal1" v-model="form.cangchu" size="small">
             <el-radio-button
+              style="margin:10px 0"
               v-for="item in dataObj.yun_cang"
               :key="item.id"
               :label="item.id"
@@ -45,6 +46,7 @@
         <el-form-item label="面单：">
           <el-radio-group v-model="form.miandan" size="small">
             <el-radio-button
+            style="margin:10px 0"
               v-for="item in dataObj.kd_data"
               :key="item.id"
               :label="item.id"
@@ -134,6 +136,7 @@
               <el-form-item label="仓储：">
                 <el-radio-group @change="changeVal1" v-model="form.cangchu" size="small">
                   <el-radio-button
+                  style="padding:4px 0"
                     v-for="item in dataObj.yun_cang"
                     :key="item.id"
                     :label="item.id"
@@ -143,6 +146,7 @@
               <el-form-item label="面单：">
                 <el-radio-group @change="changeVal2" v-model="form.miandan" size="small">
                   <el-radio-button
+                  style="padding:4px 0"
                     v-for="item in dataObj.kd_data"
                     :key="item.id"
                     :label="item.id"

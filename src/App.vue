@@ -10,6 +10,9 @@ export default {
   name: 'App',
   components: {
     Layout
+  },
+  created(){
+    document.title = '云仓礼品';
   }
 }
 </script>
