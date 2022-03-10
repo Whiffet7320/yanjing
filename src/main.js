@@ -12,13 +12,16 @@ import VXETable from 'vxe-table';
 import 'vxe-table/lib/style.css';
 import './assets/font.css'
 import VueClipboard from 'vue-clipboard2'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/swiper.scss'
+Vue.use(VueAwesomeSwiper)
 Vue.use(VueClipboard)
 Vue.use(VXETable)
 
 Vue.prototype.$api = api;
 // Vue.prototype.$url = 'http://192.168.1.128:8094/admin'
-// Vue.prototype.$url = 'http://branch.yuncanggift.com/admin'
-Vue.prototype.$url = 'http://ht.yuncanggift.com/admin'
+Vue.prototype.$url = 'https://pifa.5laoye.com'
+// Vue.prototype.$url = 'http://192.168.50.142:9013'
 
 Vue.use(ElementUI);
 Vue.use(Viewer)
@@ -41,20 +44,20 @@ Viewer.setDefaults({
   }
 })
 
-router.beforeEach((to, from, next) => {
-  console.log(to)
-  if (!sessionStorage.getItem("yqmCode")) {
-    sessionStorage.setItem('yqmCode', to.path.substr(1))
-  }
-  console.log(sessionStorage.getItem("yqmCode"))
-  // 如果有token 说明该用户已登陆
-  if (sessionStorage.getItem("isLogin") == 'true') {
-    // 在已登陆的情况下访问登陆页会重定向到首页
-    next()
-  } else {
-    // 没有登陆则访问任何页面都重定向到登陆页
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   console.log(to)
+//   if (!sessionStorage.getItem("yqmCode")) {
+//     sessionStorage.setItem('yqmCode', to.path.substr(1))
+//   }
+//   console.log(sessionStorage.getItem("yqmCode"))
+//   // 如果有token 说明该用户已登陆
+//   if (sessionStorage.getItem("isLogin") == 'true') {
+//     // 在已登陆的情况下访问登陆页会重定向到首页
+//     next()
+//   } else {
+//     // 没有登陆则访问任何页面都重定向到登陆页
+//   }
+// });
 
 Vue.config.productionTip = false
 

@@ -32,7 +32,7 @@ myPost.interceptors.request.use(config => {
     console.log(sessionStorage.getItem("token"))
     if (sessionStorage.getItem("token")) {
         config.headers = {
-            'token': sessionStorage.getItem("token"),
+            'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
             // 'Access-Control-Allow-Origin': '*',
             // "access-control-allow-credentials": "true"
         }
@@ -45,7 +45,7 @@ myPost.interceptors.request.use(config => {
 myGet.interceptors.request.use(config => {
     if (sessionStorage.getItem("token")) {
         config.headers = {
-            'token': sessionStorage.getItem("token"),
+            'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
             // 'Access-Control-Allow-Origin': '*',
             // "access-control-allow-credentials": "true"
         }
@@ -58,7 +58,16 @@ myGet.interceptors.request.use(config => {
 myPost.interceptors.response.use(response => {
     // console.log(response)
     if (response.status === 200) {
-        return response.data
+        console.log(response.data)
+        if(response.data.code == 401){
+            sessionStorage.setItem("isLogin", false);
+            router.push({
+                path: "/Shouye"
+            })
+            router.go(0)
+        }else{
+            return response.data
+        }
     }
     // if (response.status === 200 && response.data.code == '200') {
     //     vue.$message({
@@ -104,8 +113,20 @@ myPost.interceptors.response.use(response => {
     }
 })
 myGet.interceptors.response.use(response => {
+    // if (response.status === 200) {
+    //     return response.data
+    // }
     if (response.status === 200) {
-        return response.data
+        console.log(response.data)
+        if(response.data.code == 401){
+            sessionStorage.setItem("isLogin", false);
+            router.push({
+                path: "/Shouye"
+            })
+            router.go(0)
+        }else{
+            return response.data
+        }
     }
     // if (response.status === 200 && response.data.code == '200') {
     //     vue.$message({
@@ -151,21 +172,11 @@ myGet.interceptors.response.use(response => {
 })
 
 export default {
-    login(username, password, code) {
+    login(obj) {
         return myPost({
             url: urls.login,
             data: {
-                username,
-                password,
-                code
-            }
-        })
-    },
-    getVerificationCode(obj) {
-        return myPost({
-            url: urls.getVerificationCode,
-            data: {
-                ...obj,
+                ...obj
             }
         })
     },
@@ -177,289 +188,297 @@ export default {
             }
         })
     },
-    getOrder(obj) {
-        return myPost({
-            url: urls.getOrder,
-            params: {
-                ...obj,
-            }
-        })
-    },
-    verificationSession(obj) {
-        return myPost({
-            url: urls.verificationSession,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    inviteReward(obj) {
-        return myPost({
-            url: urls.inviteReward,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    userInfo(obj) {
-        return myPost({
-            url: urls.userInfo,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    getGoods(obj) {
-        return myPost({
-            url: urls.getGoods,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    kdPrice(obj) {
-        return myPost({
-            url: urls.kdPrice,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    editIndex(obj) {
-        return myPost({
-            url: urls.editIndex,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    editData(obj) {
-        return myPost({
-            url: urls.editData,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    upLevelDefault(obj) {
-        return myPost({
-            url: urls.upLevelDefault,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    searchData(obj) {
-        return myPost({
-            url: urls.searchData,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    getKefu(obj) {
-        return myPost({
-            url: urls.getKefu,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    switchYc(obj) {
-        return myPost({
-            url: urls.switchYc,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    AftermarketAddData(obj) {
-        return myPost({
-            url: urls.AftermarketAddData,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    AftermarketGetData(obj) {
-        return myPost({
-            url: urls.AftermarketGetData,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    UserEditPassword(obj) {
-        return myPost({
-            url: urls.UserEditPassword,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    UserCheckYzm(obj) {
-        return myPost({
-            url: urls.UserCheckYzm,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    ArticleList(obj) {
-        return myPost({
-            url: urls.ArticleList,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    ArticleInfo(obj) {
-        return myPost({
-            url: urls.ArticleInfo,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    orderInsertData(obj) {
-        return myPost({
-            url: urls.orderInsertData,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    orderDelOrder(obj) {
-        return myPost({
-            url: urls.orderDelOrder,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    orderGetFilterData(obj) {
-        return myPost({
-            url: urls.orderGetFilterData,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    alipayGetPay(obj) {
-        return myPost({
-            url: urls.alipayGetPay,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    userInvitationReward(obj) {
-        return myPost({
-            url: urls.userInvitationReward,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    userMoneyList(obj) {
-        return myPost({
-            url: urls.userMoneyList,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    CommentEditIndexPassword(obj) {
-        return myPost({
-            url: urls.CommentEditIndexPassword,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    userAddLevel(obj) {
-        return myPost({
-            url: urls.userAddLevel,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    userReCharge(obj) {
-        return myPost({
-            url: urls.userReCharge,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    userCommission(obj) {
-        return myPost({
-            url: urls.userCommission,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    alipayQueryOrder(obj) {
-        return myPost({
-            url: urls.alipayQueryOrder,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    orderCutAddress(obj) {
-        return myPost({
-            url: urls.orderCutAddress,
-            data: {
-                ...obj,
-            }
-        })
-    },
-    OrderBg(obj) {
+    products(obj) {
         return myGet({
-            url: urls.OrderBg,
+            url: urls.products,
             params: {
                 ...obj,
             }
         })
     },
-    OrderDaochu_order(obj) {
+    category() {
         return myGet({
-            url: urls.OrderDaochu_order,
-            params: {
-                ...obj,
-            }
+            url: urls.category,
         })
     },
-    OrderDaochu(obj) {
+    productDetail(id) {
         return myGet({
-            url: urls.OrderDaochu,
-            params: {
-                ...obj,
-            }
+            url: `${urls.productDetail}/${id}`,
         })
     },
-    OrderExport(obj) {
+    web_config() {
         return myGet({
-            url: urls.OrderExport,
-            params: {
-                ...obj,
+            url: urls.web_config,
+        })
+    },
+    coupon_list() {
+        return myGet({
+            url: urls.coupon_list,
+        })
+    },
+    category_list(obj) {
+        return myGet({
+            url: urls.category_list,
+            params:{
+                ...obj
             }
         })
     },
-    orderBg_info(obj) {
+    dushu_save(obj) {
         return myPost({
-            url: urls.orderBg_info,
+            url: urls.dushu_save,
             data: {
                 ...obj,
             }
         })
     },
-    orderBg_pay(obj) {
+    user_info(obj) {
+        return myGet({
+            url: urls.user_info,
+            params: {
+                ...obj,
+            }
+        })
+    },
+    dushu_list(obj) {
+        return myGet({
+            url: urls.dushu_list,
+            params: {
+                ...obj,
+            }
+        })
+    },
+    product_storehouse_list(obj) {
+        return myGet({
+            url: urls.product_storehouse_list,
+            params: {
+                ...obj,
+            }
+        })
+    },
+    detail(id) {
+        return myGet({
+            url: `${urls.detail}/${id}`,
+        })
+    },
+    collect(id) {
         return myPost({
-            url: urls.orderBg_pay,
+            url: `${urls.collect}/${id}`,
+        })
+    },
+    collect_list(obj) {
+        return myGet({
+            url: urls.collect_list,
+            params: {
+                ...obj,
+            }
+        })
+    },
+    cart_list(obj) {
+        return myGet({
+            url: urls.cart_list,
+            params: {
+                ...obj,
+            }
+        })
+    },
+    take_coupon(obj) {
+        return myPost({
+            url: urls.take_coupon,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    product_type_list(obj) {
+        return myGet({
+            url: urls.product_type_list,
+            params: {
+                ...obj,
+            }
+        })
+    },
+    basicindex_list(obj) {
+        return myGet({
+            url: urls.basicindex_list,
+            params: {
+                ...obj,
+            }
+        })
+    },
+    product_type_color_list(obj) {
+        return myGet({
+            url: urls.product_type_color_list,
+            params: {
+                ...obj,
+            }
+        })
+    },
+    product_type_coatings_list(obj) {
+        return myGet({
+            url: urls.product_type_coatings_list,
+            params: {
+                ...obj,
+            }
+        })
+    },
+    add2cart(obj) {
+        return myPost({
+            url: urls.add2cart,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    product_comment_list(id) {
+        return myGet({
+            url: `${urls.product_comment_list}/${id}`,
+        })
+    },
+    country_list() {
+        return myGet({
+            url: `${urls.country_list}`,
+        })
+    },
+    save_address(obj) {
+        return myPost({
+            url: urls.save_address,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    address_list() {
+        return myGet({
+            url: `${urls.address_list}`,
+        })
+    },
+    del_address(obj) {
+        return myPost({
+            url: urls.del_address,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    order2pay(obj) {
+        return myPost({
+            url: urls.order2pay,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    order_list(obj) {
+        return myGet({
+            url: `${urls.order_list}`,
+            params:{
+                ...obj
+            }
+        })
+    },
+    order_confirm(obj) {
+        return myPost({
+            url: urls.order_confirm,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    order_express_detail(obj) {
+        return myGet({
+            url: `${urls.order_express_detail}`,
+            params:{
+                ...obj
+            }
+        })
+    },
+    async upload_img(image) {
+        var configs = {
+            headers: {
+                "Content-Type": "multipart/form-data;charse=UTF-8",
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+            },
+        };
+        const res = await axios
+            .post(`${urls.baseUrl}/api/upload_img`, image, configs)
+        return res.data
+    },
+    order_comment(obj) {
+        return myPost({
+            url: urls.order_comment,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    product_level_list(obj) {
+        return myGet({
+            url: `${urls.product_level_list}`,
+            params:{
+                ...obj
+            }
+        })
+    },
+    delcart(obj) {
+        return myPost({
+            url: urls.delcart,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    user_coupon_list(obj) {
+        return myGet({
+            url: `${urls.user_coupon_list}`,
+            params:{
+                ...obj
+            }
+        })
+    },
+    user_comment_list(obj) {
+        return myGet({
+            url: `${urls.user_comment_list}`,
+            params:{
+                ...obj
+            }
+        })
+    },
+    del_user_comment(obj) {
+        return myPost({
+            url: urls.del_user_comment,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    order_calc(obj) {
+        return myPost({
+            url: `${urls.order_calc}`,
+            data:{
+                ...obj
+            }
+        })
+    },
+    test(obj) {
+        return myPost({
+            url: urls.test,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    register(obj) {
+        return myPost({
+            url: urls.register,
+            data: {
+                ...obj,
+            }
+        })
+    },
+    send_sms(obj) {
+        return myPost({
+            url: urls.send_sms,
             data: {
                 ...obj,
             }

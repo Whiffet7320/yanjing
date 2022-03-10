@@ -5,287 +5,175 @@ Vue.use(VueRouter)
 Vue.config.productionTip = false;
 
 
-const routes = [
-    {
+const routes = [{
         path: '/AliPay',
         name: 'Ali',
         component: () => import('./components/AliPay'),
         children: [{
-                path: 'AliPay',
-                name: 'AliPay',
-                component: () => import('./components/AliPay/AliPay.vue'),
-            },
-        ]
+            path: 'AliPay',
+            name: 'AliPay',
+            component: () => import('./components/AliPay/AliPay.vue'),
+        }, ]
     },
     {
         path: '/Shouye',
         name: 'Sy',
-        component: () => import('./components/Shouye'),
+        component: () => import('./components/Header/syMain'),
+    },
+    {
+        path: '/Yanjing',
+        name: 'Yanjing',
+        component: () => import('./components/Yanjing'),
         children: [{
-            path: 'Shouye',
-            name: 'Shouye',
-            component: () => import('./components/Shouye/Shouye.vue'),
+            path: 'YanjingPage',
+            name: 'YanjingPage',
+            component: () => import('./components/Yanjing/YanjingPage.vue'),
+        }]
+    }, {
+        path: '/Huiyuan',
+        name: 'Huiyuan',
+        component: () => import('./components/Huiyuan'),
+        children: [{
+            path: 'HuiyuanZing',
+            name: 'HuiyuanZing',
+            component: () => import('./components/Huiyuan/HuiyuanZing.vue'),
+        }, {
+            path: 'Tuiguang',
+            name: 'Tuiguang',
+            component: () => import('./components/Huiyuan/Tuiguang.vue'),
+        }]
+    }, {
+        path: '/Qianbao',
+        name: 'Qianbao',
+        component: () => import('./components/Qianbao'),
+        children: [{
+            path: 'Youhuiquan',
+            name: 'Youhuiquan',
+            component: () => import('./components/Qianbao/Youhuiquan.vue'),
+        }, {
+            path: 'Jifen',
+            name: 'Jifen',
+            component: () => import('./components/Qianbao/Jifen.vue'),
+        }]
+    }, {
+        path: '/Dingdan',
+        name: 'Dingdan',
+        component: () => import('./components/Dingdan'),
+        children: [{
+            path: 'Wodedingdan',
+            name: 'Wodedingdan',
+            component: () => import('./components/Dingdan/Wodedingdan.vue'),
+        }, {
+            path: 'Shouhou',
+            name: 'Shouhou',
+            component: () => import('./components/Dingdan/Shouhou.vue'),
+        }, {
+            path: 'Shouhouwenti',
+            name: 'Shouhouwenti',
+            component: () => import('./components/Dingdan/Shouhouwenti.vue'),
+        }, {
+            path: 'Tousujianyi',
+            name: 'Tousujianyi',
+            component: () => import('./components/Dingdan/Tousujianyi.vue'),
+        }, {
+            path: 'Wodepinglun',
+            name: 'Wodepinglun',
+            component: () => import('./components/Dingdan/Wodepinglun.vue'),
+        }]
+    }, {
+        path: '/Xinpingtuisong',
+        name: 'Xinpingtuisong',
+        component: () => import('./components/Xinpingtuisong'),
+        children: [{
+            path: 'Xinping',
+            name: 'Xinping',
+            component: () => import('./components/Xinpingtuisong/Xinping.vue'),
+        }, {
+            path: 'Shangpinxiangqin',
+            name: 'Shangpinxiangqin',
+            component: () => import('./components/Xinpingtuisong/Shangpinxiangqin.vue'),
+        }]
+    }, {
+        path: '/Wenzhang',
+        name: 'Wenzhang',
+        component: () => import('./components/Wenzhang'),
+        children: [{
+            path: 'Tuihuotuikuan',
+            name: 'Tuihuotuikuan',
+            component: () => import('./components/Wenzhang/Tuihuotuikuan.vue'),
+        }, {
+            path: 'Weishenmexuanze',
+            name: 'Weishenmexuanze',
+            component: () => import('./components/Wenzhang/Weishenmexuanze.vue'),
+        }, {
+            path: 'Womendechengnuo',
+            name: 'Womendechengnuo',
+            component: () => import('./components/Wenzhang/Womendechengnuo.vue'),
+        }, {
+            path: 'Yunshushuoming',
+            name: 'Yunshushuoming',
+            component: () => import('./components/Wenzhang/Yunshushuoming.vue'),
+        }, {
+            path: 'Guanyuwomen',
+            name: 'Guanyuwomen',
+            component: () => import('./components/Wenzhang/Guanyuwomen.vue'),
+        }, {
+            path: 'Jiaruwomen',
+            name: 'Jiaruwomen',
+            component: () => import('./components/Wenzhang/Jiaruwomen.vue'),
+        }]
+    }, {
+        path: '/Bangzhu',
+        name: 'Bangzhu',
+        component: () => import('./components/Bangzhu'),
+        children: [{
+            path: 'Bangzhuzhongxin',
+            name: 'Bangzhuzhongxin',
+            component: () => import('./components/Bangzhu/Bangzhuzhongxin.vue'),
+        }, {
+            path: 'Zhuizongdingdan',
+            name: 'Zhuizongdingdan',
+            component: () => import('./components/Bangzhu/Zhuizongdingdan.vue'),
+        }, {
+            path: 'Wenzhangxiangqin',
+            name: 'Wenzhangxiangqin',
+            component: () => import('./components/Bangzhu/Wenzhangxiangqin.vue'),
         }]
     },
     {
-        path: '/Lipingshangcheng',
-        name: 'Liping',
-        component: () => import('./components/Lipingshangcheng'),
+        path: '/Geren',
+        name: 'Geren',
+        component: () => import('./components/Gerenzhongxin'),
         children: [{
-            path: 'Lipingshangcheng',
-            name: 'Lipingshangcheng',
-            component: () => import('./components/Lipingshangcheng/Lipingshangcheng.vue'),
-        }, ]
-    },
-    {
-        path: '/Fenzhanyuapi',
-        name: 'Fenzhan',
-        component: () => import('./components/Fenzhanyuapi'),
-        children: [{
-                path: 'Fenzhanyuapi',
-                name: 'Fenzhanyuapi',
-                component: () => import('./components/Fenzhanyuapi/Fenzhanyuapi.vue'),
-            },
-            {
-                path: 'Bangzhuzhongxin',
-                name: 'Bangzhuzhongxin',
-                component: () => import('./components/Fenzhanyuapi/Bangzhuzhongxin.vue'),
-            },
-            {
-                path: 'Bangzhuzhongxinxiangqin',
-                name: 'Bangzhuzhongxinxiangqin',
-                component: () => import('./components/Fenzhanyuapi/Bangzhuzhongxinxiangqin.vue'),
-            }
-        ]
-    },
-    {
-        path: '/Zhanghuguanli',
-        name: 'Zhanghuguanli',
-        component: () => import('./components/Zhanghuguanli'),
-        children: [{
-            path: 'Huiyuanziliao',
-            name: 'Huiyuanziliao',
-            component: () => import('./components/Zhanghuguanli/Huiyuanziliao.vue'),
+            path: 'Gerenzhongxin',
+            name: 'Gerenzhongxin',
+            component: () => import('./components/Gerenzhongxin/Gerenzhongxin.vue'),
         }, {
-            path: 'Tuiguanfanyong',
-            name: 'Tuiguanfanyong',
-            component: () => import('./components/Zhanghuguanli/Tuiguanfanyong.vue'),
+            path: 'Zhanghuxinxi',
+            name: 'Zhanghuxinxi',
+            component: () => import('./components/Gerenzhongxin/Zhanghuxinxi.vue'),
         }, {
-            path: 'Xiugaimima',
-            name: 'Xiugaimima',
-            component: () => import('./components/Zhanghuguanli/Xiugaimima.vue'),
+            path: 'Shiliziliao',
+            name: 'Shiliziliao',
+            component: () => import('./components/Gerenzhongxin/Shiliziliao.vue'),
         }, {
-            path: 'ShengjiVIP',
-            name: 'ShengjiVIP',
-            component: () => import('./components/Zhanghuguanli/ShengjiVIP.vue'),
-        }, ]
-    },
-    {
-        path: '/Shouhoufuwu',
-        name: 'Shouhoufuwu',
-        component: () => import('./components/Shouhoufuwu'),
-        children: [{
-            path: 'Shouhouchajian',
-            name: 'Shouhouchajian',
-            component: () => import('./components/Shouhoufuwu/Shouhouchajian.vue'),
+            path: 'Wodedizhi',
+            name: 'Wodedizhi',
+            component: () => import('./components/Gerenzhongxin/Wodedizhi.vue'),
         }, {
-            path: 'Didanshenqin',
-            name: 'Didanshenqin',
-            component: () => import('./components/Shouhoufuwu/Didanshenqin.vue'),
-        }, ]
-    },
-    {
-        path: '/Daifazhinan',
-        name: 'Daifazhinan',
-        component: () => import('./components/Daifazhinan'),
-        children: [{
-            path: 'Daifazhinan',
-            name: 'Daifazhinan',
-            component: () => import('./components/Daifazhinan/Daifazhinan.vue'),
+            path: 'Wodeshoucang',
+            name: 'Wodeshoucang',
+            component: () => import('./components/Gerenzhongxin/Wodeshoucang.vue'),
+        }, {
+            path: 'Gouwuche',
+            name: 'Gouwuche',
+            component: () => import('./components/Gerenzhongxin/Gouwuche.vue'),
+        }, {
+            path: 'GouwucheNext',
+            name: 'GouwucheNext',
+            component: () => import('./components/Gerenzhongxin/GouwucheNext.vue'),
         }]
     },
-    {
-        path: '/Huiyuanzhongxin',
-        name: 'Huiyuanzhongxin',
-        component: () => import('./components/Huiyuanzhongxin'),
-        children: [{
-            path: 'Huiyuanzhongxin',
-            name: 'Huiyuanzhongxin',
-            component: () => import('./components/Huiyuanzhongxin/Huiyuanzhongxin.vue'),
-        }]
-    },
-    {
-        path: '/Caiwuzhongxin',
-        name: 'Caiwuzhongxin',
-        component: () => import('./components/Caiwuzhongxin'),
-        children: [{
-            path: 'Woyaochongzhi',
-            name: 'Woyaochongzhi',
-            component: () => import('./components/Caiwuzhongxin/Woyaochongzhi.vue'),
-        }, {
-            path: 'Zijinmingxi',
-            name: 'Zijinmingxi',
-            component: () => import('./components/Caiwuzhongxin/Zijinmingxi.vue'),
-        }, {
-            path: 'Yaoqingjiangli',
-            name: 'Yaoqingjiangli',
-            component: () => import('./components/Caiwuzhongxin/Yaoqingjiangli.vue'),
-        }]
-    },
-    {
-        path: '/Dingdanguanli',
-        name: 'Dingdanguanli',
-        component: () => import('./components/Dingdanguanli'),
-        children: [{
-            path: 'Baoguoliebiao',
-            name: 'Baoguoliebiao',
-            component: () => import('./components/Dingdanguanli/Baoguoliebiao.vue'),
-        }, {
-            path: 'Dingdanliebiao',
-            name: 'Dingdanliebiao',
-            component: () => import('./components/Dingdanguanli/Dingdanliebiao.vue'),
-        }, ]
-    },
-    {
-        path: '/Lijifahuo',
-        name: 'Lijifahuo',
-        component: () => import('./components/Lijifahuo'),
-        children: [{
-            path: 'Lijifahuo',
-            name: 'Lijifahuo',
-            component: () => import('./components/Lijifahuo/Lijifahuo.vue'),
-        }]
-    },
-    // {
-    //     path: '/',
-    //     name: 'Home',
-    //     component: () => import('./components/Home'),
-    //     children: [{
-    //             path: 'Lunbotuliebiao',
-    //             name: 'Lunbotuliebiao',
-    //             component: () => import('./components/Home/Lunbotuliebiao.vue'),
-    //         },
-    //         {
-    //             path: 'Lunbotu',
-    //             name: 'Lunbotu',
-    //             component: () => import('./components/Home/Lunbotu.vue'),
-    //         },
-    //         {
-    //             path: 'Fenleiliebiao',
-    //             name: 'Fenleiliebiao',
-    //             component: () => import('./components/Home/Fenleiliebiao.vue')
-    //         },
-    //         {
-    //             path: 'Xinjianshangping',
-    //             name: 'Xinjianshangping',
-    //             component: () => import('./components/Home/Xinjianshangping.vue'),
-    //         },
-    //         {
-    //             path: 'Shangpinliebiao',
-    //             name: 'Shangpinliebiao',
-    //             component: () => import('./components/Home/Shangpinliebiao.vue')
-    //         },
-    //     ]
-    // },
-    // {
-    //     path: '/Yonghu',
-    //     name: 'Yonghu',
-    //     component: () => import('./components/Yonghu'),
-    //     children: [{
-    //             path: 'Quanbudingdan',
-    //             name: 'Quanbudingdan',
-    //             component: () => import('./components/Yonghu/Quanbudingdan.vue'),
-    //         },
-    //         {
-    //             path: 'Pinglunguanli',
-    //             name: 'Pinglunguanli',
-    //             component: () => import('./components/Yonghu/Pinglunguanli.vue'),
-    //         },
-    //         {
-    //             path: 'Ruzhuxingxi',
-    //             name: 'Ruzhuxingxi',
-    //             component: () => import('./components/Yonghu/Ruzhuxingxi.vue')
-    //         },
-    //     ]
-    // },
-    // {
-    //     path: '/Wode',
-    //     name: 'Wode',
-    //     component: () => import('./components/Wode'),
-    //     children: [{
-    //             path: 'Quanbupingtaishuju',
-    //             name: 'Quanbupingtaishuju',
-    //             component: () => import('./components/Wode/Quanbupingtaishuju.vue'),
-    //         },
-    //         {
-    //             path: 'Kefuxitong',
-    //             name: 'Kefuxitong',
-    //             component: () => import('./components/Wode/Kefuxitong.vue')
-    //         },
-    //         {
-    //             path: 'Fenxiangshezhi',
-    //             name: 'Fenxiangshezhi',
-    //             component: () => import('./components/Wode/Fenxiangshezhi.vue')
-    //         },
-    //         {
-    //             path: 'Youhuiquanguanli',
-    //             name: 'Youhuiquanguanli',
-    //             component: () => import('./components/Wode/Youhuiquanguanli.vue')
-    //         },
-    //         {
-    //             path: 'Youhuiquanshezhi',
-    //             name: 'Youhuiquanshezhi',
-    //             component: () => import('./components/Wode/Youhuiquanshezhi.vue')
-    //         },
-    //         {
-    //             path: 'Tianjiawenzhang',
-    //             name: 'Tianjiawenzhang',
-    //             component: () => import('./components/Wode/Tianjiawenzhang.vue')
-    //         },
-    //         {
-    //             path: 'Wenzhangliebiao',
-    //             name: 'Wenzhangliebiao',
-    //             component: () => import('./components/Wode/Wenzhangliebiao.vue')
-    //         },
-    //         {
-    //             path: 'Pingtaihonghuzhucebiao',
-    //             name: 'Pingtaihonghuzhucebiao',
-    //             component: () => import('./components/Wode/Pingtaihonghuzhucebiao.vue')
-    //         },
-    //         {
-    //             path: 'Yonghutixianbiao',
-    //             name: 'Yonghutixianbiao',
-    //             component: () => import('./components/Wode/Yonghutixianbiao.vue')
-    //         },
-    //         {
-    //             path: 'Shujutongjifenxi',
-    //             name: 'Shujutongjifenxi',
-    //             component: () => import('./components/Wode/Shujutongjifenxi.vue')
-    //         },
-    //     ]
-    // },
-    // {
-    //     path: '/Fenxiao',
-    //     name: 'Fenxiao',
-    //     component: () => import('./components/Fenxiao'),
-    //     children: [{
-    //             path: 'Fenxiaofenrunzidingyi',
-    //             name: 'Fenxiaofenrunzidingyi',
-    //             component: () => import('./components/Fenxiao/Fenxiaofenrunzidingyi.vue'),
-    //         },
-    //         {
-    //             path: 'Wodetuandui',
-    //             name: 'Wodetuandui',
-    //             component: () => import('./components/Fenxiao/Wodetuandui.vue'),
-    //         },
-    //     ]
-    // },
-
-    // // {
-    // //     path: '/login',
-    // //     name: 'login',
-    // //     component: () => import('./components/Login')
-    // // },
 ]
 
 const router = new VueRouter({

@@ -6,117 +6,135 @@
       </template>
       <template v-else>
         <el-header>
-          <Header />
+          <SyHeader />
         </el-header>
         <div class="contain">
           <el-container>
-            <!-- <el-aside><Aside /></el-aside> -->
+            <el-aside><Aside /></el-aside>
             <el-main>
-              <div class="fiexd-box">
-                <div class="f-b1 b1">
-                  <img class="pic" src="../../assets/newImg/lujin526.png" alt />
-                  <div class="txt">微信咨询</div>
-                  <div class="b1-hov">
-                    <img :src="kefuImg" alt />
-                  </div>
-                </div>
-                <div class="f-b1 b2">
-                  <img class="pic" src="../../assets/newImg/lujin527.png" alt />
-                  <div class="txt">QQ咨询</div>
-                  <div class="b2-hov">{{qq}}</div>
-                </div>
-                <div class="f-b1 b3" @click="toTop">
-                  <img class="pic b3" src="../../assets/newImg/zu297.png" alt />
-                  <div class="txt">返回顶部</div>
-                </div>
-              </div>
               <RouterView></RouterView>
             </el-main>
           </el-container>
         </div>
-        <el-footer>
-          <img class="footerImg" src="../../assets/newImg/组件2–74.png" alt />
-          <div class="footerLay">
-            <a
-              id="domain"
-              class="beian"
-              href="https://beian.miit.gov.cn/#/Integrated/index"
-              target="_blank"
-            >浙ICP备2021026509号-1</a>
-          </div>
-        </el-footer>
+        <SyFooter />
       </template>
     </el-container>
     <div class="syIndex" v-else-if="this.isLogin == 'sy'">
       <SyHeader />
-      <SyMain />
+      
+      <SyMain v-if="isShouye" />
+
+      <RouterView v-if="!isShouye"></RouterView>
+      <SyFooter/>
     </div>
     <Login v-else />
   </div>
 </template>
 
 <script>
-// import { mapState } from "vuex";
+import { mapState } from "vuex";
 import AliPay from "../AliPay";
 import Login from "../Login";
-import Header from "../Header";
+// import Header from "../Header";
 import SyHeader from "../Header/syIndex.vue";
 import SyMain from "../Header/syMain.vue";
-// import Aside from "../Aside";
+import SyFooter from "../Header/syFooter.vue";
+import Aside from "../Aside";
 export default {
-  // computed: {
-  //   ...mapState(["aliPay"]),
-  // },
+  computed: {
+    ...mapState(["isShouye",'isLogin']),
+  },
   watch: {
     $route(to) {
       console.log(to.path); //到哪去
       if (to.path == "/AliPay/AliPay") {
         this.aliPay = true;
+      }else if (to.path == "/AliPay/AliPay") {
+        this.aliPay = true;
       }
+      if(to.path == "/Shouye"){
+        this.$store.commit("isShouye", true);
+      }else{
+        this.$store.commit("isShouye", false);
+      }
+      if(to.path == '/Geren/Zhanghuxinxi'){
+        this.$store.commit("isLogin", 'true');
+        this.$store.commit("asideIndex", '20-1');
+      }else if(to.path == '/Geren/Shiliziliao'){
+        this.$store.commit("isLogin", 'true');
+        this.$store.commit("asideIndex", '20-2');
+      }else if(to.path == '/Geren/Wodedizhi'){
+        this.$store.commit("isLogin", 'true');
+        this.$store.commit("asideIndex", '20-3');
+      }else if(to.path == '/Dingdan/Wodedingdan'){
+        this.$store.commit("isLogin", 'true');
+        this.$store.commit("asideIndex", '20-4');
+      }else if(to.path == '/Dingdan/Shouhou'){
+        this.$store.commit("isLogin", 'true');
+        this.$store.commit("asideIndex", '20-6');
+      }else if(to.path == '/Dingdan/Shouhouwenti'){
+        this.$store.commit("isLogin", 'true');
+        this.$store.commit("asideIndex", '20-6');
+      }else if(to.path == '/Dingdan/Tousujianyi'){
+        this.$store.commit("isLogin", 'true');
+        this.$store.commit("asideIndex", '20-6');
+      }else if(to.path == '/Qianbao/Youhuiquan'){
+        this.$store.commit("isLogin", 'true');
+        this.$store.commit("asideIndex", '20-7');
+      }else if(to.path == '/Dingdan/Wodepinglun'){
+        this.$store.commit("isLogin", 'true');
+        this.$store.commit("asideIndex", '20-5');
+      }else if(to.path == '/Qianbao/Jifen'){
+        this.$store.commit("isLogin", 'true');
+        this.$store.commit("asideIndex", '20-8');
+      }else if(to.path == '/Huiyuan/HuiyuanZing'){
+        this.$store.commit("isLogin", 'true');
+        this.$store.commit("asideIndex", '20-9');
+      }else if(to.path == '/Huiyuan/Tuiguang'){
+        this.$store.commit("isLogin", 'true');
+        this.$store.commit("asideIndex", '20-10');
+      }
+      else{
+        this.$store.commit("isLogin", 'sy');
+      }
+      
     }
   },
   data() {
     return {
-      isLogin: "false",
+      // 
+      // 
       path: "",
       aliPay: false,
       kefuImg: "",
-      qq: ""
+      qq: "",
     };
   },
   async created() {
-    console.log(this.aliPay);
-    console.log(sessionStorage.getItem("routerParams"), "ccccc");
-    this.routerParams = sessionStorage.getItem("routerParams");
-    if (!sessionStorage.getItem("isLogin")) {
-      sessionStorage.setItem("isLogin", "sy");
-    }
-    this.isLogin = sessionStorage.getItem("isLogin");
-    console.log(this.isLogin);
-    const res = await this.$api.getKefu({
-      token: sessionStorage.getItem("token")
-    });
-    console.log(res);
-    this.kefuImg = res.data.wx;
-    this.qq = res.data.qq;
+    
   },
   mounted() {
     // history.pushState(null, null, location.href)
-    window.addEventListener("popstate", this.disableBrowserBack);
-    window.addEventListener("scroll", this.scrollToTop);
+    // window.addEventListener("popstate", this.disableBrowserBack);
+    // window.addEventListener("scroll", this.scrollToTop);
   },
   destroyed() {
-    window.removeEventListener("scroll", this.scrollToTop);
+    // window.removeEventListener("scroll", this.scrollToTop);
   },
   components: {
     Login,
-    Header,
-    // Aside,
+    // Header,
+    Aside,
     SyHeader,
     SyMain,
-    AliPay
+    AliPay,
+    SyFooter
   },
   methods: {
+    toShouye(){
+      this.$router.push({name:'Shouye'})
+    },
+    // 
     toTop() {
       let that = this;
       let timer = setInterval(() => {
@@ -172,8 +190,8 @@ export default {
 </script>
 
 <style lang="scss">
-.footerLay{
-  padding:10px 0 30px 0;
+.footerLay {
+  padding: 10px 0 30px 0;
   display: flex;
   justify-content: center;
 }
@@ -183,7 +201,7 @@ export default {
   color: #aaaaaa !important;
   cursor: pointer;
 }
-.beian:hover{
+.beian:hover {
   color: #007aff !important;
 }
 .footerImg {
@@ -193,25 +211,25 @@ export default {
 }
 .layout {
   min-width: 1400px;
-  background: #eceef5;
+  background: #ffffff;
 }
 .contain {
-  width: 1400px;
-  margin: 0 auto;
+  // width: 100vw;
+  // margin: 0px auto 0 auto;
 }
 
 .el-header {
   background-color: #ffffff;
-  height: 133px !important;
+  height: 157px !important;
   padding: 0 !important;
 }
 .el-container {
   /* height: calc(100vh); */
 }
 .el-aside {
-  /* background-color: #282828; */
+  background-color: #fafafa;
   color: #333;
-  width: 284px !important;
+  width: 400px !important;
 }
 .el-footer {
   /* background-color: #282828; */
@@ -221,9 +239,14 @@ export default {
 }
 
 .el-main {
+  // flex: 0;
+  box-sizing: border-box;
+  // height: calc(100vh - 157px);
   /* padding: 0 0 0 24px !important; */
   /* background: #f3f3f3; */
   color: #333;
+  padding: 40px 0 0 70px;
+  background:#fafafa;
 }
 .syIndex {
 }

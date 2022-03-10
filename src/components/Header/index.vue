@@ -92,58 +92,57 @@ export default {
   },
   created() {
     const userName = sessionStorage.getItem("username");
-    console.log(userName);
     if (userName == null) {
       this.userName = "null";
     } else {
       this.userName = userName;
     }
   },
-  watch: {
-    $route(to) {
-      console.log(to.path, "cyy");
-      if (to.path == "/Lipingshangcheng/Lipingshangcheng") {
-        this.activeIndex2 = "2";
-        this.$store.commit("asideVal", "2-1");
-      } else if (to.path == "/Fenzhanyuapi/Fenzhanyuapi") {
-        this.activeIndex2 = "7";
-        this.$store.commit("asideVal", "7-1");
-      } else if (to.path == "/Fenzhanyuapi/Bangzhuzhongxin") {
-        this.activeIndex2 = "7";
-        this.$store.commit("asideVal", "7-2");
-      } else if (to.path == "/Zhanghuguanli/Huiyuanziliao") {
-        this.activeIndex2 = "6";
-        this.$store.commit("asideVal", "6-1");
-      } else if (to.path == "/Zhanghuguanli/Tuiguanfanyong") {
-        this.activeIndex2 = "6";
-        this.$store.commit("asideVal", "6-2");
-      } else if (to.path == "/Zhanghuguanli/Xiugaimima") {
-        this.activeIndex2 = "6";
-        this.$store.commit("asideVal", "6-3");
-      } else if (to.path == "/Zhanghuguanli/ShengjiVIP") {
-        this.activeIndex2 = "4";
-        this.$store.commit("asideVal", "6-4");
-      } else if (to.path == "/Shouhoufuwu/Shouhouchajian") {
-        this.$store.commit("asideVal", "10-1");
-      } else if (to.path == "/Shouhoufuwu/Didanshenqin") {
-        this.$store.commit("asideVal", "10-2");
-      } else if (to.path == "/Daifazhinan/Daifazhinan") {
-        this.activeIndex2 = "5";
-      } else if (to.path == "/Huiyuanzhongxin/Huiyuanzhongxin") {
-        this.activeIndex2 = "3";
-      } else if (to.path == "/Caiwuzhongxin/Woyaochongzhi") {
-        this.$store.commit("asideVal", "11-1");
-      } else if (to.path == "/Caiwuzhongxin/Zijinmingxi") {
-        this.$store.commit("asideVal", "11-2");
-      } else if (to.path == "/Caiwuzhongxin/Yaoqingjiangli") {
-        this.$store.commit("asideVal", "11-3");
-      } else if (to.path == "/Dingdanguanli/Baoguoliebiao") {
-        this.$store.commit("asideVal", "12-1");
-      } else if (to.path == "/Dingdanguanli/Dingdanliebiao") {
-        this.$store.commit("asideVal", "12-2");
-      }
-    },
-  },
+  // watch: {
+  //   $route(to) {
+  //     console.log(to.path, "cyy");
+  //     if (to.path == "/Lipingshangcheng/Lipingshangcheng") {
+  //       this.activeIndex2 = "2";
+  //       this.$store.commit("asideVal", "2-1");
+  //     } else if (to.path == "/Fenzhanyuapi/Fenzhanyuapi") {
+  //       this.activeIndex2 = "7";
+  //       this.$store.commit("asideVal", "7-1");
+  //     } else if (to.path == "/Fenzhanyuapi/Bangzhuzhongxin") {
+  //       this.activeIndex2 = "7";
+  //       this.$store.commit("asideVal", "7-2");
+  //     } else if (to.path == "/Zhanghuguanli/Huiyuanziliao") {
+  //       this.activeIndex2 = "6";
+  //       this.$store.commit("asideVal", "6-1");
+  //     } else if (to.path == "/Zhanghuguanli/Tuiguanfanyong") {
+  //       this.activeIndex2 = "6";
+  //       this.$store.commit("asideVal", "6-2");
+  //     } else if (to.path == "/Zhanghuguanli/Xiugaimima") {
+  //       this.activeIndex2 = "6";
+  //       this.$store.commit("asideVal", "6-3");
+  //     } else if (to.path == "/Zhanghuguanli/ShengjiVIP") {
+  //       this.activeIndex2 = "4";
+  //       this.$store.commit("asideVal", "6-4");
+  //     } else if (to.path == "/Shouhoufuwu/Shouhouchajian") {
+  //       this.$store.commit("asideVal", "10-1");
+  //     } else if (to.path == "/Shouhoufuwu/Didanshenqin") {
+  //       this.$store.commit("asideVal", "10-2");
+  //     } else if (to.path == "/Daifazhinan/Daifazhinan") {
+  //       this.activeIndex2 = "5";
+  //     } else if (to.path == "/Huiyuanzhongxin/Huiyuanzhongxin") {
+  //       this.activeIndex2 = "3";
+  //     } else if (to.path == "/Caiwuzhongxin/Woyaochongzhi") {
+  //       this.$store.commit("asideVal", "11-1");
+  //     } else if (to.path == "/Caiwuzhongxin/Zijinmingxi") {
+  //       this.$store.commit("asideVal", "11-2");
+  //     } else if (to.path == "/Caiwuzhongxin/Yaoqingjiangli") {
+  //       this.$store.commit("asideVal", "11-3");
+  //     } else if (to.path == "/Dingdanguanli/Baoguoliebiao") {
+  //       this.$store.commit("asideVal", "12-1");
+  //     } else if (to.path == "/Dingdanguanli/Dingdanliebiao") {
+  //       this.$store.commit("asideVal", "12-2");
+  //     }
+  //   },
+  // },
   methods: {
     denglu() {
       sessionStorage.setItem("isLogin", "123");

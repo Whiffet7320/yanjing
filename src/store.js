@@ -5,6 +5,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    jishiShougouPage:1,
+    jishiShougouPageSize:10,
+    asideIndex:"20-1",
+    isLogin:'sy',
+    isShouye:true,
     aliPay:true,
     isPay:false,
     routerParams:null,
@@ -37,8 +42,27 @@ export default new Vuex.Store({
     commission:null,
     lpscKdId:null,
     cangchu:null,
+    shopId:null,
   },
   mutations: {
+    shopId(state, str) {
+      state.shopId = str;
+    },
+    jishiShougouPage(state, str) {
+      state.jishiShougouPage = str;
+    },
+    jishiShougouPageSize(state, str) {
+      state.jishiShougouPageSize = str;
+    },
+    asideIndex(state, str) {
+      state.asideIndex = str;
+    },
+    isLogin(state, str) {
+      state.isLogin = str;
+    },
+    isShouye(state, str) {
+      state.isShouye = str;
+    },
     cangchu(state, str) {
       state.cangchu = str;
     },
