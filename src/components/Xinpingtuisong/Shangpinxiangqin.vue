@@ -2,7 +2,7 @@
   <div class="index">
     <div class="box1">
       <el-row>
-        <el-col :span="16">
+        <el-col :span="14">
           <div class="nav1">
             <div class="n1-left">
               <el-image
@@ -14,9 +14,22 @@
               ></el-image>
             </div>
             <div class="n1-right">
-              <transition name="fade">
+              <transition name="fade" v-if="isC">
                 <img v-if="show" :src="nowImg" alt class="n1-top" />
               </transition>
+              <el-carousel
+                v-if="!isC"
+                style="width: 600px; height: 600px; margin-bottom: 60px"
+                indicator-position="outside"
+              >
+                <el-carousel-item
+                  style="width: 600px; height: 600px"
+                  v-for="item in shopList"
+                  :key="item.id"
+                >
+                  <img :src="item.product_img" alt class="n1-top" />
+                </el-carousel-item>
+              </el-carousel>
               <div class="n1-bottom">
                 <el-image
                   @click="changeNowImg2(item)"
@@ -34,24 +47,29 @@
             </div>
           </div>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="10">
           <div class="nav2">
             <div class="n2-tit1">
-              <div class="txt1">{{nowSku.product_name}}</div>
+              <div class="txt1">{{ nowSku.product_name }}</div>
               <div class="txt2">50%OFF</div>
             </div>
             <div class="n2-tit2">
               <div class="txt1">评价（2320）</div>
-              <el-rate v-model="rateValue" disabled show-score text-color="#ff9900"></el-rate>
+              <el-rate
+                v-model="rateValue"
+                disabled
+                show-score
+                text-color="#ff9900"
+              ></el-rate>
             </div>
             <div class="n2-tit3">
               <div class="n2t3-item">
                 尺寸：
-                <span class="sp">{{Number(detailObj.frame_width)}}</span>
+                <span class="sp">{{ Number(detailObj.frame_width) }}</span>
               </div>
             </div>
             <div class="n2-tit4">
-              <div class="left">￥{{nowSku.product_price}}</div>
+              <div class="left">￥{{ nowSku.product_price }}</div>
               <div class="right">
                 <div class="top">震撼价</div>
                 <div class="bottom">基础的镜片和镜框全部打折</div>
@@ -61,8 +79,12 @@
               <img src="../../assets/img/Paypal.png" class="pic1" alt />
               <div class="txt1">为符合资格的购买物品支付四次无息付款</div>
             </div>
-            <div @click="chufangDialogVisible = true" class="n2-tit6">选择镜头</div>
-            <div @click="shoucang" class="n2-tit7">{{nowSku.is_collect == '1' ? '取消收藏' : '添加到收藏'}}</div>
+            <div @click="chufangDialogVisible = true" class="n2-tit6">
+              选择镜头
+            </div>
+            <div @click="shoucang" class="n2-tit7">
+              {{ nowSku.is_collect == "1" ? "取消收藏" : "添加到收藏" }}
+            </div>
             <div class="n2-tit8">分享到</div>
             <div class="n2-tit9">
               <img src="../../assets/img/lianshu.png" class="pic1" alt />
@@ -84,14 +106,14 @@
                   <el-col :span="12">
                     <div class="tit1">
                       <div class="txtt1">
-                        瞳距：{{detailObj.pd_range}}
+                        瞳距：{{ detailObj.pd_range }}
                         <i
                           @click="tongjudialogVisible = true"
                           class="el-icon-question"
                         ></i>
                       </div>
                       <div class="txtt1">
-                        度数：{{detailObj.prescription_range}}
+                        度数：{{ detailObj.prescription_range }}
                         <i
                           @click="dushudialogVisible = true"
                           class="el-icon-question"
@@ -102,13 +124,21 @@
                         <div class="sps">
                           <div class="spd">
                             散光或平光：
-                            <span class="sp">{{detailObj.progressive_or_bifocal}}</span>
-                            <i @click="shuangjiaodialogVisible = true" class="el-icon-question"></i>
+                            <span class="sp">{{
+                              detailObj.progressive_or_bifocal
+                            }}</span>
+                            <i
+                              @click="shuangjiaodialogVisible = true"
+                              class="el-icon-question"
+                            ></i>
                           </div>
-                          <div class="spd" style="margin-top:8px">
+                          <div class="spd" style="margin-top: 8px">
                             阅读：
-                            <span class="sp">{{detailObj.readers}}</span>
-                            <i @click="yueduzhedialogVisible = true" class="el-icon-question"></i>
+                            <span class="sp">{{ detailObj.readers }}</span>
+                            <i
+                              @click="yueduzhedialogVisible = true"
+                              class="el-icon-question"
+                            ></i>
                           </div>
                         </div>
                       </div>
@@ -116,11 +146,11 @@
                   </el-col>
                   <el-col :span="12">
                     <div class="tit1">
-                      <div class="txtt1">边框：{{detailObj.rim}}</div>
-                      <div class="txtt1">外形：{{detailObj.shape}}</div>
-                      <div class="txtt1">材料：{{detailObj.material}}</div>
-                      <div class="txtt1">特色：{{detailObj.feature}}</div>
-                      <div class="txtt1">标签：{{detailObj.shape}}</div>
+                      <div class="txtt1">边框：{{ detailObj.rim }}</div>
+                      <div class="txtt1">外形：{{ detailObj.shape }}</div>
+                      <div class="txtt1">材料：{{ detailObj.material }}</div>
+                      <div class="txtt1">特色：{{ detailObj.feature }}</div>
+                      <div class="txtt1">标签：{{ detailObj.shape }}</div>
                     </div>
                   </el-col>
                 </el-row>
@@ -134,15 +164,15 @@
                     <div class="tit1">
                       <div class="txtt1">
                         <img src="../../assets/img/ic1.png" alt class="ic1" />
-                        镜框总长：{{detailObj.frame_width}}
+                        镜框总长：{{ detailObj.frame_width }}
                       </div>
                       <div class="txtt1">
                         <img src="../../assets/img/ic2.png" alt class="ic2" />
-                        单镜框宽度：{{detailObj.lens_width}}
+                        单镜框宽度：{{ detailObj.lens_width }}
                       </div>
                       <div class="txtt1">
                         <img src="../../assets/img/ic3.png" alt class="ic3" />
-                        镜架距离：{{detailObj.bridge}}
+                        镜架距离：{{ detailObj.bridge }}
                       </div>
                     </div>
                   </el-col>
@@ -150,15 +180,15 @@
                     <div class="tit1">
                       <div class="txtt1 flexali">
                         <img src="../../assets/img/ic4.png" alt class="ic4" />
-                        眼镜腿长：{{detailObj.temple_length}}
+                        眼镜腿长：{{ detailObj.temple_length }}
                       </div>
                       <div class="txtt1 flexali">
                         <img src="../../assets/img/ic5.png" alt class="ic5" />
-                        单镜高度：{{detailObj.lens_height}}
+                        单镜高度：{{ detailObj.lens_height }}
                       </div>
                       <div class="txtt1 flexali">
                         <img src="../../assets/img/ic6.png" alt class="ic6" />
-                        镜框重量：{{detailObj.frame_weight}}
+                        镜框重量：{{ detailObj.frame_weight }}
                       </div>
                     </div>
                   </el-col>
@@ -168,7 +198,7 @@
           </el-row>
         </el-tab-pane>
         <el-tab-pane label="描述" name="2">
-          <div class="b2-nav2">{{detailObj.description}}</div>
+          <div class="b2-nav2">{{ detailObj.description }}</div>
         </el-tab-pane>
         <el-tab-pane label="评论" name="3">
           <!-- <el-row>
@@ -276,14 +306,21 @@
             </div>
             <div class="b2n3-tit6" v-for="item in pinglunList" :key="item.id">
               <div class="b2n3-tit1">
-                <el-rate v-model="item.star" disabled show-score text-color="#ff9900"></el-rate>
-                <div class="txt2">颜色：{{item.colorname}}</div>
+                <el-rate
+                  v-model="item.star"
+                  disabled
+                  show-score
+                  text-color="#ff9900"
+                ></el-rate>
+                <div class="txt2">颜色：{{ item.colorname }}</div>
               </div>
-              <el-row :gutter="60" style="display:flex;align-items: center;">
+              <el-row :gutter="60" style="display: flex; align-items: center">
                 <el-col :span="14">
-                  <div class="txttt1">{{item.title}}</div>
+                  <div class="txttt1">{{ item.title }}</div>
                   <div class="titt2">
-                    <div class="txt1">by{{item.username}} ，{{item.timeBefore}}</div>
+                    <div class="txt1">
+                      by{{ item.username }} ，{{ item.timeBefore }}
+                    </div>
                     <i class="el-icon-s-custom"></i>
                   </div>
                   <!-- <div class="titt3">
@@ -296,13 +333,13 @@
                       <span class="sp">尺寸合适</span>
                     </div>
                   </div>-->
-                  <div class="titt4">{{item.content}}</div>
+                  <div class="titt4">{{ item.content }}</div>
                   <!-- <div class="titt5">0/0的人发现这篇评论很有帮助。</div> -->
                 </el-col>
-                <el-col :span="10" style="display: flex;align-items: center;">
+                <el-col :span="10" style="display: flex; align-items: center">
                   <div class="imgItems">
                     <el-image
-                      v-for="(pic,i) in item.imgs"
+                      v-for="(pic, i) in item.imgs"
                       :key="i"
                       :src="pic"
                       alt
@@ -316,7 +353,13 @@
           </div>
         </el-tab-pane>
         <div class="imgItems" v-if="activeName == '1' || activeName == '2'">
-          <img v-for="item in srcList" :key="item" :src="item" alt class="imgitem" />
+          <img
+            v-for="item in srcList"
+            :key="item"
+            :src="item"
+            alt
+            class="imgitem"
+          />
         </div>
       </el-tabs>
     </div>
@@ -326,29 +369,29 @@
         <el-row :gutter="90">
           <el-col :span="6">
             <div class="swItem">
-              <img class="sw-pic1" src="../../assets/img/mcz3.png" alt />
+              <img class="sw-pic1" src="../../assets/img/wx1.png" alt />
               <div class="sw-txt1">猎杀系列</div>
               <div class="sw-txt2">￥98.0</div>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="swItem">
-              <img class="sw-pic1" src="../../assets/img/mcz3.png" alt />
-              <div class="sw-txt1">猎杀系列</div>
+              <img class="sw-pic1" src="../../assets/img/wx2.png" alt />
+              <div class="sw-txt1">耍帅系列</div>
               <div class="sw-txt2">￥98.0</div>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="swItem">
-              <img class="sw-pic1" src="../../assets/img/mcz3.png" alt />
-              <div class="sw-txt1">猎杀系列</div>
+              <img class="sw-pic1" src="../../assets/img/wx3.png" alt />
+              <div class="sw-txt1">休闲系列</div>
               <div class="sw-txt2">￥98.0</div>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="swItem">
-              <img class="sw-pic1" src="../../assets/img/mcz3.png" alt />
-              <div class="sw-txt1">猎杀系列</div>
+              <img class="sw-pic1" src="../../assets/img/wx4.png" alt />
+              <div class="sw-txt1">靓仔系列</div>
               <div class="sw-txt2">￥98.0</div>
             </div>
           </el-col>
@@ -358,7 +401,11 @@
 
     <div class="box4"></div>
     <!-- 选择处方 -->
-    <el-dialog :visible.sync="chufangDialogVisible" width="70%" :before-close="chufangHandleClose">
+    <el-dialog
+      :visible.sync="chufangDialogVisible"
+      width="70%"
+      :before-close="chufangHandleClose"
+    >
       <div class="chufangDia">
         <el-row>
           <el-col :span="16">
@@ -366,38 +413,48 @@
               <img :src="nowImg" alt class="l-pic" />
               <div class="l-tit1">
                 <div class="lt1-left">
-                  <div class="lt1-txt1">{{nowSku.product_name}}</div>
-                  <div class="lt1-txt2">{{color_name}}</div>
+                  <div class="lt1-txt1">{{ nowSku.product_name }}</div>
+                  <div class="lt1-txt2">{{ color_name }}</div>
                 </div>
-                <div class="lt1-right">￥{{nowSku.product_price}}</div>
+                <div class="lt1-right">￥{{ nowSku.product_price }}</div>
               </div>
               <div class="l-tit3">
-                <div class="lt3-tit1" v-if="dushu_id != ''">处方：{{chufangObj.dushu_name}}</div>
+                <div class="lt3-tit1" v-if="dushu_id != ''">
+                  处方：{{ chufangObj.dushu_name }}
+                </div>
                 <div class="lt3-tit1" v-else>无处方</div>
                 <div class="lt3-step" v-if="buzhouVal != ''">
                   <div class="lt3s-tit1">
                     <div class="step1">1</div>
                     <!-- <div class="step1-tx">{{buzhouVal}}：平面 | 正常使用</div> -->
-                    <div class="step1-tx">{{buzhouVal}} (￥{{leixinObj.type_price}})</div>
+                    <div class="step1-tx">
+                      {{ buzhouVal }} (￥{{ leixinObj.type_price }})
+                    </div>
                   </div>
                   <div class="lt3s-tit2">
                     <div
                       class="lt3s-txt1"
                       v-if="nowStep == '1-2-1-1-1' || nowStep == '1-2-1-1-1-1'"
                     >
-                      <div class="lt3s-left">颜色：{{yanseObj.color_name}}</div>
-                      <div class="lt3s-right">￥{{yanseObj.color_price}}</div>
+                      <div class="lt3s-left">
+                        颜色：{{ yanseObj.color_name }}
+                      </div>
+                      <div class="lt3s-right">￥{{ yanseObj.color_price }}</div>
                     </div>
                     <div
                       class="lt3s-txt1"
                       v-if="nowStep == '1-2-1-1-1' || nowStep == '1-2-1-1-1-1'"
                     >
-                      <div class="lt3s-left">折射率：{{buzhouVal2}}</div>
-                      <div class="lt3s-right">￥{{colorPrice}}</div>
+                      <div class="lt3s-left">折射率：{{ buzhouVal2 }}</div>
+                      <div class="lt3s-right">￥{{ colorPrice }}</div>
                     </div>
                     <div class="lt3s-txt1" v-if="nowStep == '1-2-1-1-1-1'">
-                      <div class="lt3s-left">反射涂料：{{nowTucengObj.coating_name}}</div>
-                      <div class="lt3s-right">￥{{nowTucengObj.coating_price}}</div>
+                      <div class="lt3s-left">
+                        反射涂料：{{ nowTucengObj.coating_name }}
+                      </div>
+                      <div class="lt3s-right">
+                        ￥{{ nowTucengObj.coating_price }}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -420,9 +477,7 @@
               </div>
               <div class="l-tit2">
                 <div class="lt1-left">预计总额</div>
-                <div
-                  class="lt1-right"
-                >￥{{price}}</div>
+                <div class="lt1-right">￥{{ price }}</div>
               </div>
             </div>
           </el-col>
@@ -433,7 +488,7 @@
                 <div v-if="nowStep == '0' && stepShow">
                   <div class="r-tit1">选择镜头类型</div>
                   <div class="r-items">
-                    <div class="r-box" @click="toStep('0','1-1','','',1)">
+                    <div class="r-box" @click="toStep('0', '1-1', '', '', 1)">
                       <div class="rb-left">
                         <div class="rb-tit1">处方</div>
                         <div class="rb-tit2">带视力矫正的透镜</div>
@@ -442,7 +497,7 @@
                         <i class="el-icon-arrow-right"></i>
                       </div>
                     </div>
-                    <div class="r-box" @click="toStep('0','1-2','','',3)">
+                    <div class="r-box" @click="toStep('0', '1-2', '', '', 3)">
                       <div class="rb-left">
                         <div class="rb-tit1">非处方</div>
                         <div class="rb-tit2">不带视力矫正的透镜</div>
@@ -458,7 +513,7 @@
                   <i @click="goBack('0')" class="el-icon-arrow-left p"></i>
                   <div class="r-tit1">选择一个</div>
                   <div class="r-items">
-                    <div class="r-box" @click="toStep('1-1','1-1-1')">
+                    <div class="r-box" @click="toStep('1-1', '1-1-1')">
                       <div class="rb-left">
                         <div class="rb-tit1">新顾客或新处方</div>
                         <div class="rb-tit3">最新的处方和瞳距（PD）</div>
@@ -467,16 +522,21 @@
                         <i class="el-icon-arrow-right"></i>
                       </div>
                     </div>
-                    <div class="r-box" @click="toStep('1-1','1-1-2','','',2)">
+                    <div
+                      class="r-box"
+                      @click="toStep('1-1', '1-1-2', '', '', 2)"
+                    >
                       <div class="rb-left">
                         <div class="rb-tit1">阅读者</div>
-                        <div class="rb-tit3">一个放大领域的阅读，无需处方说明</div>
+                        <div class="rb-tit3">
+                          一个放大领域的阅读，无需处方说明
+                        </div>
                       </div>
                       <div class="rb-right">
                         <i class="el-icon-arrow-right"></i>
                       </div>
                     </div>
-                    <div class="r-box" @click="toStep('1-1','1-1-3')">
+                    <div class="r-box" @click="toStep('1-1', '1-1-3')">
                       <div class="rb-left">
                         <div class="rb-tit1">选择我的处方</div>
                         <div class="rb-tit3">选择一个已保存的处方</div>
@@ -496,11 +556,11 @@
                       v-for="item in dengjiList"
                       :key="item.id"
                       class="r-box"
-                      @click="toStep('1-2-3-3','1-2',item.id)"
+                      @click="toStep('1-2-3-3', '1-2', item.id)"
                     >
                       <div class="rb-haveImg">
                         <div class="rb-left">
-                          <div class="rb-tit1">{{item.level_name}}</div>
+                          <div class="rb-tit1">{{ item.level_name }}</div>
                         </div>
                       </div>
                       <div class="rb-right">
@@ -518,13 +578,17 @@
                       class="r-box"
                       v-for="item in yanjinleixinList"
                       :key="item.id"
-                      @click="toStep('1-2','1-2-1',item.id,item)"
+                      @click="toStep('1-2', '1-2-1', item.id, item)"
                     >
                       <div class="rb-haveImg">
-                        <img class="rb-img" src="../../assets/img/tu2011.png" alt />
+                        <img
+                          class="rb-img"
+                          src="../../assets/img/tu2011.png"
+                          alt
+                        />
                         <div class="rb-left">
-                          <div class="rb-tit1">{{item.type_name}}</div>
-                          <div class="rb-tit3">{{item.type_desc}}</div>
+                          <div class="rb-tit1">{{ item.type_name }}</div>
+                          <div class="rb-tit3">{{ item.type_desc }}</div>
                         </div>
                       </div>
                       <div class="rb-right">
@@ -586,7 +650,7 @@
                   <i @click="goBack('1-1')" class="el-icon-arrow-left p"></i>
                   <div class="r-tit1">选择一个</div>
                   <div class="r-items">
-                    <div class="r-box" @click="toStep('1-1-1','1-1-1-1')">
+                    <div class="r-box" @click="toStep('1-1-1', '1-1-1-1-1')">
                       <div class="rb-left">
                         <div class="rb-tit1">单一视觉</div>
                         <div class="rb-tit3">最新的处方和瞳距（PD）</div>
@@ -595,7 +659,7 @@
                         <i class="el-icon-arrow-right"></i>
                       </div>
                     </div>
-                    <div class="r-box" @click="toStep('1-1-1','1-1-1-1')">
+                    <div class="r-box" @click="toStep('1-1-1', '1-1-1-1-1')">
                       <div class="rb-left">
                         <div class="rb-tit1">渐进的</div>
                         <div class="rb-tit3">选择一个已保存的处方</div>
@@ -604,7 +668,7 @@
                         <i class="el-icon-arrow-right"></i>
                       </div>
                     </div>
-                    <div class="r-box" @click="toStep('1-1-1','1-1-1-1')">
+                    <div class="r-box" @click="toStep('1-1-1', '1-1-1-1-1')">
                       <div class="rb-left">
                         <div class="rb-tit1">双焦</div>
                         <div class="rb-tit3">选择一个已保存的处方</div>
@@ -620,83 +684,110 @@
                   <i @click="goBack('1-1')" class="el-icon-arrow-left p"></i>
                   <div class="r-tit1">挑选一个放大强度</div>
                   <div class="step1-1-2box">
-                    <i @click="fangdadialogVisible = true" class="el-icon-question"></i>
+                    <i
+                      @click="fangdadialogVisible = true"
+                      class="el-icon-question"
+                    ></i>
                     <el-row :gutter="22">
                       <el-col :span="8">
                         <div
-                          @click="clickFangdaItem(1,'+0.25')"
-                          :class="{'iitem':true,'active':nowFangdaIndex==1}"
-                        >+0.25</div>
+                          @click="clickFangdaItem(1, '+0.25')"
+                          :class="{ iitem: true, active: nowFangdaIndex == 1 }"
+                        >
+                          +0.25
+                        </div>
                       </el-col>
                       <el-col :span="8">
                         <div
-                          @click="clickFangdaItem(2,'+0.50')"
-                          :class="{'iitem':true,'active':nowFangdaIndex==2}"
-                        >+0.50</div>
+                          @click="clickFangdaItem(2, '+0.50')"
+                          :class="{ iitem: true, active: nowFangdaIndex == 2 }"
+                        >
+                          +0.50
+                        </div>
                       </el-col>
                       <el-col :span="8">
                         <div
-                          @click="clickFangdaItem(3,'+0.75')"
-                          :class="{'iitem':true,'active':nowFangdaIndex==3}"
-                        >+0.75</div>
-                      </el-col>
-                    </el-row>
-                    <el-row style="margin-top:16px" :gutter="22">
-                      <el-col :span="8">
-                        <div
-                          @click="clickFangdaItem(4,'+1.00')"
-                          :class="{'iitem':true,'active':nowFangdaIndex==4}"
-                        >+1.00</div>
-                      </el-col>
-                      <el-col :span="8">
-                        <div
-                          @click="clickFangdaItem(5,'+1.25')"
-                          :class="{'iitem':true,'active':nowFangdaIndex==5}"
-                        >+1.25</div>
-                      </el-col>
-                      <el-col :span="8">
-                        <div
-                          @click="clickFangdaItem(6,'+1.50')"
-                          :class="{'iitem':true,'active':nowFangdaIndex==6}"
-                        >+1.50</div>
+                          @click="clickFangdaItem(3, '+0.75')"
+                          :class="{ iitem: true, active: nowFangdaIndex == 3 }"
+                        >
+                          +0.75
+                        </div>
                       </el-col>
                     </el-row>
-                    <el-row style="margin-top:16px" :gutter="22">
+                    <el-row style="margin-top: 16px" :gutter="22">
                       <el-col :span="8">
                         <div
-                          @click="clickFangdaItem(7,'+1.75')"
-                          :class="{'iitem':true,'active':nowFangdaIndex==7}"
-                        >+1.75</div>
+                          @click="clickFangdaItem(4, '+1.00')"
+                          :class="{ iitem: true, active: nowFangdaIndex == 4 }"
+                        >
+                          +1.00
+                        </div>
                       </el-col>
                       <el-col :span="8">
                         <div
-                          @click="clickFangdaItem(8,'+2.00')"
-                          :class="{'iitem':true,'active':nowFangdaIndex==8}"
-                        >+2.00</div>
+                          @click="clickFangdaItem(5, '+1.25')"
+                          :class="{ iitem: true, active: nowFangdaIndex == 5 }"
+                        >
+                          +1.25
+                        </div>
                       </el-col>
                       <el-col :span="8">
                         <div
-                          @click="clickFangdaItem(9,'+2.25')"
-                          :class="{'iitem':true,'active':nowFangdaIndex==9}"
-                        >+2.25</div>
+                          @click="clickFangdaItem(6, '+1.50')"
+                          :class="{ iitem: true, active: nowFangdaIndex == 6 }"
+                        >
+                          +1.50
+                        </div>
                       </el-col>
                     </el-row>
-                    <el-row style="margin-top:16px" :gutter="22">
+                    <el-row style="margin-top: 16px" :gutter="22">
                       <el-col :span="8">
                         <div
-                          @click="clickFangdaItem(10,'+2.50')"
-                          :class="{'iitem':true,'active':nowFangdaIndex==10}"
-                        >+2.50</div>
+                          @click="clickFangdaItem(7, '+1.75')"
+                          :class="{ iitem: true, active: nowFangdaIndex == 7 }"
+                        >
+                          +1.75
+                        </div>
                       </el-col>
                       <el-col :span="8">
                         <div
-                          @click="clickFangdaItem(11,'+2.75')"
-                          :class="{'iitem':true,'active':nowFangdaIndex==11}"
-                        >+2.75</div>
+                          @click="clickFangdaItem(8, '+2.00')"
+                          :class="{ iitem: true, active: nowFangdaIndex == 8 }"
+                        >
+                          +2.00
+                        </div>
+                      </el-col>
+                      <el-col :span="8">
+                        <div
+                          @click="clickFangdaItem(9, '+2.25')"
+                          :class="{ iitem: true, active: nowFangdaIndex == 9 }"
+                        >
+                          +2.25
+                        </div>
+                      </el-col>
+                    </el-row>
+                    <el-row style="margin-top: 16px" :gutter="22">
+                      <el-col :span="8">
+                        <div
+                          @click="clickFangdaItem(10, '+2.50')"
+                          :class="{ iitem: true, active: nowFangdaIndex == 10 }"
+                        >
+                          +2.50
+                        </div>
+                      </el-col>
+                      <el-col :span="8">
+                        <div
+                          @click="clickFangdaItem(11, '+2.75')"
+                          :class="{ iitem: true, active: nowFangdaIndex == 11 }"
+                        >
+                          +2.75
+                        </div>
                       </el-col>
                     </el-row>
                     <!-- <div @click="toStep('1-1-2','1-1-2-1')" class="tit3">下一步</div> -->
-                    <div @click="toStep('1-1-2','1-2','')" class="tit3">下一步</div>
+                    <div @click="toStep('1-1-2', '1-2', '')" class="tit3">
+                      下一步
+                    </div>
                   </div>
                 </div>
                 <!-- step1-1-3(处方-选择我的处方) -->
@@ -708,10 +799,10 @@
                       class="r-box"
                       v-for="item in chufangList"
                       :key="item.id"
-                      @click="toStep('1-1-3','1-1-3-1',item.id,item)"
+                      @click="toStep('1-1-3', '1-1-3-1', item.id, item)"
                     >
                       <div class="rb-left">
-                        <div class="rb-tit1">{{item.dushu_name}}</div>
+                        <div class="rb-tit1">{{ item.dushu_name }}</div>
                         <!-- <div class="rb-tit3">最新的处方和瞳距（PD）</div> -->
                       </div>
                       <div class="rb-right">
@@ -727,8 +818,8 @@
                   <div class="step1-1-2-1box">
                     <div
                       class="item"
-                      style="margin-top:50px"
-                      @click="toStep('1-1-2-1','1-1-2-1-1')"
+                      style="margin-top: 50px"
+                      @click="toStep('1-1-2-1', '1-1-2-1-1')"
                     >
                       <div class="tit1">
                         标准
@@ -739,7 +830,7 @@
                       <div class="tit4">开车使用</div>
                       <div class="tit5">推荐使用</div>
                     </div>
-                    <div class="item" @click="toStep('1-1-2-1','1-1-2-1-1')">
+                    <div class="item" @click="toStep('1-1-2-1', '1-1-2-1-1')">
                       <div class="tit1">
                         中等距离
                         <span class="sp">（大约14ft）</span>
@@ -749,7 +840,7 @@
                       <div class="tit4">不用于开车</div>
                       <div class="tit5">推荐使用</div>
                     </div>
-                    <div class="item" @click="toStep('1-1-2-1','1-1-2-1-1')">
+                    <div class="item" @click="toStep('1-1-2-1', '1-1-2-1-1')">
                       <div class="tit1">
                         近距离
                         <span class="sp">（大约20+ft）</span>
@@ -763,7 +854,10 @@
                 </div>
                 <!-- step1-1-2-1(处方-阅读者-下一步-下一步) -->
                 <div v-if="nowStep == '1-1-2-1-1' && stepShow">
-                  <i @click="goBack('1-1-2-1')" class="el-icon-arrow-left p"></i>
+                  <i
+                    @click="goBack('1-1-2-1')"
+                    class="el-icon-arrow-left p"
+                  ></i>
                   <div class="r-ntit1">生成你的处方</div>
                   <div class="step1-1-2-1-1box">
                     <div class="tit1">处方：单视 | 近视</div>
@@ -772,7 +866,7 @@
                       <span class="sp">25.1/26.45</span>
                     </div>
                     <div class="tit3">
-                      <el-row style="display: flex;align-items: center;">
+                      <el-row style="display: flex; align-items: center">
                         <el-col :span="6">
                           <div class="txt1">右-OD</div>
                         </el-col>
@@ -789,7 +883,13 @@
                           <div class="txtx2">4</div>
                         </el-col>
                       </el-row>
-                      <el-row style="display: flex;align-items: center;margin-top:20px">
+                      <el-row
+                        style="
+                          display: flex;
+                          align-items: center;
+                          margin-top: 20px;
+                        "
+                      >
                         <el-col :span="6">
                           <div class="txt1">左-OS</div>
                         </el-col>
@@ -804,56 +904,82 @@
                         </el-col>
                       </el-row>
                     </div>
-                    <div class="tit4" @click="toStep('1-1-2-1-1','1-2-1-1-1-1')">保存</div>
-                    <div class="tit5" @click="toStep('1-1-2-1-1','1-2-1-1-1-1')">跳过</div>
+                    <div
+                      class="tit4"
+                      @click="toStep('1-1-2-1-1', '1-2-1-1-1-1')"
+                    >
+                      保存
+                    </div>
+                    <div
+                      class="tit5"
+                      @click="toStep('1-1-2-1-1', '1-2-1-1-1-1')"
+                    >
+                      跳过
+                    </div>
                   </div>
                 </div>
                 <!-- step1-1-2-1(处方-选择我的处方-下一步) -->
                 <div v-if="nowStep == '1-1-3-1' && stepShow">
-                  <i @click="goBack('1-1-2-1')" class="el-icon-arrow-left p"></i>
+                  <i
+                    @click="goBack('1-1-2-1')"
+                    class="el-icon-arrow-left p"
+                  ></i>
                   <div class="r-ntit1">处方详情</div>
                   <div class="step1-1-2-1-1box">
-                    <div class="tit1">处方：{{chufangObj.dushu_name}}</div>
+                    <div class="tit1">处方：{{ chufangObj.dushu_name }}</div>
                     <div class="tit2">
                       PD-瞳距：
-                      <span
-                        class="sp"
-                      >{{chufangObj.one_number != '' ? chufangObj.one_number : `左：${chufangObj.two_number_left}/右：${chufangObj.two_number_right}`}}</span>
+                      <span class="sp">{{
+                        chufangObj.one_number != ""
+                          ? chufangObj.one_number
+                          : `左：${chufangObj.two_number_left}/右：${chufangObj.two_number_right}`
+                      }}</span>
                     </div>
                     <div class="tit3">
-                      <el-row style="display: flex;align-items: center;">
+                      <el-row style="display: flex; align-items: center">
                         <el-col :span="6">
                           <div class="txt1">右-OD</div>
                         </el-col>
                         <el-col :span="6">
                           <div class="txtx1">SPH</div>
-                          <div class="txtx2">{{chufangObj.you_sph}}</div>
+                          <div class="txtx2">{{ chufangObj.you_sph }}</div>
                         </el-col>
                         <el-col :span="6">
                           <div class="txtx1">CYL</div>
-                          <div class="txtx2">{{chufangObj.you_cyl}}</div>
+                          <div class="txtx2">{{ chufangObj.you_cyl }}</div>
                         </el-col>
                         <el-col :span="6">
                           <div class="txtx1">Axis</div>
-                          <div class="txtx2">{{chufangObj.you_axis}}</div>
+                          <div class="txtx2">{{ chufangObj.you_axis }}</div>
                         </el-col>
                       </el-row>
-                      <el-row style="display: flex;align-items: center;margin-top:20px">
+                      <el-row
+                        style="
+                          display: flex;
+                          align-items: center;
+                          margin-top: 20px;
+                        "
+                      >
                         <el-col :span="6">
                           <div class="txt1">左-OS</div>
                         </el-col>
                         <el-col :span="6">
-                          <div class="txtx2">{{chufangObj.zuo_sph}}</div>
+                          <div class="txtx2">{{ chufangObj.zuo_sph }}</div>
                         </el-col>
                         <el-col :span="6">
-                          <div class="txtx2">{{chufangObj.zuo_cyl}}</div>
+                          <div class="txtx2">{{ chufangObj.zuo_cyl }}</div>
                         </el-col>
                         <el-col :span="6">
-                          <div class="txtx2">{{chufangObj.zuo_axis}}</div>
+                          <div class="txtx2">{{ chufangObj.zuo_axis }}</div>
                         </el-col>
                       </el-row>
                     </div>
-                    <div class="tit4" @click="toStep('1-1-3-1','1-2-3-3',chufangObj.id)">下一步</div>
+                    <div
+                      class="tit4"
+                      @click="toStep('1-1-3-1', '1-2-3-3', chufangObj.id)"
+                    >
+                      下一步
+                    </div>
                   </div>
                 </div>
                 <!-- step1-2-1(非处方-平面镜) -->
@@ -868,13 +994,13 @@
                         class="r-nbox1"
                         v-for="item in zheshelvList"
                         :key="item.id"
-                        @click="toStep('1-2-1','1-2-1-1',item.id,item)"
+                        @click="toStep('1-2-1', '1-2-1-1', item.id, item)"
                       >
                         <div class="rnb-left">
-                          <div class="rnb-tit">{{item.basic_index}}</div>
+                          <div class="rnb-tit">{{ item.basic_index }}</div>
                         </div>
                         <div class="rnb-right">
-                          +￥{{item.price}}
+                          +￥{{ item.price }}
                           <i class="el-icon-arrow-right"></i>
                         </div>
                       </div>
@@ -901,85 +1027,202 @@
                   <div class="step1-1-1-1box">
                     <div class="tit1">
                       <div class="t-left">PD-瞳距</div>
-                      <i @click="tongjudialogVisible = true" class="el-icon-question"></i>
+                      <i
+                        @click="tongjudialogVisible = true"
+                        class="el-icon-question"
+                      ></i>
                     </div>
                     <div class="tit2">
                       <el-radio-group
                         @change="tongjuChange"
                         v-model="tongjuRad1"
-                        style="margin-bottom:20px"
+                        style="margin-bottom: 20px"
                       >
                         <el-radio label="1">一个瞳距</el-radio>
                         <el-radio label="2">两个瞳距</el-radio>
                       </el-radio-group>
                       <!-- 一个瞳距 -->
-                      <el-select v-if="tongjuRad1=='1'" v-model="tongjuVal" placeholder="请选择处方瞳距">
+                      <el-select
+                        v-if="tongjuRad1 == '1'"
+                        v-model="tongjuVal"
+                        placeholder="请选择处方瞳距"
+                      >
                         <el-option
-                          v-for="(item,i) in 43"
+                          v-for="(item, i) in 43"
                           :key="`${i}1`"
-                          :label="i+37"
-                          :value="i+37"
+                          :label="i + 37"
+                          :value="i + 37"
                         ></el-option>
                       </el-select>
                       <!-- 两个瞳距 -->
-                      <template v-if="tongjuRad1=='2'">
+                      <template v-if="tongjuRad1 == '2'">
                         <div class="txxx">左</div>
-                        <el-select v-model="tongjuValLeft" placeholder="请选择处方瞳距">
+                        <el-select
+                          v-model="tongjuValLeft"
+                          placeholder="请选择处方瞳距"
+                        >
                           <el-option
-                            v-for="(item,i) in 45"
+                            v-for="(item, i) in 45"
                             :key="`${i}left`"
-                            :label="(i+36)/2"
-                            :value="(i+36)/2"
+                            :label="(i + 36) / 2"
+                            :value="(i + 36) / 2"
                           ></el-option>
                         </el-select>
-                        <div class="txxx" style="margin-top: 10px;">右</div>
-                        <el-select v-model="tongjuValRight" placeholder="请选择处方瞳距">
+                        <div class="txxx" style="margin-top: 10px">右</div>
+                        <el-select
+                          v-model="tongjuValRight"
+                          placeholder="请选择处方瞳距"
+                        >
                           <el-option
-                            v-for="(item,i) in 45"
+                            v-for="(item, i) in 45"
                             :key="`${i}right`"
-                            :label="(i+36)/2"
-                            :value="(i+36)/2"
+                            :label="(i + 36) / 2"
+                            :value="(i + 36) / 2"
                           ></el-option>
                         </el-select>
                       </template>
                     </div>
                     <div
                       @click="step1111OnSubmit"
-                      :class="{'tit3':true,'active':tongjuVal!='' || (tongjuValLeft!='' && tongjuValRight!='')}"
-                    >提交</div>
+                      :class="{
+                        tit3: true,
+                        active:
+                          tongjuVal != '' ||
+                          (tongjuValLeft != '' && tongjuValRight != ''),
+                      }"
+                    >
+                      提交
+                    </div>
                   </div>
                 </div>
                 <!-- step1-1-1-1-1(处方-新顾客或新处方-单一视觉-提交) -->
                 <div v-if="nowStep == '1-1-1-1-1' && stepShow">
-                  <i @click="goBack('1-1-1-1')" class="el-icon-arrow-left p"></i>
+                  <i
+                    @click="goBack('1-1-1-1')"
+                    class="el-icon-arrow-left p"
+                  ></i>
                   <div class="r-ntit1">输入你的处方</div>
                   <div class="step1-1-1-1-1box">
+                    <div class="step1-1-1-1box">
+                      <div class="tit1">
+                        <div class="t-left">PD-瞳距</div>
+                        <i
+                          @click="tongjudialogVisible = true"
+                          class="el-icon-question"
+                        ></i>
+                      </div>
+                      <div class="tit2">
+                        <el-radio-group
+                          @change="tongjuChange"
+                          v-model="tongjuRad1"
+                          style="margin-bottom: 20px"
+                        >
+                          <el-radio label="1">一个瞳距</el-radio>
+                          <el-radio label="2">两个瞳距</el-radio>
+                        </el-radio-group>
+                        <!-- 一个瞳距 -->
+                        <el-select
+                          v-if="tongjuRad1 == '1'"
+                          v-model="tongjuVal"
+                          placeholder="请选择处方瞳距"
+                        >
+                          <el-option
+                            v-for="(item, i) in 43"
+                            :key="`${i}1`"
+                            :label="i + 37"
+                            :value="i + 37"
+                          ></el-option>
+                        </el-select>
+                        <!-- 两个瞳距 -->
+                        <template v-if="tongjuRad1 == '2'">
+                          <div class="txxx">左</div>
+                          <el-select
+                            v-model="tongjuValLeft"
+                            placeholder="请选择处方瞳距"
+                          >
+                            <el-option
+                              v-for="(item, i) in 45"
+                              :key="`${i}left`"
+                              :label="(i + 36) / 2"
+                              :value="(i + 36) / 2"
+                            ></el-option>
+                          </el-select>
+                          <div class="txxx" style="margin-top: 10px">右</div>
+                          <el-select
+                            v-model="tongjuValRight"
+                            placeholder="请选择处方瞳距"
+                          >
+                            <el-option
+                              v-for="(item, i) in 45"
+                              :key="`${i}right`"
+                              :label="(i + 36) / 2"
+                              :value="(i + 36) / 2"
+                            ></el-option>
+                          </el-select>
+                        </template>
+                      </div>
+                    </div>
                     <div class="txt1">为SPH或CYL，选择+或-的值</div>
                     <div class="tit1">
                       <div class="t-left">右眼-OD</div>
-                      <i @click="chufangleixindialogVisible = true" class="el-icon-question"></i>
+                      <i
+                        @click="chufangleixindialogVisible = true"
+                        class="el-icon-question"
+                      ></i>
                     </div>
                     <div class="tit2">
                       <el-row :gutter="10">
                         <el-col :span="8">
                           <div class="txtt1">SPH</div>
+                          <!-- <el-select v-model="leftSPH" placeholder="0.00">
+                            <el-option
+                              v-for="(item, i) in 129"
+                              :key="`${i}leftSPH`"
+                              :label="
+                                ((i - 80) / 4).toFixed(2) > 0
+                                  ? `+${((i - 80) / 4).toFixed(2)}`
+                                  : ((i - 80) / 4).toFixed(2)
+                              "
+                              :value="
+                                ((i - 80) / 4).toFixed(2) > 0
+                                  ? `+${((i - 80) / 4).toFixed(2)}`
+                                  : ((i - 80) / 4).toFixed(2)
+                              "
+                            ></el-option>
+                          </el-select> -->
                           <el-select v-model="leftSPH" placeholder="0.00">
                             <el-option
-                              v-for="(item,i) in 129"
+                              v-for="(item, i) in 801"
                               :key="`${i}leftSPH`"
-                              :label="((i-80)/4).toFixed(2) > 0 ? `+${((i-80)/4).toFixed(2)}` : ((i-80)/4).toFixed(2)"
-                              :value="((i-80)/4).toFixed(2) > 0 ? `+${((i-80)/4).toFixed(2)}` : ((i-80)/4).toFixed(2)"
+                              :label="i"
+                              :value="i"
                             ></el-option>
                           </el-select>
                         </el-col>
                         <el-col :span="8">
                           <div class="txtt1">CYL</div>
+                          <!-- <el-select v-model="leftCYL" placeholder="0.00">
+                            <el-option
+                              v-for="(item, i) in 49"
+                              :key="`${i}leftCYL`"
+                              :label="
+                                ((i - 24) / 4).toFixed(2) > 0
+                                  ? `+${((i - 24) / 4).toFixed(2)}`
+                                  : ((i - 24) / 4).toFixed(2)
+                              "
+                              :value="
+                                ((i - 24) / 4).toFixed(2) > 0
+                                  ? `+${((i - 24) / 4).toFixed(2)}`
+                                  : ((i - 24) / 4).toFixed(2)
+                              "
+                            ></el-option>
+                          </el-select> -->
                           <el-select v-model="leftCYL" placeholder="0.00">
                             <el-option
-                              v-for="(item,i) in 49"
+                              v-for="(item, i) in 601"
                               :key="`${i}leftCYL`"
-                              :label="((i-24)/4).toFixed(2) > 0 ? `+${((i-24)/4).toFixed(2)}` : ((i-24)/4).toFixed(2)"
-                              :value="((i-24)/4).toFixed(2) > 0 ? `+${((i-24)/4).toFixed(2)}` : ((i-24)/4).toFixed(2)"
+                              :label="i"
+                              :value="i"
                             ></el-option>
                           </el-select>
                         </el-col>
@@ -991,7 +1234,7 @@
                             placeholder="0.00"
                           >
                             <el-option
-                              v-for="(item,i) in 181"
+                              v-for="(item, i) in 181"
                               :key="`${i}leftAxis`"
                               :label="i"
                               :value="i"
@@ -1008,23 +1251,55 @@
                       <el-row :gutter="10">
                         <el-col :span="8">
                           <div class="txtt1">SPH</div>
+                          <!-- <el-select v-model="rightSPH" placeholder="0.00">
+                            <el-option
+                              v-for="(item, i) in 129"
+                              :key="`${i}rightSPH`"
+                              :label="
+                                ((i - 80) / 4).toFixed(2) > 0
+                                  ? `+${((i - 80) / 4).toFixed(2)}`
+                                  : ((i - 80) / 4).toFixed(2)
+                              "
+                              :value="
+                                ((i - 80) / 4).toFixed(2) > 0
+                                  ? `+${((i - 80) / 4).toFixed(2)}`
+                                  : ((i - 80) / 4).toFixed(2)
+                              "
+                            ></el-option>
+                          </el-select> -->
                           <el-select v-model="rightSPH" placeholder="0.00">
                             <el-option
-                              v-for="(item,i) in 129"
+                              v-for="(item, i) in 801"
                               :key="`${i}rightSPH`"
-                              :label="((i-80)/4).toFixed(2) > 0 ? `+${((i-80)/4).toFixed(2)}` : ((i-80)/4).toFixed(2)"
-                              :value="((i-80)/4).toFixed(2) > 0 ? `+${((i-80)/4).toFixed(2)}` : ((i-80)/4).toFixed(2)"
+                              :label="i"
+                              :value="i"
                             ></el-option>
                           </el-select>
                         </el-col>
                         <el-col :span="8">
                           <div class="txtt1">CYL</div>
+                          <!-- <el-select v-model="rightCYL" placeholder="0.00">
+                            <el-option
+                              v-for="(item, i) in 49"
+                              :key="`${i}rightCYL`"
+                              :label="
+                                ((i - 24) / 4).toFixed(2) > 0
+                                  ? `+${((i - 24) / 4).toFixed(2)}`
+                                  : ((i - 24) / 4).toFixed(2)
+                              "
+                              :value="
+                                ((i - 24) / 4).toFixed(2) > 0
+                                  ? `+${((i - 24) / 4).toFixed(2)}`
+                                  : ((i - 24) / 4).toFixed(2)
+                              "
+                            ></el-option>
+                          </el-select> -->
                           <el-select v-model="rightCYL" placeholder="0.00">
                             <el-option
-                              v-for="(item,i) in 49"
+                              v-for="(item, i) in 601"
                               :key="`${i}rightCYL`"
-                              :label="((i-24)/4).toFixed(2) > 0 ? `+${((i-24)/4).toFixed(2)}` : ((i-24)/4).toFixed(2)"
-                              :value="((i-24)/4).toFixed(2) > 0 ? `+${((i-24)/4).toFixed(2)}` : ((i-24)/4).toFixed(2)"
+                              :label="i"
+                              :value="i"
                             ></el-option>
                           </el-select>
                         </el-col>
@@ -1036,7 +1311,7 @@
                             placeholder="0.00"
                           >
                             <el-option
-                              v-for="(item,i) in 181"
+                              v-for="(item, i) in 181"
                               :key="`${i}rightAxis`"
                               :label="i"
                               :value="i"
@@ -1060,19 +1335,19 @@
                             <div class="tx1">水平</div>
                             <el-select v-model="leftODsp" placeholder="0.00">
                               <el-option
-                                v-for="(item,i) in 50"
+                                v-for="(item, i) in 50"
                                 :key="`${i}rightSPH`"
-                                :label="(i/4).toFixed(2)"
-                                :value="(i/4).toFixed(2)"
+                                :label="(i / 4).toFixed(2)"
+                                :value="(i / 4).toFixed(2)"
                               ></el-option>
                             </el-select>
                             <div class="tx1">垂直</div>
                             <el-select v-model="leftODcz" placeholder="0.00">
                               <el-option
-                                v-for="(item,i) in 129"
+                                v-for="(item, i) in 129"
                                 :key="`${i}rightSPH`"
-                                :label="(i/4).toFixed(2)"
-                                :value="(i/4).toFixed(2)"
+                                :label="(i / 4).toFixed(2)"
+                                :value="(i / 4).toFixed(2)"
                               ></el-option>
                             </el-select>
                           </el-col>
@@ -1081,7 +1356,7 @@
                             <el-radio-group
                               @change="leftODspChange"
                               v-model="leftODspRad1"
-                              style="margin-bottom:20px"
+                              style="margin-bottom: 20px"
                             >
                               <el-radio label="1">里</el-radio>
                               <el-radio label="2">外</el-radio>
@@ -1090,7 +1365,7 @@
                             <el-radio-group
                               @change="leftODczChange"
                               v-model="leftODczRad1"
-                              style="margin-bottom:20px"
+                              style="margin-bottom: 20px"
                             >
                               <el-radio label="1">里</el-radio>
                               <el-radio label="2">外</el-radio>
@@ -1105,19 +1380,19 @@
                             <div class="tx1">水平</div>
                             <el-select v-model="leftOSsp" placeholder="0.00">
                               <el-option
-                                v-for="(item,i) in 50"
+                                v-for="(item, i) in 50"
                                 :key="`${i}rightSPH`"
-                                :label="(i/4).toFixed(2)"
-                                :value="(i/4).toFixed(2)"
+                                :label="(i / 4).toFixed(2)"
+                                :value="(i / 4).toFixed(2)"
                               ></el-option>
                             </el-select>
                             <div class="tx1">垂直</div>
                             <el-select v-model="leftOScz" placeholder="0.00">
                               <el-option
-                                v-for="(item,i) in 129"
+                                v-for="(item, i) in 129"
                                 :key="`${i}rightSPH`"
-                                :label="(i/4).toFixed(2)"
-                                :value="(i/4).toFixed(2)"
+                                :label="(i / 4).toFixed(2)"
+                                :value="(i / 4).toFixed(2)"
                               ></el-option>
                             </el-select>
                           </el-col>
@@ -1126,7 +1401,7 @@
                             <el-radio-group
                               @change="leftOSspChange"
                               v-model="leftOSspRad1"
-                              style="margin-bottom:20px"
+                              style="margin-bottom: 20px"
                             >
                               <el-radio label="1">里</el-radio>
                               <el-radio label="2">外</el-radio>
@@ -1135,7 +1410,7 @@
                             <el-radio-group
                               @change="leftOSczChange"
                               v-model="leftOSczRad1"
-                              style="margin-bottom:20px"
+                              style="margin-bottom: 20px"
                             >
                               <el-radio label="1">里</el-radio>
                               <el-radio label="2">外</el-radio>
@@ -1156,23 +1431,26 @@
                     <div class="r-nntit1">1.选择一个颜色</div>
                     <div class="stepnav1">
                       <div class="tit1">
-                        <div class="txt1">{{nowZslObj.basic_index}}</div>
-                        <div class="txt2">+￥{{colorPrice}}</div>
+                        <div class="txt1">{{ nowZslObj.basic_index }}</div>
+                        <div class="txt2">+￥{{ colorPrice }}</div>
                       </div>
-                      <div class="tit2">{{nowZslObj.desc}}</div>
+                      <div class="tit2">{{ nowZslObj.desc }}</div>
                       <div class="items">
                         <div
                           class="item"
-                          v-for="(item,i) in colorList"
+                          v-for="(item, i) in colorList"
                           :key="item.id"
-                          @click="step1211Pic(i,item)"
+                          @click="step1211Pic(i, item)"
                         >
                           <img
                             :src="item.color_img"
                             alt
-                            :class="{'pic':true,'active':step1211PicIndex == i}"
+                            :class="{
+                              pic: true,
+                              active: step1211PicIndex == i,
+                            }"
                           />
-                          <div class="txt">{{item.color_name}}</div>
+                          <div class="txt">{{ item.color_name }}</div>
                         </div>
                       </div>
                     </div>
@@ -1185,18 +1463,28 @@
                 </div>
                 <!-- step1-2-1-1-1(非处方-平面镜-正常用途-下一步) -->
                 <div v-if="nowStep == '1-2-1-1-1' && stepShow">
-                  <i @click="goBack('1-2-1-1')" class="el-icon-arrow-left p"></i>
+                  <i
+                    @click="goBack('1-2-1-1')"
+                    class="el-icon-arrow-left p"
+                  ></i>
                   <div class="r-ntit1">选择一个折射率</div>
                   <div class="step1-2-1-1-1box">
-                    <i @click="fanshedialogVisible = true" class="el-icon-question"></i>
+                    <i
+                      @click="fanshedialogVisible = true"
+                      class="el-icon-question"
+                    ></i>
                     <div class="steptxt1">2.挑选你的反射涂料</div>
-                    <div class="steptxt2">抗反射（AR）涂层可大大减少光反射，改善视力和眼镜外观。</div>
+                    <div class="steptxt2">
+                      抗反射（AR）涂层可大大减少光反射，改善视力和眼镜外观。
+                    </div>
                     <div class="r-nItems">
                       <div class="r-nItem">
                         <div class="r-ntxt1">基础</div>
                         <div
                           class="r-nbox1"
-                          @click="toStep('1-2-1-1-1','1-2-1-1-1-1',item.id,item)"
+                          @click="
+                            toStep('1-2-1-1-1', '1-2-1-1-1-1', item.id, item)
+                          "
                           v-for="item in fansheList"
                           :key="item.id"
                         >
@@ -1204,12 +1492,16 @@
                             <!-- <img class="pic" src="../../assets/img/tu2001.png" alt /> -->
                             <img class="pic" :src="item.coating_img" alt />
                             <div class="rnb-left">
-                              <div class="rnb-tit1">{{item.coating_name}}</div>
-                              <div class="rnb-tit2">{{item.coating_desc}}</div>
+                              <div class="rnb-tit1">
+                                {{ item.coating_name }}
+                              </div>
+                              <div class="rnb-tit2">
+                                {{ item.coating_desc }}
+                              </div>
                             </div>
                           </div>
                           <div class="rnb-right">
-                            +￥{{item.coating_price}}
+                            +￥{{ item.coating_price }}
                             <i class="el-icon-arrow-right"></i>
                           </div>
                         </div>
@@ -1264,29 +1556,44 @@
                 </div>
                 <!-- step1-2-1(非处方-平面镜-正常用途-下一步-基础) -->
                 <div v-if="nowStep == '1-2-1-1-1-1' && stepShow">
-                  <i @click="goBack('1-2-1-1-1')" class="el-icon-arrow-left p"></i>
+                  <i
+                    @click="goBack('1-2-1-1-1')"
+                    class="el-icon-arrow-left p"
+                  ></i>
                   <div class="r-ntit1">完成</div>
                   <div class="step1-2-1-1-1-1box">
                     <div class="boxxs">
                       <div
                         @click="stepBoxIndex = '1'"
-                        :class="{'boxx1':true,'active':stepBoxIndex == '1'}"
+                        :class="{ boxx1: true, active: stepBoxIndex == '1' }"
                       >
-                        <img src="../../assets/img/tu2021.png" alt class="pic" />
+                        <img
+                          src="../../assets/img/tu2021.png"
+                          alt
+                          class="pic"
+                        />
                         <div class="txt">添加一个夹子</div>
                       </div>
                       <div
                         @click="stepBoxIndex = '2'"
-                        :class="{'boxx1':true,'active':stepBoxIndex == '2'}"
-                        style="margin-left: 20px;"
+                        :class="{ boxx1: true, active: stepBoxIndex == '2' }"
+                        style="margin-left: 20px"
                       >
-                        <img src="../../assets/img/tu2021.png" alt class="pic" />
+                        <img
+                          src="../../assets/img/tu2021.png"
+                          alt
+                          class="pic"
+                        />
                         <div class="txt">添加一个雕刻</div>
                       </div>
                     </div>
-                    <div class="step-tit1">在你完成处方之前，可能你需要一些附加选项</div>
+                    <div class="step-tit1">
+                      在你完成处方之前，可能你需要一些附加选项
+                    </div>
                     <div @click="onSubmit" class="step-tit2">完成</div>
-                    <div @click="onSubmit" class="step-tit3">保存到我的处方</div>
+                    <div @click="onSubmit" class="step-tit3">
+                      保存到我的处方
+                    </div>
                   </div>
                 </div>
               </transition>
@@ -1296,33 +1603,47 @@
       </div>
     </el-dialog>
     <!-- 什么是瞳距 -->
-    <el-dialog :visible.sync="tongjudialogVisible" width="600px" :before-close="tongjuhandleClose">
+    <el-dialog
+      :visible.sync="tongjudialogVisible"
+      width="600px"
+      :before-close="tongjuhandleClose"
+    >
       <div class="tongjuDia">
         <el-tabs v-model="tongjuActiveName">
           <el-tab-pane label="一个瞳距" name="1">
             <img src="../../assets/img/tongju.png" alt class="pic" />
-            <div
-              class="txt"
-            >瞳孔距离（PD），即瞳孔中心之间的距离，决定了你通过眼镜镜片看的位置。它应该尽可能准确。成人平均单个PD在54-74 mm之间；儿童的身高在43-58毫米之间。 通过查看我们的PD信息图和视频，了解如何测量以及了解单PD、双PD和近PD之间的差异。</div>
+            <div class="txt">
+              瞳孔距离（PD），即瞳孔中心之间的距离，决定了你通过眼镜镜片看的位置。它应该尽可能准确。成人平均单个PD在54-74
+              mm之间；儿童的身高在43-58毫米之间。
+              通过查看我们的PD信息图和视频，了解如何测量以及了解单PD、双PD和近PD之间的差异。
+            </div>
           </el-tab-pane>
           <el-tab-pane label="两个瞳距" name="2">
             <img src="../../assets/img/tongju.png" alt class="pic" />
-            <div class="txt">瞳孔距离（PD），即瞳孔中心之间的距离，决定了你通过眼镜镜片看的位置。。</div>
+            <div class="txt">
+              瞳孔距离（PD），即瞳孔中心之间的距离，决定了你通过眼镜镜片看的位置。。
+            </div>
           </el-tab-pane>
           <el-tab-pane label="什么是瞳距" name="3">
             <img src="../../assets/img/tongju.png" alt class="pic" />
-            <div class="txt">瞳孔距离（PD），即瞳孔中心之间的距离，查看我们的PD信息图和视频，了解如何测量以及了解单PD、双PD和近PD之间的差异。</div>
+            <div class="txt">
+              瞳孔距离（PD），即瞳孔中心之间的距离，查看我们的PD信息图和视频，了解如何测量以及了解单PD、双PD和近PD之间的差异。
+            </div>
           </el-tab-pane>
         </el-tabs>
       </div>
     </el-dialog>
     <!-- 度数 -->
-    <el-dialog :visible.sync="dushudialogVisible" width="600px" :before-close="dushuhandleClose">
+    <el-dialog
+      :visible.sync="dushudialogVisible"
+      width="600px"
+      :before-close="dushuhandleClose"
+    >
       <div class="dushuDia">
         <div class="txt1">处方范围</div>
-        <div
-          class="txt2"
-        >处方范围这些框架只能在某些处方中使用。这是基于球面(sph)值的近似范围。如果您有散光(cyl)在您的处方，这一范围可能会进一步限制。请在订单页面上输入您的处方，看看我们是否能为您生产这些眼镜/太阳镜。</div>
+        <div class="txt2">
+          处方范围这些框架只能在某些处方中使用。这是基于球面(sph)值的近似范围。如果您有散光(cyl)在您的处方，这一范围可能会进一步限制。请在订单页面上输入您的处方，看看我们是否能为您生产这些眼镜/太阳镜。
+        </div>
       </div>
     </el-dialog>
     <!-- 双焦点透镜 -->
@@ -1333,13 +1654,13 @@
     >
       <div class="dushuDia">
         <div class="txt1">双焦点透镜</div>
-        <div
-          class="txt2"
-        >两个视野被一条线隔开。一般来说，顶部用于远距离视觉或计算机距离，底部用于近距离视觉工作，例如阅读。在双焦点透镜中，两个视野由一条可见光线特别区分。底部阅读区域为28毫米宽，并且位于镜头中心线以下。双焦点区域的物理位置会受到所选镜头物理高度的影响。双焦距镜头的镜头总高度必须在30毫米或以上。我们推荐更高的镜头，更舒适的佩戴，但30毫米是双焦镜头的最低高度。如果选择的镜框高度小于30毫米，双焦镜头必须选择不同的镜框渐进镜</div>
-        <div class="txt1" style="margin-top:30px">渐进镜</div>
-        <div
-          class="txt2"
-        >包括多个视野，没有线条，有时被称为“无线多焦点”。在渐进镜片中，镜片矫正部分的形状大约为漏斗或蘑菇状。在标准进行体中，上半部分用于远距离视觉，下半部分用于中间视觉，最后下半部分用于阅读视觉。中间和阅读区域应小于距离区域。标准渐进镜片是最常用的渐进镜片。在工作区渐进式中，顶部部分用于中间视觉，底部部分用于近视或阅读，在工作区渐进式中没有远视。有两种类型的工作空间进步人士:中级进步人士和近级进步人士。中距渐进式适用于需要较大中间视力的近距离工作，如台式电脑和会议，而近距离渐进式最适用于静态近距离工作，如长时间阅读、手持设备的使用和手工制作。渐进式镜头的镜头高度必须达30毫米或以上。我们推荐更高的镜头，更舒适的佩戴，但最低镜头高度是30毫米。如果镜架的镜片高度小于30毫米，必须为渐进镜片选择不同的镜架。</div>
+        <div class="txt2">
+          两个视野被一条线隔开。一般来说，顶部用于远距离视觉或计算机距离，底部用于近距离视觉工作，例如阅读。在双焦点透镜中，两个视野由一条可见光线特别区分。底部阅读区域为28毫米宽，并且位于镜头中心线以下。双焦点区域的物理位置会受到所选镜头物理高度的影响。双焦距镜头的镜头总高度必须在30毫米或以上。我们推荐更高的镜头，更舒适的佩戴，但30毫米是双焦镜头的最低高度。如果选择的镜框高度小于30毫米，双焦镜头必须选择不同的镜框渐进镜
+        </div>
+        <div class="txt1" style="margin-top: 30px">渐进镜</div>
+        <div class="txt2">
+          包括多个视野，没有线条，有时被称为“无线多焦点”。在渐进镜片中，镜片矫正部分的形状大约为漏斗或蘑菇状。在标准进行体中，上半部分用于远距离视觉，下半部分用于中间视觉，最后下半部分用于阅读视觉。中间和阅读区域应小于距离区域。标准渐进镜片是最常用的渐进镜片。在工作区渐进式中，顶部部分用于中间视觉，底部部分用于近视或阅读，在工作区渐进式中没有远视。有两种类型的工作空间进步人士:中级进步人士和近级进步人士。中距渐进式适用于需要较大中间视力的近距离工作，如台式电脑和会议，而近距离渐进式最适用于静态近距离工作，如长时间阅读、手持设备的使用和手工制作。渐进式镜头的镜头高度必须达30毫米或以上。我们推荐更高的镜头，更舒适的佩戴，但最低镜头高度是30毫米。如果镜架的镜片高度小于30毫米，必须为渐进镜片选择不同的镜架。
+        </div>
       </div>
     </el-dialog>
     <!-- 阅读者 -->
@@ -1350,20 +1671,27 @@
     >
       <div class="yueduzheDia">
         <div class="txt1">阅读者</div>
-        <div
-          class="txt2"
-        >眼睛近距离聚焦的能力会随着年龄的增长而减弱。当我们到了40岁时，由于眼睛自然失去弹性，阅读小字体的困难变得更加明显。这就是为什么菜单、报纸和智能手机上的印刷品变得难以阅读的原因。如果你有以下任何一种经验，那么阅读眼镜可能适合你:眯着眼睛看近处的材料，拿着远处的阅读材料，在弱光条件下阅读困难。读者不需要处方</div>
+        <div class="txt2">
+          眼睛近距离聚焦的能力会随着年龄的增长而减弱。当我们到了40岁时，由于眼睛自然失去弹性，阅读小字体的困难变得更加明显。这就是为什么菜单、报纸和智能手机上的印刷品变得难以阅读的原因。如果你有以下任何一种经验，那么阅读眼镜可能适合你:眯着眼睛看近处的材料，拿着远处的阅读材料，在弱光条件下阅读困难。读者不需要处方
+        </div>
         <div class="tit3">
           <el-table :data="yueduzheTableData" border style="width: 361px">
-            <el-table-column prop="date" label="你的年龄" width="180"></el-table-column>
-            <el-table-column prop="name" label="预计交货" width="180"></el-table-column>
+            <el-table-column
+              prop="date"
+              label="你的年龄"
+              width="180"
+            ></el-table-column>
+            <el-table-column
+              prop="name"
+              label="预计交货"
+              width="180"
+            ></el-table-column>
           </el-table>
         </div>
         <div class="txt1">给阅读者忠告</div>
-        <div
-          class="txt2"
-          style="margin-bottom:20px"
-        >不要把读者忠告当作矫正镜片的替代品，只有专业的眼睛检查才能确定你的眼睛健康状况和视力需要。请咨询专业的眼睛护理人员，定期进行眼睛检查。</div>
+        <div class="txt2" style="margin-bottom: 20px">
+          不要把读者忠告当作矫正镜片的替代品，只有专业的眼睛检查才能确定你的眼睛健康状况和视力需要。请咨询专业的眼睛护理人员，定期进行眼睛检查。
+        </div>
       </div>
     </el-dialog>
     <!-- 处方类型 -->
@@ -1379,28 +1707,47 @@
             <el-table-column prop="OS" label="OS/OD"></el-table-column>
             <el-table-column prop="SPH" label="SPH(视力)"></el-table-column>
             <el-table-column prop="CYL" label="CYL(散光)"></el-table-column>
-            <el-table-column prop="AXIS" label="AXIS(散光方向)"></el-table-column>
-            <el-table-column prop="NVADD" label="NV-ADD(加光)"></el-table-column>
+            <el-table-column
+              prop="AXIS"
+              label="AXIS(散光方向)"
+            ></el-table-column>
+            <el-table-column
+              prop="NVADD"
+              label="NV-ADD(加光)"
+            ></el-table-column>
           </el-table>
         </div>
         <div class="tit2">OD=右眼 OS=左眼</div>
       </div>
     </el-dialog>
     <!-- 放大强度 -->
-    <el-dialog :visible.sync="fangdadialogVisible" width="600px" :before-close="fangdahandleClose">
+    <el-dialog
+      :visible.sync="fangdadialogVisible"
+      width="600px"
+      :before-close="fangdahandleClose"
+    >
       <div class="fangdaDia">
         <div class="txt1">放大强度</div>
-        <div class="txt2">通过使用此图表或以下建议找到您首选的放大强度。读者不需要处方。</div>
+        <div class="txt2">
+          通过使用此图表或以下建议找到您首选的放大强度。读者不需要处方。
+        </div>
         <div class="tit3">
           <el-table :data="fangdaTableData" style="width: 100%">
             <el-table-column prop="age" label="你的年龄"></el-table-column>
-            <el-table-column prop="tuijian" label="推荐的阅读眼镜功率"></el-table-column>
+            <el-table-column
+              prop="tuijian"
+              label="推荐的阅读眼镜功率"
+            ></el-table-column>
           </el-table>
         </div>
       </div>
     </el-dialog>
     <!-- 反射涂料 -->
-    <el-dialog :visible.sync="fanshedialogVisible" width="600px" :before-close="fanshehandleClose">
+    <el-dialog
+      :visible.sync="fanshedialogVisible"
+      width="600px"
+      :before-close="fanshehandleClose"
+    >
       <div class="tongjuDia fansheDia">
         <div class="txx">反射涂料</div>
         <el-tabs v-model="fansheActiveName" @tab-click="fanshehandleClick">
@@ -1408,29 +1755,31 @@
             <img src="../../assets/img/mcz29.png" alt class="pic2" />
             <div class="fstxt">
               基础
-              <span class="sp">防反射涂层可减少夜间灯光周围的眩光、反射和光晕，改善视力和眼镜外观。</span>
+              <span class="sp"
+                >防反射涂层可减少夜间灯光周围的眩光、反射和光晕，改善视力和眼镜外观。</span
+              >
             </div>
             <div class="fstxt2">包括</div>
             <div class="items">
               <div class="item">
                 <img src="../../assets/img/tu2001.png" alt class="it-pic" />
                 <div class="it-txt1">反射涂料</div>
-                <i :class="{'el-icon-success':true,'active':fsIndex1}"></i>
+                <i :class="{ 'el-icon-success': true, active: fsIndex1 }"></i>
               </div>
               <div class="item">
                 <img src="../../assets/img/tu2002.png" alt class="it-pic" />
                 <div class="it-txt1">防水</div>
-                <i :class="{'el-icon-success':true,'active':fsIndex2}"></i>
+                <i :class="{ 'el-icon-success': true, active: fsIndex2 }"></i>
               </div>
               <div class="item">
                 <img src="../../assets/img/tu2003.png" alt class="it-pic" />
                 <div class="it-txt1">防油</div>
-                <i :class="{'el-icon-success':true,'active':fsIndex3}"></i>
+                <i :class="{ 'el-icon-success': true, active: fsIndex3 }"></i>
               </div>
               <div class="item">
                 <img src="../../assets/img/tu2004.png" alt class="it-pic" />
                 <div class="it-txt1">防雾</div>
-                <i :class="{'el-icon-success':true,'active':fsIndex4}"></i>
+                <i :class="{ 'el-icon-success': true, active: fsIndex4 }"></i>
               </div>
             </div>
           </el-tab-pane>
@@ -1438,29 +1787,31 @@
             <img src="../../assets/img/mcz29.png" alt class="pic2" />
             <div class="fstxt">
               基础
-              <span class="sp">防反射涂层可减少夜间灯光周围的眩光、反射和光晕，改善视力和眼镜外观。</span>
+              <span class="sp"
+                >防反射涂层可减少夜间灯光周围的眩光、反射和光晕，改善视力和眼镜外观。</span
+              >
             </div>
             <div class="fstxt2">包括</div>
             <div class="items">
               <div class="item">
                 <img src="../../assets/img/tu2001.png" alt class="it-pic" />
                 <div class="it-txt1">反射涂料</div>
-                <i :class="{'el-icon-success':true,'active':fsIndex1}"></i>
+                <i :class="{ 'el-icon-success': true, active: fsIndex1 }"></i>
               </div>
               <div class="item">
                 <img src="../../assets/img/tu2002.png" alt class="it-pic" />
                 <div class="it-txt1">防水</div>
-                <i :class="{'el-icon-success':true,'active':fsIndex2}"></i>
+                <i :class="{ 'el-icon-success': true, active: fsIndex2 }"></i>
               </div>
               <div class="item">
                 <img src="../../assets/img/tu2003.png" alt class="it-pic" />
                 <div class="it-txt1">防油</div>
-                <i :class="{'el-icon-success':true,'active':fsIndex3}"></i>
+                <i :class="{ 'el-icon-success': true, active: fsIndex3 }"></i>
               </div>
               <div class="item">
                 <img src="../../assets/img/tu2004.png" alt class="it-pic" />
                 <div class="it-txt1">防雾</div>
-                <i :class="{'el-icon-success':true,'active':fsIndex4}"></i>
+                <i :class="{ 'el-icon-success': true, active: fsIndex4 }"></i>
               </div>
             </div>
           </el-tab-pane>
@@ -1468,7 +1819,12 @@
             <div class="fsbox">
               <template v-if="isFW">
                 <div class="top">
-                  <img @click="clickFY" src="../../assets/img/tu2022.png" alt class="pic1" />
+                  <img
+                    @click="clickFY"
+                    src="../../assets/img/tu2022.png"
+                    alt
+                    class="pic1"
+                  />
                   <img src="../../assets/img/tu2004.png" alt class="pic2" />
                 </div>
                 <div class="down">防雾</div>
@@ -1476,7 +1832,12 @@
               <template v-if="isFY">
                 <div class="top">
                   <img src="../../assets/img/tu2003.png" alt class="pic2" />
-                  <img @click="clickFW" src="../../assets/img/tu2023.png" alt class="pic3" />
+                  <img
+                    @click="clickFW"
+                    src="../../assets/img/tu2023.png"
+                    alt
+                    class="pic3"
+                  />
                 </div>
                 <div class="down">防油</div>
               </template>
@@ -1484,29 +1845,31 @@
             <img src="../../assets/img/mcz29.png" alt class="pic2" />
             <div class="fstxt">
               基础
-              <span class="sp">防反射涂层可减少夜间灯光周围的眩光、反射和光晕，改善视力和眼镜外观。</span>
+              <span class="sp"
+                >防反射涂层可减少夜间灯光周围的眩光、反射和光晕，改善视力和眼镜外观。</span
+              >
             </div>
             <div class="fstxt2">包括</div>
             <div class="items">
               <div class="item">
                 <img src="../../assets/img/tu2001.png" alt class="it-pic" />
                 <div class="it-txt1">反射涂料</div>
-                <i :class="{'el-icon-success':true,'active':fsIndex1}"></i>
+                <i :class="{ 'el-icon-success': true, active: fsIndex1 }"></i>
               </div>
               <div class="item">
                 <img src="../../assets/img/tu2002.png" alt class="it-pic" />
                 <div class="it-txt1">防水</div>
-                <i :class="{'el-icon-success':true,'active':fsIndex2}"></i>
+                <i :class="{ 'el-icon-success': true, active: fsIndex2 }"></i>
               </div>
               <div class="item">
                 <img src="../../assets/img/tu2003.png" alt class="it-pic" />
                 <div class="it-txt1">防油</div>
-                <i :class="{'el-icon-success':true,'active':fsIndex3}"></i>
+                <i :class="{ 'el-icon-success': true, active: fsIndex3 }"></i>
               </div>
               <div class="item">
                 <img src="../../assets/img/tu2004.png" alt class="it-pic" />
                 <div class="it-txt1">防雾</div>
-                <i :class="{'el-icon-success':true,'active':fsIndex4}"></i>
+                <i :class="{ 'el-icon-success': true, active: fsIndex4 }"></i>
               </div>
             </div>
           </el-tab-pane>
@@ -1520,37 +1883,40 @@
 import { mapState } from "vuex";
 export default {
   computed: {
-    ...mapState(["shopId"])
+    ...mapState(["shopId"]),
   },
   watch: {
-    nowStep () {
+    nowStep() {
       this.price = 0;
       if (this.nowSku) {
-        console.log(this.nowSku)
-        if(this.nowSku.product_price != ""){
-          this.price += Number(this.nowSku.product_price)
-          console.log(Number(this.nowSku.product_price))
+        console.log(this.nowSku);
+        if (this.nowSku.product_price != "") {
+          this.price += Number(this.nowSku.product_price);
+          console.log(Number(this.nowSku.product_price));
         }
-        if (this.nowTucengObj.coating_price && this.nowTucengObj.coating_price != ""){
-          this.price += Number(this.nowTucengObj.coating_price)
-          console.log(this.nowTucengObj)
+        if (
+          this.nowTucengObj.coating_price &&
+          this.nowTucengObj.coating_price != ""
+        ) {
+          this.price += Number(this.nowTucengObj.coating_price);
+          console.log(this.nowTucengObj);
         }
-        if (this.colorPrice && this.colorPrice != ""){
-          this.price += Number(this.colorPrice)
+        if (this.colorPrice && this.colorPrice != "") {
+          this.price += Number(this.colorPrice);
         }
-        if (this.leixinObj.type_price && this.leixinObj.type_price != ""){
-          this.price += Number(this.leixinObj.type_price)
+        if (this.leixinObj.type_price && this.leixinObj.type_price != "") {
+          this.price += Number(this.leixinObj.type_price);
         }
-        if (this.yanseObj.color_price && this.yanseObj.color_price != ""){
-          this.price += Number(this.yanseObj.color_price)
+        if (this.yanseObj.color_price && this.yanseObj.color_price != "") {
+          this.price += Number(this.yanseObj.color_price);
         }
         console.log(this.price);
       }
-    }
+    },
   },
   data() {
     return {
-      price:0,
+      price: 0,
       colorPrice: 0,
       zheshelvList: [],
       shopList: [],
@@ -1594,24 +1960,24 @@ export default {
       yueduzheTableData: [
         {
           date: "40-44",
-          name: "（+075）-（+1.00）"
+          name: "（+075）-（+1.00）",
         },
         {
           date: "45-49",
-          name: "（+1.00）-（+1.50）"
+          name: "（+1.00）-（+1.50）",
         },
         {
           date: "50-54",
-          name: "（+1.50）-（+2.00）"
+          name: "（+1.50）-（+2.00）",
         },
         {
           date: "55-59",
-          name: "（+2.00）-（+2.25）"
+          name: "（+2.00）-（+2.25）",
         },
         {
           date: "60+",
-          name: "（+2.25）-（+2.75）"
-        }
+          name: "（+2.25）-（+2.75）",
+        },
       ],
       chufangleixinTableData: [
         {
@@ -1619,15 +1985,15 @@ export default {
           SPH: "0.00",
           CYL: "0.00",
           AXIS: "0.25",
-          NVADD: "1.25"
+          NVADD: "1.25",
         },
         {
           OS: "左-OS",
           SPH: "0.00",
           CYL: "0.00",
           AXIS: "0.25",
-          NVADD: "1.25"
-        }
+          NVADD: "1.25",
+        },
       ],
       shuangjiaodialogVisible: false,
       chufangleixindialogVisible: false,
@@ -1636,24 +2002,24 @@ export default {
       fangdaTableData: [
         {
           age: "40-44",
-          tuijian: "+0.75 至 +1.00"
+          tuijian: "+0.75 至 +1.00",
         },
         {
           age: "45-49",
-          tuijian: "+1.00 至 +1.50"
+          tuijian: "+1.00 至 +1.50",
         },
         {
           age: "50-54",
-          tuijian: "+1.50 至 +2.00"
+          tuijian: "+1.50 至 +2.00",
         },
         {
           age: "55-59",
-          tuijian: "+2.00 至 +2.25"
+          tuijian: "+2.00 至 +2.25",
         },
         {
           age: "60+",
-          tuijian: "+2.25 至 +2.75"
-        }
+          tuijian: "+2.25 至 +2.75",
+        },
       ],
       fanshedialogVisible: false,
       fansheActiveName: "1",
@@ -1665,7 +2031,7 @@ export default {
       isFY: false,
       step1211PicIndex: "",
       nowSku: {
-        product_price: ""
+        product_price: "",
       },
       detailObj: {},
       yanjinleixinList: [],
@@ -1691,8 +2057,9 @@ export default {
       fromz: "",
       nowZslObj: {},
       nowTucengObj: {},
-      leixinObj:{},
-      yanseObj:{},
+      leixinObj: {},
+      yanseObj: {},
+      isC: false,
     };
   },
   created() {
@@ -1700,6 +2067,9 @@ export default {
       this.$router.push({ name: "Xinping" });
     }
     this.getData();
+  },
+  mounted() {
+    window.scrollTo(0, 0);
   },
   methods: {
     async getData() {
@@ -1709,7 +2079,7 @@ export default {
       console.log(res.data);
       this.shopList = res.data.data;
       if (this.$route.params.detailShopId) {
-        this.shopList.forEach(ele => {
+        this.shopList.forEach((ele) => {
           if (ele.id == this.$route.params.detailShopId) {
             this.nowSku = ele;
           }
@@ -1718,7 +2088,7 @@ export default {
         this.nowSku = this.shopList[0];
       }
       this.nowImg = this.nowSku.product_img;
-      this.srcList = this.nowSku.product_detail_imgs.filter(ele => {
+      this.srcList = this.nowSku.product_detail_imgs.filter((ele) => {
         return ele != "";
       });
       // const res3 = await this.$api.product_type_list();
@@ -1726,7 +2096,7 @@ export default {
       // console.log(this.yanjinleixinList);
       const res4 = await this.$api.product_comment_list(this.shopId);
       this.pinglunList = res4.data.data;
-      this.pinglunList.forEach(ele => {
+      this.pinglunList.forEach((ele) => {
         ele.timeBefore = this.getDateDiff(new Date(ele.add_time));
         ele.imgs.forEach((ele2, i2) => {
           if (ele2 == "") {
@@ -1746,7 +2116,7 @@ export default {
       if (res.code == 200) {
         this.$message({
           message: res.message,
-          type: "success"
+          type: "success",
         });
         this.getData();
         this.dialogVisible = false;
@@ -1814,7 +2184,7 @@ export default {
       this.toStep("1-2-1-1", "1-2-1-1-1");
     },
     step1211Pic(i, item) {
-      console.log(item)
+      console.log(item);
       this.yanseObj = item;
       this.step1211PicIndex = i;
       this.color_i = item.id;
@@ -1858,7 +2228,7 @@ export default {
       if (res.code == 200) {
         this.$message({
           message: res.message,
-          type: "success"
+          type: "success",
         });
         this.chufangDialogVisible = false;
       } else {
@@ -1898,6 +2268,7 @@ export default {
       this.chufangDialogVisible = false;
     },
     changeNowImg(item) {
+      this.isC = true;
       this.show = !this.show;
       this.nowImg = item;
       setTimeout(() => {
@@ -1905,7 +2276,8 @@ export default {
       }, 200);
     },
     changeNowImg2(item) {
-      this.srcList = item.product_detail_imgs.filter(ele => {
+      this.isC = false;
+      this.srcList = item.product_detail_imgs.filter((ele) => {
         return ele != "";
       });
       this.nowSku = item;
@@ -1944,13 +2316,13 @@ export default {
         you_axis: this.leftAxis,
         one_number: this.tongjuVal,
         two_number_left: this.tongjuValLeft,
-        two_number_right: this.tongjuValRight
+        two_number_right: this.tongjuValRight,
       });
       console.log(res.data);
       if (res.code == 200) {
         this.$message({
           message: res.message,
-          type: "success"
+          type: "success",
         });
         this.toStep("1-1-1-1-1", "1-1-3");
       } else {
@@ -1967,7 +2339,7 @@ export default {
         // this.dushu_id = id;
         console.log(id);
         const res3 = await this.$api.product_type_list({
-          level_id: id
+          level_id: id,
         });
         this.yanjinleixinList = res3.data;
         this.product_level_id = id;
@@ -1983,20 +2355,20 @@ export default {
       if (val == "1-2-1") {
         this.product_type_id = id;
         const res = await this.$api.basicindex_list({
-          product_type_id: this.product_type_id
+          product_type_id: this.product_type_id,
         });
         this.zheshelvList = res.data;
         this.basicindex_id = id;
         this.buzhouVal = `${item.type_name}`;
-        this.leixinObj = item
+        this.leixinObj = item;
       }
       if (val == "1-2-1-1") {
         const res = await this.$api.product_type_color_list({
-          product_type_id: this.product_type_id
+          product_type_id: this.product_type_id,
         });
         this.nowZslObj = item;
         this.colorList = res.data;
-        this.yanseObj = this.colorList[0]
+        this.yanseObj = this.colorList[0];
         this.colorPrice = this.colorList[0].color_price;
         this.color_id = this.colorList[0].id;
         this.color_name = this.colorList[0].color_name;
@@ -2004,7 +2376,7 @@ export default {
       }
       if (val == "1-2-1-1-1") {
         const res = await this.$api.product_type_coatings_list({
-          product_type_id: this.product_type_id
+          product_type_id: this.product_type_id,
         });
         this.fansheList = res.data;
       }
@@ -2045,8 +2417,8 @@ export default {
     },
     handleClick(tab, event) {
       console.log(tab, event);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -2063,16 +2435,17 @@ export default {
 .nav1 {
   display: flex;
   align-items: center;
+  justify-content: center;
   background: #ffffff;
   padding: 40px 80px 100px 80px;
   .n1-left {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 120px;
+    margin-right: 140px;
     .n1l-pic {
-      width: 66px;
-      height: 66px;
+      width: 60px;
+      height: 60px;
       background: rgba(0, 0, 0, 0);
       border: 1px solid #e1e1e6;
       cursor: pointer;
@@ -2089,9 +2462,27 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    /deep/ .el-carousel__indicators--outside {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    /deep/ .el-carousel__container {
+      height: 600px;
+      overflow: hidden;
+      .el-carousel__item {
+        overflow: hidden;
+        .n1-top {
+          width: 600px;
+          height: 600px;
+          overflow: hidden;
+          margin-bottom: 0px;
+        }
+      }
+    }
     .n1-top {
-      width: 800px;
-      height: 800px;
+      width: 600px;
+      height: 600px;
       margin-bottom: 60px;
     }
     .n1-bottom {
@@ -2126,7 +2517,7 @@ export default {
 }
 .nav2 {
   box-sizing: border-box;
-  margin-right: 80px;
+  margin: 0 80px;
   height: 923px;
   background: #fafafa;
   padding: 120px 60px;
@@ -2577,7 +2968,7 @@ export default {
         object-fit: cover;
       }
       .sw-txt1 {
-        margin-top: 43px;
+        // margin-top: 43px;
         margin-bottom: 25px;
         font-size: 16px;
         font-family: Segoe UI, Segoe UI-Regular;
@@ -2601,11 +2992,15 @@ export default {
 .chufangDia {
   .left {
     margin: 0 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     .l-pic {
-      width: 100%;
-      height: 500px;
+      width: 600px;
+      height: 600px;
     }
     .l-tit1 {
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -2632,6 +3027,7 @@ export default {
       }
     }
     .l-tit2 {
+      width: 100%;
       margin-top: 30px;
       display: flex;
       align-items: center;
@@ -2648,6 +3044,7 @@ export default {
       }
     }
     .l-tit3 {
+      width: 100%;
       margin-top: 20px;
       .lt3-tit1 {
         font-size: 18px;
@@ -2872,7 +3269,7 @@ export default {
     //   color: #000000;
     // }
     .step1-1-1-1box {
-      padding: 0 20px;
+      // padding: 0 20px;
       .tit1 {
         display: flex;
         align-items: center;

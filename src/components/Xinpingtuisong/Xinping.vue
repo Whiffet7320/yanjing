@@ -2,9 +2,14 @@
   <div class="index">
     <el-row>
       <el-col :span="24">
-        <img
+        <!-- <img
           class="pic1"
           src="https://img2.baidu.com/it/u=1208920319,2762754731&fm=253&fmt=auto&app=138&f=JPEG?w=752&h=500"
+          alt
+        /> -->
+        <img
+          class="pic1"
+          src="../../assets/img/wx11.png"
           alt
         />
       </el-col>
@@ -68,10 +73,16 @@ export default {
   },
   watch: {
     jishiShougouPage: function(page) {
+      if(this.jishiShougouPage == 1){
+        return
+      }
       this.$store.commit("jishiShougouPage", page);
       this.getData();
     },
     jishiShougouPageSize: function(pageSize) {
+       if(this.jishiShougouPage == 1){
+        return
+      }
       this.$store.commit("jishiShougouPageSize", pageSize);
       this.getData();
     }
@@ -99,14 +110,18 @@ export default {
         rexiao: this.$route.params.status == "rexiao" ? 1 : 0,
         jingxuan: this.$route.params.status == "jingxuan" ? 1 : 0
       });
-      this.tableData = res.data.data;
+      this.tableData = this.tableData.concat(res.data.data);
+      if(this.jishiShougouPage > res.data.last_page){
+        this.$message('没有更多了');
+      }
     },
     toXiangqin(id) {
       this.$store.commit("shopId", id);
       this.$router.push({ name: "Shangpinxiangqin" });
     },
     seeMore() {
-      this.iii += 5;
+      // this.iii += 5;
+      this.$store.commit("jishiShougouPage", this.jishiShougouPage + 1);
     },
     changeCommand(e) {
       console.log(e);
@@ -228,18 +243,19 @@ export default {
         }
       }
       .n2-img {
-        margin-top: 98px;
-        width: 80%;
-        height: 147px;
+        // margin-top: 98px;
+        width: 70%;
+        // height: 147px;
+        object-fit: cover;
       }
       .n2-txt1 {
         position: absolute;
-        top: 374px;
+        top: 360px;
         font-size: 28px;
         color: #2626ff;
       }
       .n2-txt2 {
-        margin-top: 160px;
+        margin-top: 60px;
         font-size: 36px;
         font-family: PingFang SC, PingFang SC-Bold;
         font-weight: 700;

@@ -9,7 +9,7 @@
               <div class="n2-tit1">
                 <div class="left">50%OFF</div>
               </div>
-              <img class="n2-img" src="../../assets/img/mcz30.png" alt />
+              <img class="n2-img" :src="item.productinfo.product_img" alt />
               <div class="n2-tit2">
                 <div class="txt1">{{item.productinfo.product_name}}</div>
                 <i :class="{'el-icon-star-on':true,'active':true}"></i>
@@ -148,12 +148,13 @@ export default {
         }
       }
       .n2-img {
-        width: 80%;
-        height: 147px;
-        margin: 98px auto 0 auto;
+        width: 76%;
+        object-fit: cover;
+        // height: 147px;
+        margin:-40px auto 0 auto;
       }
       .n2-tit2 {
-        margin-top: 80px;
+        // margin-top: 80px;
         display: flex;
         align-items: center;
         width: 100%;

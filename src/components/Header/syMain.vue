@@ -76,7 +76,7 @@
     <div class="nav5">
       <el-row>
         <el-col :span="24">
-          <img src="../../assets/img/mcz3.png" class="n5-pic" alt />
+          <img src="../../assets/img/wx11.png" class="n5-pic" alt />
         </el-col>
       </el-row>
     </div>
@@ -106,17 +106,17 @@
         <el-col :span="24">
           <div class="n7-box">
             <div class="tit1">炫光</div>
-            <div class="tit1">炫光</div>
-            <div class="tit1">炫光</div>
+            <div class="tit1">明亮</div>
+            <div class="tit1">镜面磨砂</div>
           </div>
         </el-col>
       </el-row>
       <el-row style="margin-top:45px">
         <el-col :span="24">
           <div class="n7-box">
-            <div class="tit1">炫光</div>
-            <div class="tit1">炫光</div>
-            <div class="tit1">炫光</div>
+            <div class="tit1">黑框</div>
+            <div class="tit1">办公室适用</div>
+            <div class="tit1">旅行适用</div>
           </div>
         </el-col>
       </el-row>
@@ -129,14 +129,14 @@
         <el-col :span="10">
           <img
             class="n8-pic"
-            src="https://img2.baidu.com/it/u=1208920319,2762754731&fm=253&fmt=auto&app=138&f=JPEG?w=752&h=500"
+            src="../../assets/img/wx12.png"
             alt
           />
         </el-col>
         <el-col :span="10">
           <img
             class="n8-pic"
-            src="https://img2.baidu.com/it/u=1195495163,209534845&fm=253&fmt=auto&app=120&f=JPEG?w=1202&h=676"
+            src="../../assets/img/wx13.png"
             alt
           />
         </el-col>
@@ -349,7 +349,7 @@ export default {
         page:1,
         jingxuan:1
       })
-      if(this.jingxuanList.length>4){
+      if(res4.data.data.length>4){
         this.jingxuanList = res4.data.data.slice(0,4)
       }else{
          this.jingxuanList = res4.data.data
@@ -360,7 +360,7 @@ export default {
         page:1,
         shangxin:1
       })
-      if(this.shangxinList.length>4){
+      if(res5.data.data.length>4){
         this.shangxinList = res5.data.data.slice(0,4)
       }else{
          this.shangxinList = res5.data.data
@@ -370,7 +370,7 @@ export default {
         page:1,
         rexiao:1
       })
-      if(this.rexiaoList.length>4){
+      if(res6.data.data.length>4){
         this.rexiaoList = res6.data.data.slice(0,4)
       }else{
          this.rexiaoList = res6.data.data
@@ -672,6 +672,7 @@ export default {
     justify-content: space-around;
   }
   .swItem {
+    width: 25%;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -681,7 +682,7 @@ export default {
       object-fit: cover;
     }
     .sw-txt1 {
-      margin-top: 43px;
+      // margin-top: 43px;
       margin-bottom: 25px;
       font-size: 16px;
       font-family: Segoe UI, Segoe UI-Regular;
@@ -731,6 +732,7 @@ export default {
     margin: 0 20px;
   }
   .swItem {
+    width: 25%;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -882,7 +884,7 @@ export default {
         &:nth-child(3) {
           margin-top: 20px;
         }
-        width: 30%;
+        width: 38%;
         height: 320px;
         background: #ffffff;
         cursor: pointer;
@@ -890,12 +892,12 @@ export default {
         flex-direction: column;
         align-items: center;
         .sw-pic1 {
-          width: 100%;
-          // object-fit: cover;
-          height: 180px;
+          width: 80%;
+          object-fit: cover;
+          // height: 180px;
         }
         .sw-txt1 {
-          margin-top: 43px;
+          // margin-top: 43px;
           margin-bottom: 25px;
           font-size: 16px;
           font-family: Segoe UI, Segoe UI-Regular;

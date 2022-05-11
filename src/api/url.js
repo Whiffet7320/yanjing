@@ -3,7 +3,7 @@ export default {
     // baseUrl: 'http://47.100.26.153',
     // baseUrl: 'http://192.168.50.132',
     // baseUrl:'http://branch.yuncanggift.com',
-    baseUrl:'https://pifa.5laoye.com',
+    baseUrl:'https://yanjingapi.xingmangkeji.cn',
     login:'/api/login',//登录
     username:'/home/Reg/reg',//注册
     products:'/api/product_list',//商品

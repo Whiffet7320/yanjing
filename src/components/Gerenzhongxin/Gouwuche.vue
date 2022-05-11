@@ -19,7 +19,7 @@
                 </div>
                 <div class="i-txt2">
                   <img
-                    src="https://img1.baidu.com/it/u=1410082512,1043177061&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400"
+                    :src="item.product.product_detail_imgs[0]"
                     alt
                     class="pic1"
                   />
@@ -63,7 +63,7 @@
         <el-col :span="10">
           <div class="b-right">
             <div class="titt1">
-              <div class="txtt1">运费</div>
+              <div class="txtt1">折扣</div>
               <div class="txtt2">购买一个眼镜，获得其他50%的折扣</div>
               <div class="txtt3">选择其他 >></div>
             </div>

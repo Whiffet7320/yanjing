@@ -87,9 +87,21 @@
               <el-row style="width:100%">
                 <el-col :span="24">
                   <div class="index2-item">
-                    <div class="items" v-for="item in 4" :key="item">
-                      <img src="../../assets/img/zu8.png" class="pic" alt />
+                    <div class="items">
+                      <img src="../../assets/img/wx111.png" class="pic" alt />
                       <div class="i2-txt">所有太阳镜</div>
+                    </div>
+                    <div class="items">
+                      <img src="../../assets/img/wx112.png" class="pic" alt />
+                      <div class="i2-txt">有色处方太阳镜</div>
+                    </div>
+                    <div class="items">
+                      <img src="../../assets/img/wx113.png" class="pic" alt />
+                      <div class="i2-txt">偏光处方太阳镜</div>
+                    </div>
+                    <div class="items">
+                      <img src="../../assets/img/wx114.png" class="pic" alt />
+                      <div class="i2-txt">时尚太阳镜</div>
                     </div>
                   </div>
                 </el-col>
@@ -97,9 +109,9 @@
             </div>
           </el-submenu>
           <el-menu-item index="3" :route="{name:'Xinping'}">新品推送</el-menu-item>
-          <el-menu-item index="4">配件</el-menu-item>
+          <!-- <el-menu-item index="4">配件</el-menu-item>
           <el-menu-item index="5">推送</el-menu-item>
-          <el-menu-item index="6">限时抢购</el-menu-item>
+          <el-menu-item index="6">限时抢购</el-menu-item> -->
           <el-menu-item index="7" @click="toShop">精选</el-menu-item>
         </el-menu>
       </div>

@@ -151,10 +151,10 @@
                 <div class="t-l">折扣</div>
                 <div class="t-r">-￥{{payObj.coupon_price}}</div>
               </div>
-              <div class="titt1">
+              <!-- <div class="titt1">
                 <div class="t-l">赠送积分</div>
                 <div class="t-r">{{payObj.total_integral}}点</div>
-              </div>
+              </div> -->
               <div class="titt1">
                 <div class="t-l">邮费</div>
                 <div class="t-r">￥{{payObj.total_postage}}</div>

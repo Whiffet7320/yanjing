@@ -2,10 +2,30 @@
   <div class="index">
     <div class="tit1">我的订单</div>
     <div class="tit2">
-      <div @click="changeFahuo('0')" :class="{'txt1':true,'active':nowIndex == '0'}">待发货</div>
-      <div @click="changeFahuo('1')" :class="{'txt1':true,'active':nowIndex == '1'}">待收货</div>
-      <div @click="changeFahuo('2')" :class="{'txt1':true,'active':nowIndex == '2'}">待评价</div>
-      <div @click="changeFahuo('3')" :class="{'txt1':true,'active':nowIndex == '3'}">已完成</div>
+      <div
+        @click="changeFahuo('0')"
+        :class="{ txt1: true, active: nowIndex == '0' }"
+      >
+        待发货
+      </div>
+      <div
+        @click="changeFahuo('1')"
+        :class="{ txt1: true, active: nowIndex == '1' }"
+      >
+        待收货
+      </div>
+      <div
+        @click="changeFahuo('2')"
+        :class="{ txt1: true, active: nowIndex == '2' }"
+      >
+        待评价
+      </div>
+      <div
+        @click="changeFahuo('3')"
+        :class="{ txt1: true, active: nowIndex == '3' }"
+      >
+        已完成
+      </div>
     </div>
     <div class="nav1">
       <div class="items">
@@ -13,53 +33,71 @@
         <template v-if="!loading">
           <div class="item" v-for="item in orderList" :key="item.id">
             <div class="i-tit1">
-              <div class="i-txt1">订单编号：{{item.trade_no}}</div>
-              <div
-                class="i-txt2"
-              >{{nowIndex == '0' ? '待发货' : nowIndex == '1' ? '待收货' : nowIndex == '2' ? '待评价' : "已完成"}}</div>
+              <div class="i-txt1">订单编号：{{ item.trade_no }}</div>
+              <div class="i-txt2">
+                {{
+                  nowIndex == "0"
+                    ? "待发货"
+                    : nowIndex == "1"
+                    ? "待收货"
+                    : nowIndex == "2"
+                    ? "待评价"
+                    : "已完成"
+                }}
+              </div>
             </div>
             <div class="i-tit2" v-for="ele in item.orderinfo" :key="ele.id">
               <img :src="ele.product_img" alt class="i-pic1" />
               <div class="i-right">
-                <div class="ir-txt1">{{ele.product_name}}</div>
-                <div class="ir-txt2">{{ele.product_num}}</div>
-                <div class="ir-txt3">￥{{ele.product_price}}</div>
+                <div class="ir-txt1">{{ ele.product_name }}</div>
+                <div class="ir-txt2">{{ ele.product_num }}</div>
+                <div class="ir-txt3">￥{{ ele.product_price }}</div>
               </div>
               <el-col :span="6" v-if="nowIndex == '2'">
-                <div v-if="ele.is_comment == 0" @click="xiePingjia(ele)" class="i3-btn11 xpj">写评价</div>
+                <div
+                  v-if="ele.is_comment == 0"
+                  @click="xiePingjia(ele)"
+                  class="i3-btn11 xpj"
+                >
+                  写评价
+                </div>
                 <div v-else class="i3-btn11 xpj">已评价</div>
                 <!-- <div class="shouhou">售后</div> -->
               </el-col>
             </div>
             <div class="i-tit3">
-              <el-row :gutter="26" style="display: flex;align-items: center;">
+              <el-row :gutter="26" style="display: flex; align-items: center">
                 <el-col :span="18">
                   <el-row>
                     <el-col :span="6">
                       <div class="i3-txt">收货人：</div>
                     </el-col>
                     <el-col :span="18">
-                      <div
-                        class="i3-txt"
-                      >{{item.addressinfo.real_name_first}} {{item.addressinfo.real_name_second}}</div>
+                      <div class="i3-txt">
+                        {{ item.addressinfo.real_name_first }}
+                        {{ item.addressinfo.real_name_second }}
+                      </div>
                     </el-col>
                   </el-row>
-                  <el-row style="margin-top: 18px;">
+                  <el-row style="margin-top: 18px">
                     <el-col :span="6">
                       <div class="i3-txt">电话：</div>
                     </el-col>
                     <el-col :span="18">
-                      <div class="i3-txt">{{item.addressinfo.phone}}</div>
+                      <div class="i3-txt">{{ item.addressinfo.phone }}</div>
                     </el-col>
                   </el-row>
-                  <el-row style="margin-top: 18px;">
+                  <el-row style="margin-top: 18px">
                     <el-col :span="6">
                       <div class="i3-txt">地址：</div>
                     </el-col>
                     <el-col :span="18">
-                      <div
-                        class="i3-txt"
-                      >{{item.addressinfo.province}} {{item.addressinfo.city}} {{item.addressinfo.district}} {{item.addressinfo.detail}}</div>
+                      <div class="i3-txt">
+                        {{ item.addressinfo.province }}
+                        {{ item.addressinfo.city }}
+                        {{ item.addressinfo.district }}
+                        {{ item.addressinfo.detail }}
+                      </div>
                     </el-col>
                   </el-row>
                 </el-col>
@@ -86,7 +124,7 @@
         <template v-if="false">
           <div class="item" v-for="item in orderList" :key="item.id">
             <div class="i-tit1">
-              <div class="i-txt1">订单编号：{{item.trade_no}}</div>
+              <div class="i-txt1">订单编号：{{ item.trade_no }}</div>
               <div class="i-txt2">待评价</div>
             </div>
             <div class="i-tit2">
@@ -96,13 +134,15 @@
                 class="i-pic1"
               />
               <div class="i-right">
-                <div class="ir-txt1">办公室用严谨边框白镜黑框公室用严谨边框白镜黑框公室用严谨边框白镜黑框眼镜</div>
+                <div class="ir-txt1">
+                  办公室用严谨边框白镜黑框公室用严谨边框白镜黑框公室用严谨边框白镜黑框眼镜
+                </div>
                 <div class="ir-txt2">ZQX45646-02</div>
                 <div class="ir-txt3">￥56.61</div>
               </div>
             </div>
             <div class="i-tit3">
-              <el-row :gutter="26" style="display: flex;align-items: center;">
+              <el-row :gutter="26" style="display: flex; align-items: center">
                 <el-col :span="18">
                   <el-row>
                     <el-col :span="6">
@@ -112,7 +152,7 @@
                       <div class="i3-txt">六哥</div>
                     </el-col>
                   </el-row>
-                  <el-row style="margin-top: 18px;">
+                  <el-row style="margin-top: 18px">
                     <el-col :span="6">
                       <div class="i3-txt">电话：</div>
                     </el-col>
@@ -120,17 +160,21 @@
                       <div class="i3-txt">153645687978</div>
                     </el-col>
                   </el-row>
-                  <el-row style="margin-top: 18px;">
+                  <el-row style="margin-top: 18px">
                     <el-col :span="6">
                       <div class="i3-txt">地址：</div>
                     </el-col>
                     <el-col :span="18">
-                      <div class="i3-txt">中国 浙江省 温州市 龙湾区 什么街道 什么什么区 2-630</div>
+                      <div class="i3-txt">
+                        中国 浙江省 温州市 龙湾区 什么街道 什么什么区 2-630
+                      </div>
                     </el-col>
                   </el-row>
                 </el-col>
                 <el-col :span="6">
-                  <div @click="pinlundialogVisible = true" class="i3-btn1 xpj">写评价</div>
+                  <div @click="pinlundialogVisible = true" class="i3-btn1 xpj">
+                    写评价
+                  </div>
                   <div class="shouhou">售后</div>
                 </el-col>
               </el-row>
@@ -142,7 +186,7 @@
         <template v-if="false">
           <div class="item" v-for="item in orderList" :key="item.id">
             <div class="i-tit1">
-              <div class="i-txt1">订单编号：{{item.trade_no}}</div>
+              <div class="i-txt1">订单编号：{{ item.trade_no }}</div>
               <div class="i-txt2">已完成</div>
             </div>
             <div class="i-tit2">
@@ -152,13 +196,15 @@
                 class="i-pic1"
               />
               <div class="i-right">
-                <div class="ir-txt1">办公室用严谨边框白镜黑框公室用严谨边框白镜黑框公室用严谨边框白镜黑框眼镜</div>
+                <div class="ir-txt1">
+                  办公室用严谨边框白镜黑框公室用严谨边框白镜黑框公室用严谨边框白镜黑框眼镜
+                </div>
                 <div class="ir-txt2">ZQX45646-02</div>
                 <div class="ir-txt3">￥56.61</div>
               </div>
             </div>
             <div class="i-tit3">
-              <el-row :gutter="26" style="display: flex;align-items: center;">
+              <el-row :gutter="26" style="display: flex; align-items: center">
                 <el-col :span="18">
                   <el-row>
                     <el-col :span="6">
@@ -168,7 +214,7 @@
                       <div class="i3-txt">六哥</div>
                     </el-col>
                   </el-row>
-                  <el-row style="margin-top: 18px;">
+                  <el-row style="margin-top: 18px">
                     <el-col :span="6">
                       <div class="i3-txt">电话：</div>
                     </el-col>
@@ -176,12 +222,14 @@
                       <div class="i3-txt">153645687978</div>
                     </el-col>
                   </el-row>
-                  <el-row style="margin-top: 18px;">
+                  <el-row style="margin-top: 18px">
                     <el-col :span="6">
                       <div class="i3-txt">地址：</div>
                     </el-col>
                     <el-col :span="18">
-                      <div class="i3-txt">中国 浙江省 温州市 龙湾区 什么街道 什么什么区 2-630</div>
+                      <div class="i3-txt">
+                        中国 浙江省 温州市 龙湾区 什么街道 什么什么区 2-630
+                      </div>
                     </el-col>
                   </el-row>
                 </el-col>
@@ -197,7 +245,7 @@
         <template v-if="false">
           <div class="item" v-for="item in orderList" :key="item.id">
             <div class="i-tit1">
-              <div class="i-txt1">订单编号：{{item.trade_no}}</div>
+              <div class="i-txt1">订单编号：{{ item.trade_no }}</div>
               <div class="i-txt2">待收货</div>
             </div>
             <div class="i-tit2">
@@ -207,13 +255,15 @@
                 class="i-pic1"
               />
               <div class="i-right">
-                <div class="ir-txt1">办公室用严谨边框白镜黑框公室用严谨边框白镜黑框公室用严谨边框白镜黑框眼镜</div>
+                <div class="ir-txt1">
+                  办公室用严谨边框白镜黑框公室用严谨边框白镜黑框公室用严谨边框白镜黑框眼镜
+                </div>
                 <div class="ir-txt2">ZQX45646-02</div>
                 <div class="ir-txt3">￥56.61</div>
               </div>
             </div>
             <div class="i-tit3">
-              <el-row :gutter="26" style="display: flex;align-items: center;">
+              <el-row :gutter="26" style="display: flex; align-items: center">
                 <el-col :span="18">
                   <el-row>
                     <el-col :span="6">
@@ -223,7 +273,7 @@
                       <div class="i3-txt">六哥</div>
                     </el-col>
                   </el-row>
-                  <el-row style="margin-top: 18px;">
+                  <el-row style="margin-top: 18px">
                     <el-col :span="6">
                       <div class="i3-txt">电话：</div>
                     </el-col>
@@ -231,12 +281,14 @@
                       <div class="i3-txt">153645687978</div>
                     </el-col>
                   </el-row>
-                  <el-row style="margin-top: 18px;">
+                  <el-row style="margin-top: 18px">
                     <el-col :span="6">
                       <div class="i3-txt">地址：</div>
                     </el-col>
                     <el-col :span="18">
-                      <div class="i3-txt">中国 浙江省 温州市 龙湾区 什么街道 什么什么区 2-630</div>
+                      <div class="i3-txt">
+                        中国 浙江省 温州市 龙湾区 什么街道 什么什么区 2-630
+                      </div>
                     </el-col>
                   </el-row>
                 </el-col>
@@ -264,13 +316,17 @@
       </el-row>-->
     </div>
     <!-- 物流信息 -->
-    <el-dialog :visible.sync="wuliudialogVisible" width="500px" :before-close="wuliuhandleClose">
+    <el-dialog
+      :visible.sync="wuliudialogVisible"
+      width="500px"
+      :before-close="wuliuhandleClose"
+    >
       <div class="wuliuDia">
         <div class="wuliuDia-tit1">顺风快递：65464564645</div>
         <div v-for="(item, index) in tracesData" :key="index">
           <trackNode
-            :is-first="index===tracesData.length-1"
-            :is-newest="index===0"
+            :is-first="index === tracesData.length - 1"
+            :is-newest="index === 0"
             :is-main-node="item.isMainNode"
             :node-data="item"
           ></trackNode>
@@ -279,7 +335,11 @@
       </div>
     </el-dialog>
     <!-- 写评论 -->
-    <el-dialog :visible.sync="pinlundialogVisible" width="500px" :before-close="pinlunhandleClose">
+    <el-dialog
+      :visible.sync="pinlundialogVisible"
+      width="500px"
+      :before-close="pinlunhandleClose"
+    >
       <div class="pinlunDia">
         <div class="pinlun-tit1">写评论</div>
         <div class="txx">
@@ -287,7 +347,7 @@
           <el-rate v-model="star"></el-rate>
         </div>
         <div class="imgs">
-          <div v-for="(item,i) in imgs" :key="i" @click="companyList(i)">
+          <div v-for="(item, i) in imgs" :key="i" @click="companyList(i)">
             <el-image style="width: 100px; height: 100px" :src="item">
               <div slot="error" class="image-slot">
                 <i class="el-icon-picture-outline"></i>
@@ -295,7 +355,12 @@
             </el-image>
           </div>
         </div>
-        <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="pinlunVal"></el-input>
+        <el-input
+          type="textarea"
+          :rows="5"
+          placeholder="请输入内容"
+          v-model="pinlunVal"
+        ></el-input>
         <div @click="pinlunonSubmit" class="pinlun-btn">发表</div>
       </div>
     </el-dialog>
@@ -303,7 +368,7 @@
       type="file"
       name="companyLogo"
       id="file0"
-      style="display:none"
+      style="display: none"
       multiple="multiple"
       @change="companyLogo($event)"
       ref="fileInputList"
@@ -316,16 +381,16 @@ import { mapState } from "vuex";
 import trackNode from "../../components/trackNode.vue";
 export default {
   components: {
-    trackNode
+    trackNode,
   },
   computed: {
-    ...mapState(["jishiShougouPage"])
+    ...mapState(["jishiShougouPage"]),
   },
   watch: {
-    jishiShougouPage: function(page) {
+    jishiShougouPage: function (page) {
       this.$store.commit("jishiShougouPage", page);
       this.getData();
-    }
+    },
   },
   data() {
     return {
@@ -343,7 +408,7 @@ export default {
           status: "COMPLETE", // 节点状态
           phone: "", // 电话
           statusName: "已签收", // 节点标题
-          isMainNode: true // 是否主节点，主节点前方展示icon
+          isMainNode: true, // 是否主节点，主节点前方展示icon
         },
         {
           acceptStation: "由派送员蔡小坤同志配送，电话：",
@@ -351,7 +416,7 @@ export default {
           status: "DELIVERING",
           phone: "16677778888",
           statusName: "运输中",
-          isMainNode: true
+          isMainNode: true,
         },
         {
           acceptStation: "已到XXX小区快递点",
@@ -359,7 +424,7 @@ export default {
           status: "DELIVERING",
           phone: "",
           statusName: "运输中",
-          isMainNode: false
+          isMainNode: false,
         },
         {
           acceptStation: "已到海宁集散中心",
@@ -367,7 +432,7 @@ export default {
           status: "DELIVERING",
           phone: "",
           statusName: "运输中",
-          isMainNode: false
+          isMainNode: false,
         },
         {
           acceptStation: "已到杭州集散中心",
@@ -375,7 +440,7 @@ export default {
           status: "DELIVERING",
           phone: "",
           statusName: "运输中",
-          isMainNode: false
+          isMainNode: false,
         },
         {
           acceptStation: "包裹已到达余杭区集散中心",
@@ -383,7 +448,7 @@ export default {
           status: "DELIVERING",
           phone: "",
           statusName: "运输中",
-          isMainNode: false
+          isMainNode: false,
         },
         {
           acceptStation: "快递员已上门取件",
@@ -391,7 +456,7 @@ export default {
           status: "DELIVERING",
           phone: "",
           statusName: "已揽收",
-          isMainNode: false
+          isMainNode: false,
         },
         {
           acceptStation: "等待快递员上门揽件",
@@ -399,7 +464,7 @@ export default {
           status: "WATTING_DELIVER",
           phone: "",
           statusName: "已发货",
-          isMainNode: true
+          isMainNode: true,
         },
         {
           acceptStation: "您的包裹正在打包",
@@ -407,22 +472,22 @@ export default {
           status: "WATTING_DELIVER",
           phone: "",
           statusName: "待发货",
-          isMainNode: false
+          isMainNode: false,
         },
         {
           acceptStation: "订单支付成功，等待商家发货",
           createTime: "2019-10-24 15: 22: 30",
           status: "PAYED",
           statusName: "已支付",
-          isMainNode: true
+          isMainNode: true,
         },
         {
           acceptStation: "订单提交成功",
           createTime: "2019-10-24 15: 22: 00",
           status: "WATTING_PAY",
           statusName: "已下单",
-          isMainNode: true
-        }
+          isMainNode: true,
+        },
       ],
       pinlunVal: "",
       form: {
@@ -433,11 +498,11 @@ export default {
         delivery: false,
         type: [],
         resource: "",
-        desc: ""
+        desc: "",
       },
       total: 0,
       loading: false,
-      imgIndex: ""
+      imgIndex: "",
     };
   },
   created() {
@@ -451,12 +516,12 @@ export default {
         lock: true,
         text: "Loading",
         spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)"
+        background: "rgba(0, 0, 0, 0.7)",
       });
       const res = await this.$api.order_list({
         status: this.nowIndex,
         limit: 1000,
-        page: 1
+        page: 1,
       });
       console.log(res);
       this.orderList = res.data.data;
@@ -468,7 +533,7 @@ export default {
       if (res.code == 200) {
         this.$message({
           message: res.message,
-          type: "success"
+          type: "success",
         });
         this.getData();
       } else {
@@ -480,7 +545,7 @@ export default {
       if (res.code == 200) {
         this.$message({
           message: res.message,
-          type: "success"
+          type: "success",
         });
         this.wuliudialogVisible = true;
       } else {
@@ -536,12 +601,12 @@ export default {
         orderinfo_id: this.id,
         imgs: this.imgs,
         content: this.pinlunVal,
-        star: this.star
+        star: this.star,
       });
       if (res.code == 200) {
         this.$message({
           message: res.message,
-          type: "success"
+          type: "success",
         });
         this.pinlundialogVisible = false;
         this.getData();
@@ -568,8 +633,8 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.$store.commit("jishiShougouPage", val);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -590,6 +655,7 @@ export default {
   display: flex;
   align-content: center;
   margin-top: 20px;
+  margin-bottom: 22px;
   .txt1 {
     cursor: pointer;
     margin-right: 40px;
@@ -603,17 +669,21 @@ export default {
 }
 .nav1 {
   .items {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+    width: 96%;
+    column-count: 2;
+    // display: flex;
+    // align-items: center;
+    // flex-wrap: wrap;
     margin-bottom: 30px;
     .item {
-      &:nth-child(odd) {
-        margin-right: 24px;
-      }
-      margin-top: 22px;
+      break-inside: avoid;
+      box-sizing: border-box;
+      // &:nth-child(odd) {
+      //   margin-right: 24px;
+      // }
+      margin-bottom: 22px;
       background: #ffffff;
-      width: 40%;
+      // width: 40%;
       padding: 22px 30px;
       .i-tit1 {
         display: flex;
